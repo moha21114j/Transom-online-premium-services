@@ -1,0 +1,596 @@
+header {
+    background: white;
+    padding: 0;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+    transition: all 0.3s cubic-bezier(0.4,0,0.2,1) ;
+}
+
+header.scrolled {
+    box-shadow: 0 2px 20px rgba(0,0,0,0.15);
+}
+
+header.scrolled .top-bar {
+    padding: 4px 0;
+    font-size: 0.8rem;
+}
+
+header.scrolled .main-nav {
+    padding: 8px 0;
+}
+
+header.scrolled .logo {
+    font-size: 1.8rem;
+}
+
+header.scrolled .nav-item > a {
+    padding: 8px 12px;
+    font-size: 0.9rem;
+}
+
+header.scrolled .user-btn {
+    width: 28px;
+    height: 28px;
+}
+
+.top-bar {
+    background: #f8f9fa;
+    padding: 8px 0;
+    font-size: 0.9rem;
+    border-bottom: 1px solid #e9ecef;
+    transition: opacity 0.3s ease;
+
+}
+
+.top-bar .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.top-bar-left {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.top-bar-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.top-bar a {
+    color: #666;
+    text-decoration: none;
+    font-size: 0.85rem;
+    transition: color 0.3s;
+}
+
+.top-bar a:hover {
+    color: #005BAC;
+}
+
+.contact-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    font-size: 0.85rem;
+    color: #666;
+}
+
+.contact-info span {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+/* Main Navigation */
+.main-nav {
+    padding: 15px 0;
+    background: white;
+    transition: margin-top 0.3s ease;
+}
+
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 2.2rem;
+    font-weight: bold;
+    color: #005BAC
+    ;
+    text-transform: lowercase;
+    text-decoration: none;
+    transition: transform 0.3s;
+}
+
+.logo:hover {
+    transform: scale(1.05);
+}
+
+.nav-menu {
+    display: flex;
+    list-style: none;
+    align-items: center;
+    gap: 5px;
+    white-space: nowrap;
+}
+
+.nav-item {
+    position: relative;
+}
+
+.nav-item > a {
+    color: #333;
+    text-decoration: none;
+    padding: 15px 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    transition: all 0.3s;
+    border-radius: 5px;
+    position: relative;
+    letter-spacing: 0.3px;
+    white-space: nowrap;
+}
+
+.nav-item > a:hover {
+    color: #005BAC;
+    background: rgba(233, 30, 99, 0.05);
+}
+
+.nav-item > a::after {
+    content: '▼';
+    font-size: 0.9em;
+    margin-left: 3px;
+    transition: transform 0.3s;
+    font-weight: bold;
+}
+
+.nav-item:hover > a::after {
+    transform: rotate(180deg);
+}
+/* Dropdown Menu */
+.dropdown {
+    position: fixed; /* Change from absolute to fixed */
+    top: 100%; /* Will be updated with JS */
+    left: 0; /* Start from left edge */
+    right: 0; /* Extend to right edge */
+    width: 100vw; /* Full viewport width */
+    background: white;
+    border: none; /* Remove border */
+    border-radius: 0; /* Remove border radius */
+    padding: 40px 0; /* Increase padding */
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15); /* Stronger shadow */
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
+    z-index: 1000;
+    min-width: unset; /* Remove min-width */
+}
+/* Premium Car Services Specific Styles */
+.car-service-option {
+    background: #f8f9fa;
+    padding: 30px;
+    border-radius: 12px;
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.car-service-option:hover {
+    border-color: #005BAC;
+    background: #fff;
+    box-shadow: 0 8px 25px rgba(0,91,172,0.1);
+    transform: translateY(-2px);
+}
+
+.service-icon {
+    font-size: 3rem;
+    margin-bottom: 20px;
+    display: block;
+    color: #005BAC;
+}
+
+.service-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.service-description {
+    color: #666;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.service-features {
+    list-style: none;
+    margin-bottom: 20px;
+}
+
+.service-features li {
+    color: #666;
+    font-size: 0.9rem;
+    margin-bottom: 8px;
+    position: relative;
+    padding-left: 20px;
+}
+
+.service-features li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: #005BAC;
+    font-weight: bold;
+}
+
+.service-price {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #005BAC;
+    margin-bottom: 15px;
+}
+
+.book-now-small {
+    background: #005BAC;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.book-now-small:hover {
+    background: #004a94;
+    transform: translateY(-1px);
+}
+/* Update dropdown content to be centered and organized */
+.dropdown-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    box-sizing: border-box;
+}
+
+/* Add backdrop overlay */
+.dropdown-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.1);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s;
+    z-index: 999;
+}
+
+
+
+.dropdown-title {
+    font-weight: 600;
+    color: #005BAC;
+    margin-bottom: 8px;
+    font-size: 0.95rem;
+}
+
+.dropdown-description {
+    color: #666;
+    font-size: 0.85rem;
+    line-height: 1.4;
+    margin-bottom: 10px;
+}
+
+.dropdown-link {
+    color: #333;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: color 0.3s;
+}
+
+.dropdown-link:hover {
+    color: #005BAC;
+}
+
+/* Super compact Premium Car Services Dropdown */
+.car-services-dropdown {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    box-sizing: border-box;
+}
+
+
+/* Top wide description container - smaller */
+.car-services-description {
+  background: #f8f9fa;
+  padding: 16px;
+  border-radius: 8px;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.car-services-description h3 {
+  font-size: 1.2rem;
+  margin-bottom: 8px;
+  color: #333;
+}
+
+.car-services-description p {
+  max-width: 600px;
+  margin: 0 auto;
+  text-align: center;
+  font-size: 0.85rem;
+  color: #666;
+  line-height: 1.4;
+}
+
+
+
+/* Bottom two cards side by side - tighter grid */
+.car-services-options {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+    width: 100%;
+    box-sizing: border-box;
+    justify-content: center;
+}
+
+
+/* Each card itself - more compact */
+.car-service-option {
+  background: #f8f9fa;
+  padding: 16px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  border: 1px solid #ddd;
+  text-align: center;
+}
+
+.car-service-option .service-icon {
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+.car-service-option .service-title {
+  font-size: 1.1rem;
+  margin-bottom: 8px;
+}
+
+.car-service-option .service-description {
+  max-width: 220px;
+  margin: 0 auto 10px;
+  text-align: center;
+  line-height: 1.4;
+  font-size: 0.8rem;
+  color: #666;
+  word-wrap: break-word;
+}
+
+
+.car-service-option .service-price {
+  font-size: 0.9rem;
+  margin-bottom: 8px;
+}
+
+.book-now-small {
+  padding: 6px 12px;
+  font-size: 0.8rem;
+  border-radius: 4px;
+}
+
+
+/* User Actions */
+   .user-actions {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .currency-selector {
+            position: relative;
+        }
+
+        .currency-btn {
+            background: none;
+            border: 1px solid #ddd;
+            color: #666;
+            padding: 8px 12px;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .currency-btn:hover {
+            border-color: #005BAC;
+            color: #005BAC;
+        }
+
+        .currency-selector {
+            position: relative;
+            }
+
+            .currency-dropdown {
+            position: absolute;
+            top: 110%;
+            left: 0;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+            display: none;
+            z-index: 1000;
+            }
+
+            .currency-dropdown button {
+            background: none;
+            border: none;
+            padding: 10px 20px;
+            width: 100%;
+            text-align: left;
+            cursor: pointer;
+            font-size: 0.9rem;
+            color: #333;
+            transition: background 0.3s;
+            }
+
+            .currency-dropdown button:hover {
+            background: #f0f0f0;
+            }
+
+
+        .search-btn {
+            background: none;
+            border: 1px solid #ddd;
+            color: #666;
+            font-size: 1rem;
+            cursor: pointer;
+            padding: 10px 12px;
+            border-radius: 6px;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .search-btn:hover {
+            border-color: #005BAC;
+            color: #005BAC;
+        }
+
+        .cart-btn {
+            background: none;
+            border: none;
+            color: #666;
+            position: relative;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 50%;
+            transition: all 0.3s;
+        }
+
+        .cart-btn:hover {
+            background: rgba(233, 30, 99, 0.1);
+            color: #005BAC;
+        }
+
+        .cart-badge {
+            position: absolute;
+            top: -2px;
+            right: -2px;
+            background: #ff4444;
+            color: white;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            font-size: 0.7rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .user-btn {
+            min-width: 80px;              /* NEW: prevents it from getting too small */
+            height: auto;
+            border-radius: 6px;
+            background: none;
+            border: 1px solid #ddd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            text-decoration: none;
+            font-size: 0.9rem;
+            padding: 8px 16px;            /* adjust padding for text space */
+            transition: all 0.3s;
+            gap: 8px;
+            white-space: nowrap;          /* NEW: keep text in one line */
+            overflow: hidden;             /* hide anything that spills */
+            text-overflow: ellipsis;      /* add ... if needed */
+        }
+
+
+        .user-btn:hover {
+            border-color: #005BAC;
+            color: #005BAC;
+        }
+
+        /* Fix Premium Car Services Dropdown overflow */
+
+
+
+
+/* Mobile Menu */
+.mobile-menu-btn {
+    display: none;
+    background: none;
+    border: none;
+    color: #333;
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 5px;
+}
+
+.mobile-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: white;
+    border-top: 1px solid #e9ecef;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.mobile-menu.active {
+    display: block;
+}
+
+.mobile-menu-item {
+    border-bottom: 1px solid #f8f9fa;
+}
+
+.mobile-menu-item a {
+    display: block;
+    padding: 15px 20px;
+    color: #333;
+    text-decoration: none;
+    transition: background 0.3s;
+}
+
+.mobile-menu-item a:hover {
+    background: rgba(233, 30, 99, 0.05);
+    color: #005BAC;
+}
+
