@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oman Airport Services</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f5f5f5;
+        }
+
+        .carousel-container {
+            position: relative;
+            width: 100%;
+            height: 200px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+
+        .carousel-slide {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        .carousel-slide.active {
+            opacity: 1;
+        }
+
+        .carousel-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .carousel-dots {
+            position: absolute;
+            bottom: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .dot.active {
+            background-color: #e91e63;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+
+        .service-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .tab {
+            padding: 10px 20px;
+            border: 2px solid #ddd;
+            border-radius: 25px;
+            background-color: white;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 14px;
+        }
+
+        .tab.active {
+            background-color: #e91e63;
+            color: white;
+            border-color: #e91e63;
+        }
+
+        .tab.inactive {
+            border-color: #e91e63;
+            color: #e91e63;
+        }
+
+        .service-info {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .info-icon {
+            width: 20px;
+            height: 20px;
+            background-color: #e91e63;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .service-options {
+            margin-bottom: 20px;
+        }
+
+        .radio-group {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 20px;
+        }
+
+        .radio-option {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .radio-option input[type="radio"] {
+            width: 16px;
+            height: 16px;
+            accent-color: #e91e63;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .form-group input,
+        .form-group select {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        .passenger-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 20px;
+        }
+
+        .passenger-group {
+            text-align: center;
+        }
+
+        .passenger-group h4 {
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+
+        .passenger-group .subtitle {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 15px;
+        }
+
+        .counter {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .counter-btn {
+            width: 30px;
+            height: 30px;
+            border: 1px solid #ddd;
+            background-color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+            font-size: 16px;
+            color: #666;
+        }
+
+        .counter-btn:hover {
+            background-color: #f5f5f5;
+        }
+
+        .counter-value {
+            font-size: 18px;
+            font-weight: bold;
+            min-width: 20px;
+        }
+
+        .search-btn {
+            background-color: #ccc;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .search-btn.active {
+            background-color: #e91e63;
+        }
+
+        .oman-airports {
+            display: none;
+        }
+
+        .airport-option {
+            padding: 8px;
+            background-color: #f8f9fa;
+            border: 1px solid #ddd;
+            margin-bottom: 5px;
+            border-radius: 4px;
+        }
+
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .passenger-section {
+                grid-template-columns: 1fr;
+            }
+            
+            .service-tabs {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="carousel-container">
+        <div class="carousel-slide active">
+            <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); height: 100%; display: flex; align-items: center; justify-content: center;">
+                <h1 style="color: white; font-size: 2.5rem; text-align: center;">Oman Airport Services</h1>
+            </div>
+        </div>
+        <div class="carousel-slide">
+            <div style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); height: 100%; display: flex; align-items: center; justify-content: center;">
+                <h1 style="color: white; font-size: 2.5rem; text-align: center;">Premium Airport Experience</h1>
+            </div>
+        </div>
+        <div class="carousel-slide">
+            <div style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); height: 100%; display: flex; align-items: center; justify-content: center;">
+                <h1 style="color: white; font-size: 2.5rem; text-align: center;">Luxury Travel Services</h1>
+            </div>
+        </div>
+        <div class="carousel-slide">
+            <div style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); height: 100%; display: flex; align-items: center; justify-content: center;">
+                <h1 style="color: white; font-size: 2.5rem; text-align: center;">VIP Transportation</h1>
+            </div>
+        </div>
+        
+        <div class="carousel-dots">
+            <div class="dot active" onclick="currentSlide(1)"></div>
+            <div class="dot" onclick="currentSlide(2)"></div>
+            <div class="dot" onclick="currentSlide(3)"></div>
+            <div class="dot" onclick="currentSlide(4)"></div>
+        </div>
+    </div>
+
+    <div class="container">
+        <h2>Search services</h2>
+        
+        <div class="service-tabs">
+            <div class="tab active" data-service="meetgreet">Meet & Greet</div>
+            <div class="tab inactive" data-service="lounges">Lounges</div>
+            <div class="tab inactive" data-service="limo">Limo Service</div>
+        </div>
+
+        <div id="meetgreet-content" class="service-content">
+            <div class="service-info">
+                <div class="info-icon">i</div>
+                <div>Meet & Greet: Choose from a range of Meet & Greet services to make your airport experience simpler, quicker and less stressful.</div>
+            </div>
+            
+            <div class="service-options">
+                <h3 style="margin-bottom: 15px;">Service required for:</h3>
+                <div class="radio-group">
+                    <div class="radio-option">
+                        <input type="radio" id="arrival" name="service-type" value="arrival" checked>
+                        <label for="arrival">Arrival</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="lounges-content" class="service-content" style="display: none;">
+            <div class="service-info">
+                <div class="info-icon">i</div>
+                <div>Airport Lounges: Relax in style, no matter your airline or class of travel, in our world-class airport lounges around Oman.</div>
+            </div>
+            
+            <div class="service-options">
+                <h3 style="margin-bottom: 15px;">Service required for:</h3>
+                <div class="radio-group">
+                    <div class="radio-option">
+                        <input type="radio" id="arrival-lounge" name="service-type-lounge" value="arrival" checked>
+                        <label for="arrival-lounge">Arrival</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="departure-lounge" name="service-type-lounge" value="departure">
+                        <label for="departure-lounge">Departure</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="limo-content" class="service-content" style="display: none;">
+            <div class="service-info">
+                <div class="info-icon">i</div>
+                <div>Limo Service: Enjoy premium transportation with our luxury limousine service, perfect for VIPs and those who appreciate comfort and style.</div>
+            </div>
+            
+            <div class="service-options">
+                <h3 style="margin-bottom: 15px;">Service required for:</h3>
+                <div class="radio-group">
+                    <div class="radio-option">
+                        <input type="radio" id="arrival-limo" name="service-type-limo" value="arrival" checked>
+                        <label for="arrival-limo">Arrival</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="departure-limo" name="service-type-limo" value="departure">
+                        <label for="departure-limo">Departure</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label>Departure Airport</label>
+                <select id="departure-airport">
+                    <option value="">Select Airport</option>
+                    <option value="mct">Muscat International Airport</option>
+                    <option value="sll">Salalah Airport</option>
+                    <option value="msm">Masirah Airport</option>
+                    <option value="khs">Khasab Airport</option>
+                    <option value="sur">Sur Airport</option>
+                    <option value="duq">Duqm Airport</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label>Arrival Airport</label>
+                <select id="arrival-airport">
+                    <option value="">Select Airport</option>
+                    <option value="mct">Muscat International Airport</option>
+                    <option value="sll">Salalah Airport</option>
+                    <option value="msm">Masirah Airport</option>
+                    <option value="khs">Khasab Airport</option>
+                    <option value="sur">Sur Airport</option>
+                    <option value="duq">Duqm Airport</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label>Date</label>
+                <input type="date" id="service-date">
+            </div>
+            
+            <div class="form-group">
+                <label>Flight Number</label>
+                <input type="text" id="flight-number" placeholder="Enter flight number (e.g., WY101)">
+            </div>
+        </div>
+
+        <div class="passenger-section">
+            <div class="passenger-group">
+                <h4>Adults</h4>
+                <div class="counter">
+                    <button class="counter-btn" onclick="changeCount('adults', -1)">‹</button>
+                    <span class="counter-value" id="adults-count">1</span>
+                    <button class="counter-btn" onclick="changeCount('adults', 1)">›</button>
+                </div>
+            </div>
+            
+            <div class="passenger-group">
+                <h4>Children</h4>
+                <div class="subtitle">(from 2 to 12y.o.)</div>
+                <div class="counter">
+                    <button class="counter-btn" onclick="changeCount('children', -1)">‹</button>
+                    <span class="counter-value" id="children-count">0</span>
+                    <button class="counter-btn" onclick="changeCount('children', 1)">›</button>
+                </div>
+            </div>
+            
+            <div class="passenger-group">
+                <h4>Infants</h4>
+                <div class="subtitle">(below 2y.o.)</div>
+                <div class="counter">
+                    <button class="counter-btn" onclick="changeCount('infants', -1)">‹</button>
+                    <span class="counter-value" id="infants-count">0</span>
+                    <button class="counter-btn" onclick="changeCount('infants', 1)">›</button>
+                </div>
+            </div>
+        </div>
+
+        <button class="search-btn" id="search-btn" onclick="performSearch()">Search</button>
+    </div>
+
+    <script>
+        let slideIndex = 1;
+        let slideInterval;
+
+        function currentSlide(n) {
+            showSlides(slideIndex = n);
+        }
+
+        function showSlides(n) {
+            let slides = document.getElementsByClassName("carousel-slide");
+            let dots = document.getElementsByClassName("dot");
+            
+            if (n > slides.length) {slideIndex = 1}
+            if (n < 1) {slideIndex = slides.length}
+            
+            for (let i = 0; i < slides.length; i++) {
+                slides[i].classList.remove("active");
+            }
+            
+            for (let i = 0; i < dots.length; i++) {
+                dots[i].classList.remove("active");
+            }
+            
+            slides[slideIndex-1].classList.add("active");
+            dots[slideIndex-1].classList.add("active");
+        }
+
+        function autoSlide() {
+            slideIndex++;
+            if (slideIndex > 4) slideIndex = 1;
+            showSlides(slideIndex);
+        }
+
+        // Start auto-sliding
+        slideInterval = setInterval(autoSlide, 4000);
+
+        // Pause on hover
+        document.querySelector('.carousel-container').addEventListener('mouseenter', () => {
+            clearInterval(slideInterval);
+        });
+
+        document.querySelector('.carousel-container').addEventListener('mouseleave', () => {
+            slideInterval = setInterval(autoSlide, 4000);
+        });
+
+        // Tab switching
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                // Remove active class from all tabs
+                document.querySelectorAll('.tab').forEach(t => {
+                    t.classList.remove('active');
+                    t.classList.add('inactive');
+                });
+                
+                // Add active class to clicked tab
+                this.classList.remove('inactive');
+                this.classList.add('active');
+                
+                // Hide all content
+                document.querySelectorAll('.service-content').forEach(content => {
+                    content.style.display = 'none';
+                });
+                
+                // Show selected content
+                const service = this.dataset.service;
+                document.getElementById(service + '-content').style.display = 'block';
+                
+                updateFormFields(service);
+            });
+        });
+
+        function updateFormFields(service) {
+            const departureField = document.querySelector('.form-group:first-child label');
+            const arrivalField = document.querySelector('.form-group:nth-child(2) label');
+            const dateField = document.querySelector('.form-group:nth-child(3) label');
+            
+            if (service === 'limo') {
+                departureField.textContent = 'Pickup Location';
+                arrivalField.textContent = 'Destination';
+                dateField.textContent = 'Service Date';
+            } else {
+                departureField.textContent = 'Departure Airport';
+                arrivalField.textContent = 'Arrival Airport';
+                dateField.textContent = 'Date';
+            }
+        }
+
+        // Counter functions
+        function changeCount(type, change) {
+            const element = document.getElementById(type + '-count');
+            let count = parseInt(element.textContent);
+            count += change;
+            
+            if (count < 0) count = 0;
+            if (type === 'adults' && count < 1) count = 1;
+            
+            element.textContent = count;
+            updateSearchButton();
+        }
+
+        function updateSearchButton() {
+            const btn = document.getElementById('search-btn');
+            const departureAirport = document.getElementById('departure-airport').value;
+            const arrivalAirport = document.getElementById('arrival-airport').value;
+            const date = document.getElementById('service-date').value;
+            const flightNumber = document.getElementById('flight-number').value;
+            
+            if (departureAirport && arrivalAirport && date && flightNumber.trim()) {
+                btn.classList.add('active');
+            } else {
+                btn.classList.remove('active');
+            }
+        }
+
+        // Add event listeners to form fields
+        document.getElementById('departure-airport').addEventListener('change', updateSearchButton);
+        document.getElementById('arrival-airport').addEventListener('change', updateSearchButton);
+        document.getElementById('service-date').addEventListener('change', updateSearchButton);
+        document.getElementById('flight-number').addEventListener('input', updateSearchButton);
+
+        function performSearch() {
+            const btn = document.getElementById('search-btn');
+            if (btn.classList.contains('active')) {
+                alert('Searching for services...');
+            }
+        }
+
+        // Initialize
+        showSlides(slideIndex);
+        updateSearchButton();
+    </script>
+</body>
+</html>
