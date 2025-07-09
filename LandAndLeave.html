@@ -6,6 +6,8 @@
     <title>Land and Leave - Transom Handling | Maraheb Services</title>
     <link rel="stylesheet" href="header.css">
     <link rel="stylesheet" href="LsndAndLeave.css">
+    <link rel="stylesheet" href="footer.css">
+
 </head>
 <body>
     <!-- Header -->
@@ -78,11 +80,8 @@
     </main>
 
     <!-- Footer -->
-    <footer>
-        <div class="container">
-            <p>&copy; 2025 Transom Handling. All rights reserved. | Muscat, Sultanate of Oman</p>
-        </div>
-    </footer>
+      <!-- Footer -->
+     <div id="footer-placeholder"></div>
      <script>
         fetch('header.html')
           .then(res => res.text())
@@ -93,5 +92,14 @@
             document.body.appendChild(script);
           });
         </script>
+
+        <script>
+        fetch('footer.html')
+            .then(res => res.text())
+            .then(data => {
+            document.getElementById('footer-placeholder').innerHTML = data;
+            });
+</script>
+
 </body>
 </html>

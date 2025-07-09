@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Elite Airport Services - Muscat | Premium Travel Experience</title>
     <link rel="stylesheet" href="header.css">
+     <link rel="stylesheet" href="footer.css">
     <style>
         * {
     margin: 0;
@@ -618,11 +619,9 @@ footer {
     </section>
 
     <!-- Footer -->
-    <footer>
-        <div class="container">
-            <p>&copy; 2025 Elite Airport Services. All rights reserved. | Muscat, Sultanate of Oman</p>
-        </div>
-    </footer>
+     <div id="footer-placeholder"></div>
+
+    
 
     <script>
     // Service selection
@@ -773,9 +772,19 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 </script>
 
+<script>
+  fetch('footer.html')
+    .then(res => res.text())
+    .then(data => {
+      document.getElementById('footer-placeholder').innerHTML = data;
+    });
+</script>
+
+
 
 
 
 
 </body>
+
 </html>

@@ -6,6 +6,8 @@
     <title>Home Check-in</title>
     <link rel="stylesheet" href="header.css">
     <link rel="stylesheet" href="HomeCheckIn.css">
+    <link rel="stylesheet" href="footer.css">
+
 
     
 </head>
@@ -81,11 +83,7 @@
     </main>
 
     <!-- Footer -->
-      <footer>
-        <div class="container">
-            <p>&copy; 2025 Transom Handling. All rights reserved. | Muscat, Sultanate of Oman</p>
-        </div>
-    </footer>
+     <div id="footer-placeholder"></div>
 
 
     <script>
@@ -98,6 +96,14 @@
             document.body.appendChild(script);
           });
         </script>
+
+          <script>
+        fetch('footer.html')
+            .then(res => res.text())
+            .then(data => {
+            document.getElementById('footer-placeholder').innerHTML = data;
+            });
+</script>
         
 </body>
 </html>
