@@ -4,7 +4,7 @@ window.addEventListener('scroll', () => {
     const mainNav = document.querySelector('.main-nav');
     const scrollY = window.scrollY;
 
-    const fadeStart = 50;
+    const fadeStart = 0;
     const fadeEnd = 200;
 
     // Fade the top-bar
@@ -252,3 +252,26 @@ button.addEventListener('click', function(e) {
 });
 
 
+window.addEventListener('scroll', () => {
+    const topBar = document.querySelector('.top-bar');
+    const mainNav = document.querySelector('.main-nav');
+    const scrollY = window.scrollY;
+
+    const fadeStart = 0;
+    const fadeEnd = 200;
+
+    // Fade the top-bar
+    let opacity = 1;
+    if (scrollY > fadeStart) {
+        opacity = 1 - (scrollY - fadeStart) / (fadeEnd - fadeStart);
+        if (opacity < 0) opacity = 0;
+    }
+    topBar.style.opacity = opacity;
+
+    // Slide the nav up when top-bar is gone
+    if (opacity === 0) {
+        mainNav.style.marginTop = '-40px';  // adjust as needed
+    } else {
+        mainNav.style.marginTop = '0';
+    }
+});
