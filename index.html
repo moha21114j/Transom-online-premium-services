@@ -288,17 +288,7 @@
         }
     }
 
-    // Passenger counter
-    let counts = { adults: 1, children: 0, infants: 0 };
-
-    function changeCount(type, change) {
-        counts[type] += change;
-        if (counts[type] < 0) counts[type] = 0;
-        if (type === 'adults' && counts[type] < 1) counts[type] = 1;
-        document.getElementById(type + '-count').textContent = counts[type];
-        const minusBtn = event.target.parentElement.querySelector('.counter-btn:first-child');
-        minusBtn.disabled = (counts[type] === 0) || (type === 'adults' && counts[type] === 1);
-    }
+    
 
     function searchServices() {
         const serviceType = document.querySelector('input[name="service-type"]:checked').value;
@@ -357,7 +347,6 @@
 
         
         
-    <div class="dropdown-overlay"></div>
     <script>
         fetch('header.html')
           .then(res => res.text())
