@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="header.css">
      <link rel="stylesheet" href="footer.css">
      <link rel="stylesheet" href="index.css">
+     
+
    
 </head>
 <body>
@@ -178,38 +180,38 @@
                 <p class="premium-subtitle">Comprehensive airport services designed to make your journey seamless and comfortable</p>
                 <div class="premium-grid">
                   <div class="premium-card">
-                    <img src="1212.jpg" alt="Meet & Greet">
+                    <img src="1212.jpg" alt="Meet & Greet" loading="lazy">
                     <h3>Meet & Greet Services</h3>
                     <p>Personal assistance from arrival to departure with dedicated staff to guide you through all airport procedures.</p>
                     <a href="#">Learn More →</a>
                   </div>
                   <div class="premium-card">
-                    <img src="0B1A2315.JPG" alt="VIP Lounges">
+                    <img src="0B1A2315.JPG" alt="VIP Lounges" loading="lazy">
                     <h3>VIP Airport Lounges</h3>
                     <p>Relax in our exclusive lounges with premium amenities, complimentary dining, and business facilities.</p>
                     <a href="#">Learn More →</a>
                   </div>
                   <div class="premium-card">
-                    <img src="03.jpeg" alt="Transfers">
+                    <img src="03.jpeg" alt="Transfers" loading="lazy">
                     <h3>Premium Transfer Services</h3>
                     <p>Luxury vehicle transfers with professional chauffeurs for a comfortable journey to your destination.</p>
                     <a href="#">Learn More →</a>
                   </div>
                   <div class="premium-card">
-                    <img src="04.jpg" alt="Concierge">
+                    <img src="04.jpg" alt="Concierge" loading="lazy">
                     <h3>Maraheb </h3>
                     <p>Helps you check in and drop your bags before you go to the airport.
                       You can do this at a MARAHEB office in the city..</p>
                     <a href="#">Learn More →</a>
                   </div>
                   <div class="premium-card">
-                    <img src="11.JPG" alt="Baggage Services">
+                    <img src="11.JPG" alt="Baggage Services" loading="lazy">
                     <h3>Land and Leave</h3>
                     <p>Quick exit with fast-track arrival service. Get through immigration and customs in record time..</p>
                     <a href="#">Learn More →</a>
                   </div>
                   <div class="premium-card">
-                    <img src="0B1A5212.jpg" alt="Fast Track">
+                    <img src="0B1A5212.jpg" alt="Fast Track" loading="lazy">
                     <h3>Check in Anywhere</h3>
                     <p>Check in from home or hotel for a seamless start to your journey. Skip the queues and head straight to security..</p>
                     <a href="#">Learn More →</a>
@@ -237,7 +239,7 @@
      <div id="footer-placeholder"></div>
 
     
-
+    
     <script>
         function subscribeNewsletter(event) {
         event.preventDefault();
@@ -288,23 +290,58 @@
         }
     }
 
-    
+    // Passenger counter
+    let counts = { adults: 1, children: 0, infants: 0 };
+
+    function changeCount(type, change) {
+        counts[type] += change;
+        if (counts[type] < 0) counts[type] = 0;
+        if (type === 'adults' && counts[type] < 1) counts[type] = 1;
+        document.getElementById(type + '-count').textContent = counts[type];
+        const minusBtn = event.target.parentElement.querySelector('.counter-btn:first-child');
+        minusBtn.disabled = (counts[type] === 0) || (type === 'adults' && counts[type] === 1);
+    }
 
     function searchServices() {
-        const serviceType = document.querySelector('input[name="service-type"]:checked').value;
-        const departureAirport = document.getElementById('departure-airport').value;
-        const arrivalDate = document.getElementById('arrival-date').value;
-        const flightNumber = document.getElementById('flight-number').value;
-        if (!arrivalDate) {
-            alert('Please select an arrival date');
-            return;
-        }
-        if (!flightNumber) {
-            alert('Please enter a flight number');
-            return;
-        }
-        alert(`Searching for ${serviceType} services for ${counts.adults} adults, ${counts.children} children, and ${counts.infants} infants on ${arrivalDate} - Flight: ${flightNumber}`);
+    const serviceType = document.querySelector('input[name="service-type"]:checked').value;
+    const departureAirport = document.getElementById('departure-airport').value;
+    const arrivalDate = document.getElementById('arrival-date').value;
+    const flightNumber = document.getElementById('flight-number').value;
+    
+    if (!arrivalDate) {
+        alert('Please select an arrival date');
+        return;
     }
+    if (!flightNumber) {
+        alert('Please enter a flight number');
+        return;
+    }
+
+    //  if Meet & Greet is selected, go to Meet&Greet.html
+    if (currentService === 'meet-greet') {
+    // gather everything the user entered
+    const airportSelect = document.getElementById('departure-airport');
+    const airportText = airportSelect.options[airportSelect.selectedIndex].text;
+
+    const params = new URLSearchParams({
+      flight:   document.getElementById('flight-number').value,
+      date:     document.getElementById('arrival-date').value,
+      airport:  airportText,
+      adults:   counts.adults,
+      children: counts.children,
+      infants:  counts.infants
+    });
+
+    // redirect, carrying all that data in the URL
+    window.location.href = `Meet&Greet.html?${params.toString()}`;
+    return;
+}
+
+
+    // For other services, keep existing behavior
+    alert(`Searching for ${serviceType} services for ${counts.adults} adults, ${counts.children} children, and ${counts.infants} infants on ${arrivalDate} - Flight: ${flightNumber}`);
+}
+
 
     // Hero slider
     const slides = document.querySelectorAll('.hero-slider .slide');
@@ -341,22 +378,57 @@
     // Set default date to today
     document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('arrival-date').valueAsDate = new Date();
+
+        updateServiceOptions();
+
+
     });
 </script>
 
 
         
         
+
+
+ <script>
+fetch('header.html')
+  .then(res => res.text())
+  .then(html => {
+    document.getElementById('header-placeholder').innerHTML = html;
+    const script = document.createElement('script');
+    script.src = 'header.js';
+    document.body.appendChild(script);
+  });
+</script>
+
+
     <script>
-        fetch('header.html')
-          .then(res => res.text())
-          .then(html => {
-            document.getElementById('header-placeholder').innerHTML = html;
-            const script = document.createElement('script');
-            script.src = 'header.js';
-            document.body.appendChild(script);
-          });
+    window.addEventListener('scroll', () => {
+        const topBar = document.querySelector('.top-bar');
+        const mainNav = document.querySelector('.main-nav');
+        const scrollY = window.scrollY;
+
+        if (!topBar || !mainNav) return;
+
+        const fadeStart = 0;
+        const fadeEnd = 200;
+
+        let opacity = 1;
+        if (scrollY > fadeStart) {
+            opacity = 1 - (scrollY - fadeStart) / (fadeEnd - fadeStart);
+            if (opacity < 0) opacity = 0;
+        }
+
+        topBar.style.opacity = opacity;
+
+        if (opacity === 0) {
+            mainNav.style.marginTop = '-40px';
+        } else {
+            mainNav.style.marginTop = '0';
+        }
+    });
     </script>
+
     
       
 <script>

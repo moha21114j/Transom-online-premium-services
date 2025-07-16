@@ -1,0 +1,964 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart - Oman Airport Services</title>
+    <link rel="stylesheet" href="footer.css">
+    <link rel="stylesheet" href="header.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        header {
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f8f9fa;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .main-content {
+            padding: 150px 20px 2rem 20px;
+        }
+
+        .cart-header {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        .cart-title {
+            font-size: 2rem;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .cart-subtitle {
+            color: #666;
+            margin-bottom: 1rem;
+        }
+
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .breadcrumb a {
+            color: #005BAC;
+            text-decoration: none;
+        }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        .cart-content {
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 2rem;
+        }
+
+        .cart-items {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .cart-section-title {
+            background: #005BAC;
+            color: white;
+            padding: 1.5rem;
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+
+        .cart-item {
+            padding: 2rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .cart-item:last-child {
+            border-bottom: none;
+        }
+
+        .item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .item-info h3 {
+            color: #005BAC;
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .item-info p {
+            color: #666;
+            margin-bottom: 0.5rem;
+        }
+
+        .service-badge {
+            background: #6A1B9A;
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .flight-info {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+        }
+
+        .flight-info h4 {
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .flight-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .flight-detail {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .flight-detail label {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 0.25rem;
+        }
+
+        .flight-detail span {
+            color: #666;
+        }
+
+        .service-details {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+        }
+
+        .service-details h4 {
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .service-info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .service-info-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .service-info-item label {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 0.25rem;
+        }
+
+        .service-info-item span {
+            color: #666;
+        }
+
+        .item-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 1rem;
+        }
+
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .quantity-btn {
+            background: #005BAC;
+            color: white;
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .quantity-btn:hover {
+            background: #004891;
+        }
+
+        .quantity-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        .quantity-display {
+            background: #f8f9fa;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            min-width: 60px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .item-price {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #6A1B9A;
+        }
+
+        .remove-btn {
+            background: #e74c3c;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        .remove-btn:hover {
+            background: #c0392b;
+        }
+
+        .service-features {
+            list-style: none;
+            margin-top: 1rem;
+        }
+
+        .service-features li {
+            color: #666;
+            margin-bottom: 0.5rem;
+            padding-left: 1.5rem;
+            position: relative;
+            font-size: 0.9rem;
+        }
+
+        .service-features li:before {
+            content: "✓";
+            color: #005BAC;
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+
+        .cart-summary {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            height: fit-content;
+            position: sticky;
+            top: 170px;
+        }
+
+        .summary-content {
+            padding: 2rem;
+        }
+
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .summary-item:last-child {
+            border-bottom: none;
+        }
+
+        .summary-total {
+            border-top: 2px solid #005BAC;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #6A1B9A;
+        }
+
+        .promo-code {
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid #eee;
+        }
+
+        .promo-input {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .promo-input input {
+            flex: 1;
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .promo-input button {
+            background: #6A1B9A;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .promo-input button:hover {
+            background: #5A1589;
+        }
+
+        .checkout-btn {
+            width: 100%;
+            background: #005BAC;
+            color: white;
+            border: none;
+            padding: 1rem;
+            border-radius: 5px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .checkout-btn:hover {
+            background: #004891;
+            transform: translateY(-1px);
+        }
+
+        .continue-shopping {
+            text-align: center;
+            margin-top: 1rem;
+        }
+
+        .continue-shopping a {
+            color: #005BAC;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .continue-shopping a:hover {
+            text-decoration: underline;
+        }
+
+        .empty-cart {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: #666;
+        }
+
+        .empty-cart h3 {
+            color: #333;
+            margin-bottom: 1rem;
+        }
+
+        .empty-cart p {
+            margin-bottom: 2rem;
+        }
+
+        .security-badges {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid #eee;
+        }
+
+        .security-badge {
+            background: #f8f9fa;
+            padding: 0.5rem;
+            border-radius: 5px;
+            font-size: 0.8rem;
+            color: #666;
+        }
+
+        .passenger-info {
+            background: #e8f4f8;
+            padding: 1rem;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+        }
+
+        .passenger-info h4 {
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .passenger-breakdown {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .passenger-type {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 0.5rem;
+            background: white;
+            border-radius: 5px;
+            min-width: 80px;
+        }
+
+        .passenger-type .count {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #005BAC;
+        }
+
+        .passenger-type .label {
+            color: #666;
+            font-size: 0.8rem;
+        }
+
+        @media (max-width: 768px) {
+            .cart-content {
+                grid-template-columns: 1fr;
+            }
+
+            .cart-summary {
+                position: relative;
+                top: 0;
+            }
+
+            .flight-details, .service-info-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .item-actions {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: stretch;
+            }
+
+            .quantity-controls {
+                justify-content: center;
+            }
+
+            .passenger-breakdown {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="header-placeholder"></div>
+    
+    <main class="main-content">
+        <div class="container">
+            <div class="cart-header">
+                <h1 class="cart-title">Shopping Cart</h1>
+                <p class="cart-subtitle">Review your selected services before checkout</p>
+                <div class="breadcrumb">
+                    <a href="index.html">Home</a>
+                    <span>→</span>
+                    <span>Cart</span>
+                </div>
+            </div>
+
+            <div class="cart-content">
+                <div class="cart-items">
+                    <div class="cart-section-title">
+                        Your Selected Services
+                    </div>
+                    
+                    <div id="cart-items-container">
+                        <!-- Cart items will be populated here -->
+                    </div>
+                </div>
+
+                <div class="cart-summary">
+                    <div class="cart-section-title">
+                        Order Summary
+                    </div>
+                    <div class="summary-content">
+                        <div class="summary-item">
+                            <span>Service Subtotal:</span>
+                            <span id="subtotal">$0.00</span>
+                        </div>
+                        <div class="summary-item">
+                            <span>Service Fee:</span>
+                            <span id="service-fee">$5.00</span>
+                        </div>
+                        <div class="summary-item">
+                            <span>VAT (5%):</span>
+                            <span id="vat">$0.00</span>
+                        </div>
+                        <div class="summary-item summary-total">
+                            <span>Total:</span>
+                            <span id="total">$5.00</span>
+                        </div>
+
+                        <div class="promo-code">
+                            <label>Promo Code:</label>
+                            <div class="promo-input">
+                                <input type="text" placeholder="Enter code" id="promo-input">
+                                <button onclick="applyPromo()">Apply</button>
+                            </div>
+                        </div>
+
+                        <button class="checkout-btn" onclick="proceedToCheckout()">
+                            Proceed to Checkout
+                        </button>
+
+                        <div class="continue-shopping">
+                            <a href="index.html">← Continue Shopping</a>
+                        </div>
+
+                        <div class="security-badges">
+                            <div class="security-badge">🔒 SSL Secure</div>
+                            <div class="security-badge">💳 Safe Payment</div>
+                            <div class="security-badge">✓ Verified</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div id="footer-placeholder"></div>
+
+    <script>
+        // Cart data structure
+        let cart = {
+            items: [],
+            serviceFee: 5,
+            vatRate: 0.05,
+            appliedPromo: null
+        };
+
+        // Service configurations
+        const serviceConfigs = {
+            'meet-greet': {
+                name: 'Meet & Greet',
+                badge: 'Arrival Service',
+                basePrice: 85,
+                features: [
+                    'Personal greeting at arrival',
+                    'Fast-track immigration',
+                    'Baggage assistance',
+                    'Ground transportation coordination'
+                ],
+                requiresFlight: true,
+                supportsQuantity: true
+            },
+            'premium-meet-greet': {
+                name: 'Premium Meet & Greet',
+                badge: 'VIP Service',
+                basePrice: 150,
+                features: [
+                    'VIP greeting at aircraft door',
+                    'Fast-track immigration',
+                    'Priority baggage collection',
+                    'Lounge access (2 hours)',
+                    'Transportation to departure gate'
+                ],
+                requiresFlight: true,
+                supportsQuantity: true
+            },
+            'lounge': {
+                name: 'Airport Lounge Access',
+                badge: 'Comfort Service',
+                basePrice: 45,
+                features: [
+                    'Premium lounge access',
+                    'Complimentary food and beverages',
+                    'Wi-Fi and business facilities',
+                    'Comfortable seating',
+                    'Shower facilities'
+                ],
+                requiresFlight: true,
+                supportsQuantity: true
+            },
+            'limo': {
+                name: 'Limousine Service',
+                badge: 'Transport Service',
+                basePrice: 200,
+                features: [
+                    'Luxury vehicle transport',
+                    'Professional chauffeur',
+                    'Airport to hotel transfer',
+                    'Complimentary water and refreshments',
+                    'Flight monitoring'
+                ],
+                requiresFlight: true,
+                supportsQuantity: false
+            },
+            'maraheb': {
+                name: 'Maraheb Service',
+                badge: 'City Service',
+                basePrice: 35,
+                features: [
+                    'City check-in service',
+                    'Baggage drop-off',
+                    'Pre-departure convenience',
+                    'Multiple city locations',
+                    'Extended operating hours'
+                ],
+                requiresFlight: true,
+                supportsQuantity: true
+            },
+            'fast-track': {
+                name: 'Fast Track Service',
+                badge: 'Express Service',
+                basePrice: 25,
+                features: [
+                    'Skip security queues',
+                    'Priority immigration',
+                    'Expedited processing',
+                    'Dedicated staff assistance',
+                    'Time-saving convenience'
+                ],
+                requiresFlight: true,
+                supportsQuantity: true
+            }
+        };
+
+        // Initialize cart from URL parameters or localStorage
+        function initializeCart() {
+            const urlParams = new URLSearchParams(window.location.search);
+            
+            // Check if this is a new item being added
+            const service = urlParams.get('service');
+            if (service) {
+                addItemToCart({
+                    service: service,
+                    flight: urlParams.get('flight'),
+                    date: urlParams.get('date'),
+                    airport: urlParams.get('airport'),
+                    time: urlParams.get('time'),
+                    adults: parseInt(urlParams.get('adults')) || 1,
+                    children: parseInt(urlParams.get('children')) || 0,
+                    infants: parseInt(urlParams.get('infants')) || 0,
+                    serviceType: urlParams.get('serviceType') || 'arrival'
+                });
+            }
+
+            // Load existing cart from localStorage
+            const savedCart = localStorage.getItem('airportServiceCart');
+            if (savedCart) {
+                cart = JSON.parse(savedCart);
+            }
+
+            renderCart();
+        }
+
+        // Add item to cart
+        function addItemToCart(itemData) {
+            const serviceConfig = serviceConfigs[itemData.service] || serviceConfigs['meet-greet'];
+            
+            const item = {
+                id: Date.now().toString(),
+                service: itemData.service,
+                serviceName: serviceConfig.name,
+                badge: serviceConfig.badge,
+                basePrice: serviceConfig.basePrice,
+                features: serviceConfig.features,
+                flight: itemData.flight,
+                date: itemData.date,
+                airport: itemData.airport,
+                time: itemData.time,
+                adults: itemData.adults,
+                children: itemData.children,
+                infants: itemData.infants,
+                serviceType: itemData.serviceType,
+                quantity: serviceConfig.supportsQuantity ? (itemData.adults + itemData.children) : 1,
+                supportsQuantity: serviceConfig.supportsQuantity,
+                requiresFlight: serviceConfig.requiresFlight
+            };
+
+            cart.items.push(item);
+            saveCart();
+        }
+
+        // Save cart to localStorage
+        function saveCart() {
+            localStorage.setItem('airportServiceCart', JSON.stringify(cart));
+        }
+
+        // Render cart items
+        function renderCart() {
+            const container = document.getElementById('cart-items-container');
+            
+            if (cart.items.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-cart">
+                        <h3>Your cart is empty</h3>
+                        <p>Add some services to get started with your booking</p>
+                        <a href="index.html" class="checkout-btn" style="display: inline-block; text-decoration: none; width: auto; padding: 0.75rem 2rem;">Browse Services</a>
+                    </div>
+                `;
+                updateSummary();
+                return;
+            }
+
+            container.innerHTML = cart.items.map(item => `
+                <div class="cart-item" id="cart-item-${item.id}">
+                    <div class="item-header">
+                        <div class="item-info">
+                            <h3>${item.serviceName}</h3>
+                            <span class="service-badge">${item.badge}</span>
+                        </div>
+                    </div>
+                    
+                    ${item.requiresFlight ? `
+                    <div class="flight-info">
+                        <h4>Flight Information</h4>
+                        <div class="flight-details">
+                            <div class="flight-detail">
+                                <label>Flight Number:</label>
+                                <span>${item.flight}</span>
+                            </div>
+                            <div class="flight-detail">
+                                <label>${item.serviceType === 'departure' ? 'Departure' : 'Arrival'} Date:</label>
+                                <span>${formatDate(item.date)}</span>
+                            </div>
+                            <div class="flight-detail">
+                                <label>Airport:</label>
+                                <span>${item.airport}</span>
+                            </div>
+                            ${item.time ? `
+                            <div class="flight-detail">
+                                <label>Time:</label>
+                                <span>${item.time}</span>
+                            </div>
+                            ` : ''}
+                        </div>
+                    </div>
+                    ` : ''}
+
+                    <div class="passenger-info">
+                        <h4>Passenger Information</h4>
+                        <div class="passenger-breakdown">
+                            <div class="passenger-type">
+                                <div class="count">${item.adults}</div>
+                                <div class="label">Adults</div>
+                            </div>
+                            ${item.children > 0 ? `
+                            <div class="passenger-type">
+                                <div class="count">${item.children}</div>
+                                <div class="label">Children</div>
+                            </div>
+                            ` : ''}
+                            ${item.infants > 0 ? `
+                            <div class="passenger-type">
+                                <div class="count">${item.infants}</div>
+                                <div class="label">Infants</div>
+                            </div>
+                            ` : ''}
+                        </div>
+                    </div>
+
+                    <ul class="service-features">
+                        ${item.features.map(feature => `<li>${feature}</li>`).join('')}
+                    </ul>
+
+                    <div class="item-actions">
+                        ${item.supportsQuantity ? `
+                        <div class="quantity-controls">
+                            <button class="quantity-btn" onclick="updateQuantity('${item.id}', -1)" ${item.quantity <= 1 ? 'disabled' : ''}>-</button>
+                            <div class="quantity-display">${item.quantity}</div>
+                            <button class="quantity-btn" onclick="updateQuantity('${item.id}', 1)" ${item.quantity >= 10 ? 'disabled' : ''}>+</button>
+                            <span style="margin-left: 1rem; color: #666;">${item.service === 'limo' ? 'vehicle' : 'passengers'}</span>
+                        </div>
+                        ` : '<div></div>'}
+                        <div class="item-price">$${(item.basePrice * item.quantity).toFixed(2)}</div>
+                        <button class="remove-btn" onclick="removeItem('${item.id}')">Remove</button>
+                    </div>
+                </div>
+            `).join('');
+
+            updateSummary();
+        }
+
+        // Update quantity
+        function updateQuantity(itemId, change) {
+            const item = cart.items.find(i => i.id === itemId);
+            if (item) {
+                const newQuantity = item.quantity + change;
+                if (newQuantity >= 1 && newQuantity <= 10) {
+                    item.quantity = newQuantity;
+                    saveCart();
+                    renderCart();
+                }
+            }
+        }
+
+        // Remove item
+        function removeItem(itemId) {
+            if (confirm('Are you sure you want to remove this item from your cart?')) {
+                cart.items = cart.items.filter(item => item.id !== itemId);
+                saveCart();
+                renderCart();
+            }
+        }
+
+        // Update summary
+        function updateSummary() {
+            const subtotal = cart.items.reduce((sum, item) => sum + (item.basePrice * item.quantity), 0);
+            const vatAmount = (subtotal + cart.serviceFee) * cart.vatRate;
+            let total = subtotal + cart.serviceFee + vatAmount;
+
+            // Apply promo discount if any
+            if (cart.appliedPromo) {
+                if (cart.appliedPromo.type === 'percentage') {
+                    total = total * (1 - cart.appliedPromo.discount / 100);
+                } else if (cart.appliedPromo.type === 'fixed') {
+                    total = total - cart.appliedPromo.discount;
+                }
+            }
+
+            document.getElementById('subtotal').textContent = `$${subtotal.toFixed(2)}`;
+            document.getElementById('service-fee').textContent = `$${cart.serviceFee.toFixed(2)}`;
+            document.getElementById('vat').textContent = `$${vatAmount.toFixed(2)}`;
+            document.getElementById('total').textContent = `$${total.toFixed(2)}`;
+        }
+
+        // Apply promo code
+        function applyPromo() {
+            const promoCode = document.getElementById('promo-input').value.toUpperCase();
+            const promoInput = document.getElementById('promo-input');
+            
+            // Sample promo codes
+            const promoCodes = {
+                'WELCOME10': { type: 'percentage', discount: 10, description: '10% off' },
+                'SAVE20': { type: 'fixed', discount: 20, description: '$20 off' },
+                'FIRST15': { type: 'percentage', discount: 15, description: '15% off first booking' },
+                'AIRPORT5': { type: 'percentage', discount: 5, description: '5% off airport services' }
+            };
+
+            if (promoCodes[promoCode]) {
+                cart.appliedPromo = promoCodes[promoCode];
+                promoInput.style.borderColor = '#28a745';
+                promoInput.value = `${promoCode} Applied (${cart.appliedPromo.description})`;
+                promoInput.disabled = true;
+                document.querySelector('.promo-input button').textContent = 'Applied';
+                document.querySelector('.promo-input button').disabled = true;
+                document.querySelector('.promo-input button').style.background = '#28a745';
+                
+                // Add discount line to summary
+                const subtotal = cart.items.reduce((sum, item) => sum + (item.basePrice * item.quantity), 0);
+                const discountAmount = cart.appliedPromo.type === 'percentage' 
+                    ? ((subtotal + cart.serviceFee) * (1 + cart.vatRate) * cart.appliedPromo.discount / 100)
+                    : cart.appliedPromo.discount;
+                
+                const discountLine = document.createElement('div');
+                discountLine.className = 'summary-item';
+                discountLine.innerHTML = `<span>Discount (${promoCode}):</span><span style="color: #28a745;">-$${discountAmount.toFixed(2)}</span>`;
+                document.querySelector('.summary-total').before(discountLine);
+                
+                saveCart();
+                updateSummary();
+            } else {
+                promoInput.style.borderColor = '#e74c3c';
+                alert('Invalid promo code. Please try again.');
+            }
+        }
+
+        // Proceed to checkout
+        function proceedToCheckout() {
+            if (cart.items.length === 0) {
+                alert('Your cart is empty. Please add some services first.');
+                return;
+            }
+
+            // Get current cart summary
+            const subtotal = cart.items.reduce((sum, item) => sum + (item.basePrice * item.quantity), 0);
+            const total = document.getElementById('total').textContent;
+            
+            const orderSummary = cart.items.map(item => 
+                `${item.serviceName} for ${item.quantity} ${item.service === 'limo' ? 'vehicle' : 'passengers'}`
+            ).join('\\n');
+
+            // In a real application, this would redirect to checkout
+            alert(`Proceeding to secure checkout...\\n\\nYour order:\\n${orderSummary}\\n\\nTotal: ${total}`);
+            
+            // For demo purposes, clear cart after checkout
+            // cart.items = [];
+            // saveCart();
+            // renderCart();
+        }
+
+        // Utility function to format date
+        function formatDate(dateString) {
+            if (!dateString) return '';
+            const date = new Date(dateString);
+            return date.toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+        }
+
+        // Load header and footer
+        document.addEventListener('DOMContentLoaded', () => {
+            fetch('header.html')
+                .then(res => res.text())
+                .then(html => {
+                    document.getElementById('header-placeholder').innerHTML = html;
+                    const script = document.createElement('script');
+                    script.src = 'header.js';
+                    document.body.appendChild(script);
+                });
+
+            fetch('footer.html')
+                .then(res => res.text())
+                .then(data => {
+                    document.getElementById('footer-placeholder').innerHTML = data;
+                });
+
+            initializeCart();
+        });
+    </script>
+</body>
+</html>

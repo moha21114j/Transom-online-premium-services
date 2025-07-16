@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Meet & Greet Service - Oman Airport Services</title>
+    <link rel="stylesheet" href="footer.css">
+    <link rel="stylesheet" href="header.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        header {
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+    background: white;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f8f9fa;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        
+
+        /* Main Content */
+        .main-content {
+    padding: 150px 20px 2rem 20px;
+}
+
+
+        .booking-header {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        .booking-title {
+            font-size: 2rem;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .booking-subtitle {
+            color: #666;
+            margin-bottom: 1.5rem;
+        }
+
+        .flight-summary {
+            background: #fff5f8;
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-left: 4px solid #005BAC;
+            margin-bottom: 2rem;
+        }
+
+        .flight-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .flight-detail {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .flight-detail label {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 0.25rem;
+        }
+
+        .flight-detail span {
+            color: #666;
+        }
+
+        /* Service Selection */
+        .service-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            color: #333;
+            margin-bottom: 1rem;
+        }
+
+        .service-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .service-option {
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .service-option:hover {
+            border-color: #005BAC;
+            transform: translateY(-2px);
+        }
+
+        .service-option.selected {
+            border-color: #005BAC;
+            background: #fff5f8;
+        }
+
+        .service-option input[type="radio"] {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+        }
+
+        .service-option h3 {
+            color: #005BAC;
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        .service-option p {
+            color: #666;
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+
+        .service-price {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #6A1B9A;
+        }
+
+        .service-features {
+            list-style: none;
+            margin-top: 1rem;
+        }
+
+        .service-features li {
+            color: #666;
+            margin-bottom: 0.5rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .service-features li:before {
+            content: "✓";
+            color: #005BAC;
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+
+
+
+        /* Booking Summary */
+        .booking-summary {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .summary-item:last-child {
+            border-bottom: none;
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: #6A1B9A;
+            padding-top: 1rem;
+        }
+
+        .summary-total {
+            border-top: 2px solid #005BAC;
+            margin-top: 1rem;
+            padding-top: 1rem;
+        }
+
+        /* Action Buttons */
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: #005BAC;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #c2185b;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: #6A1B9A;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #005BAC;
+            transform: translateY(-2px);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .flight-details {
+                grid-template-columns: 1fr;
+            }
+
+            .service-options {
+                grid-template-columns: 1fr;
+            }
+
+            .passenger-form {
+                grid-template-columns: 1fr;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+   <div id="header-placeholder"></div>
+    <main class="main-content">
+        
+        <div class="container">
+            <div class="booking-header">
+                <h1 class="booking-title">Book Meet & Greet Service</h1>
+                <p class="booking-subtitle">Complete your booking for premium airport assistance</p>
+                
+                <div class="flight-summary">
+                    <div class="flight-details">
+                        <div class="flight-detail">
+                        <label>Flight Number:</label>
+                        <span id="js-flight-number"></span>
+                        </div>
+                        <div class="flight-detail">
+                        <label>Arrival Date:</label>
+                        <span id="js-arrival-date"></span>
+                        </div>
+                        <div class="flight-detail">
+                        <label>Airport:</label>
+                        <span id="js-airport"></span>
+                        </div>
+                        <div class="flight-detail">
+                        <label>Passengers:</label>
+                        <span id="js-passengers"></span>
+                        </div>
+                    </div>
+                    </div>
+
+
+            <div class="service-section">
+                <h2 class="section-title">Select Your Service Package</h2>
+                <div class="service-options">
+                    <div class="service-option selected">
+                        <input type="radio" name="service" value="standard" checked>
+                        <h3>Standard Meet & Greet</h3>
+                        <p>Professional meet and greet service with basic assistance</p>
+                        <div class="service-price">$45 per person</div>
+                        <ul class="service-features">
+                            <li>Personal greeting at arrival gate</li>
+                            <li>Assistance with immigration</li>
+                            <li>Baggage assistance</li>
+                            <li>Basic airport guidance</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="service-option">
+                        <input type="radio" name="service" value="premium">
+                        <h3>Premium Meet & Greet</h3>
+                        <p>Enhanced service with priority assistance and comfort</p>
+                        <div class="service-price">$85 per person</div>
+                        <ul class="service-features">
+                            <li>VIP greeting at aircraft door</li>
+                            <li>Fast-track immigration</li>
+                            <li>Priority baggage collection</li>
+                            <li>Lounge access (2 hours)</li>
+                            <li>Transportation to departure gate</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="service-option">
+                        <input type="radio" name="service" value="luxury">
+                        <h3>Luxury Meet & Greet</h3>
+                        <p>Ultimate premium experience with dedicated concierge</p>
+                        <div class="service-price">$150 per person</div>
+                        <ul class="service-features">
+                            <li>Dedicated concierge service</li>
+                            <li>Private airport lounge</li>
+                            <li>Expedited customs clearance</li>
+                            <li>Porter service</li>
+                            <li>Premium vehicle transfer</li>
+                            <li>24/7 support hotline</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+
+         
+
+            <div class="booking-summary">
+                <h2 class="section-title">Booking Summary</h2>
+                <div class="summary-item">
+                    <span>Standard Meet & Greet (1 person)</span>
+                    <span>$45.00</span>
+                </div>
+            
+                <div class="summary-item">
+                    <span>VAT (5%)</span>
+                    <span>$2.50</span>
+                </div>
+                <div class="summary-item summary-total">
+                    <span>Total Amount</span>
+                    <span>$52.50</span>
+                </div>
+            </div>
+
+            <div class="action-buttons">
+                <a href="#" class="btn btn-secondary">Save for Later</a>
+                <button type="button" class="btn btn-primary" id="proceed-btn">Proceed to Payment</button>
+
+            </div>
+        </div>
+    </main>
+    <!-- Footer -->
+     <div id="footer-placeholder"></div>
+     <script>
+        fetch('header.html')
+          .then(res => res.text())
+          .then(html => {
+            document.getElementById('header-placeholder').innerHTML = html;
+            const script = document.createElement('script');
+            script.src = 'header.js';
+            document.body.appendChild(script);
+          });
+        </script>
+
+
+    <script>
+        // Service option selection
+        document.querySelectorAll('.service-option').forEach(option => {
+            option.addEventListener('click', function() {
+                // Remove selected class from all options
+                document.querySelectorAll('.service-option').forEach(opt => opt.classList.remove('selected'));
+                
+                // Add selected class to clicked option
+                this.classList.add('selected');
+                
+                // Check the radio button
+                const radio = this.querySelector('input[type="radio"]');
+                radio.checked = true;
+                
+                // Update summary
+                updateSummary();
+            });
+        });
+
+        // Additional services checkboxes
+        document.querySelectorAll('.additional-option input[type="checkbox"]').forEach(checkbox => {
+            checkbox.addEventListener('change', updateSummary);
+        });
+
+        function updateSummary() {
+            const selectedService = document.querySelector('input[name="service"]:checked');
+            const additionalServices = document.querySelectorAll('.additional-option input[type="checkbox"]:checked');
+            
+            let basePrice = 0;
+            let serviceName = '';
+            
+            if (selectedService) {
+                switch(selectedService.value) {
+                    case 'standard':
+                        basePrice = 45;
+                        serviceName = 'Standard Meet & Greet';
+                        break;
+                    case 'premium':
+                        basePrice = 85;
+                        serviceName = 'Premium Meet & Greet';
+                        break;
+                    case 'luxury':
+                        basePrice = 150;
+                        serviceName = 'Luxury Meet & Greet';
+                        break;
+                }
+            }
+            
+            let additionalTotal = 0;
+            additionalServices.forEach(service => {
+                additionalTotal += parseFloat(service.value);
+            });
+            
+            const subtotal = basePrice + additionalTotal;
+            const serviceFee = 5;
+            const vat = (subtotal + serviceFee) * 0.05;
+            const total = subtotal + serviceFee + vat;
+            
+            // Update summary display
+            const summaryItems = document.querySelectorAll('.summary-item');
+            summaryItems[0].innerHTML = `<span>${serviceName} (1 person)</span><span>$${basePrice.toFixed(2)}</span>`;
+            
+            if (additionalTotal > 0) {
+                if (summaryItems.length === 4) {
+                    // Insert additional services line
+                    const additionalLine = document.createElement('div');
+                    additionalLine.className = 'summary-item';
+                    additionalLine.innerHTML = `<span>Additional Services</span><span>$${additionalTotal.toFixed(2)}</span>`;
+                    summaryItems[0].parentNode.insertBefore(additionalLine, summaryItems[1]);
+                } else {
+                    summaryItems[1].innerHTML = `<span>Additional Services</span><span>$${additionalTotal.toFixed(2)}</span>`;
+                }
+            }
+            
+            const vatLine = document.querySelector('.summary-item:nth-last-child(2)');
+            vatLine.innerHTML = `<span>VAT (5%)</span><span>$${vat.toFixed(2)}</span>`;
+            
+            const totalLine = document.querySelector('.summary-total');
+            totalLine.innerHTML = `<span>Total Amount</span><span>$${total.toFixed(2)}</span>`;
+        }
+
+        // Form validation
+        document.querySelector('.btn-primary').addEventListener('click', function(e) {
+    e.preventDefault();
+
+    // Build URL with all booking data
+    const params = new URLSearchParams(window.location.search);
+
+    const query = new URLSearchParams({
+      service: 'meet-greet',
+      flight: params.get('flight'),
+      date: params.get('date'),
+      airport: params.get('airport'),
+      adults: params.get('adults'),
+      children: params.get('children'),
+      infants: params.get('infants')
+    }).toString();
+
+    // Go to cart.html with params
+    window.location.href = `cart.html?${query}`;
+});
+
+    </script>
+          <script>
+        fetch('footer.html')
+            .then(res => res.text())
+            .then(data => {
+            document.getElementById('footer-placeholder').innerHTML = data;
+            });
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const p = new URLSearchParams(window.location.search);
+
+  // get each param (or default to empty/zero)
+  const flight   = p.get('flight')   || '';
+  const dateStr  = p.get('date')     || '';
+  const airport  = p.get('airport')  || '';
+  const adults   = parseInt(p.get('adults'))   || 0;
+  const children = parseInt(p.get('children')) || 0;
+  const infants  = parseInt(p.get('infants'))  || 0;
+
+  // nicely format the date
+  let dateText = dateStr;
+  if (dateStr) {
+    const d = new Date(dateStr);
+    dateText = d.toLocaleDateString('en-US', {
+      year:  'numeric',
+      month: 'long',
+      day:   'numeric'
+    });
+  }
+
+  // build the “1 Adult, 2 Children…” string
+  const parts = [];
+  if (adults)   parts.push(`${adults} Adult${adults>1?'s':''}`);
+  if (children) parts.push(`${children} Child${children>1?'ren':''}`);
+  if (infants)  parts.push(`${infants} Infant${infants>1?'s':''}`);
+  const passengerText = parts.join(', ') || '—';
+
+  // inject into the spans
+  document.getElementById('js-flight-number').textContent = flight;
+  document.getElementById('js-arrival-date').textContent  = dateText;
+  document.getElementById('js-airport').textContent       = airport;
+  document.getElementById('js-passengers').textContent    = passengerText;
+});
+</script>
+
+<script>
+document.getElementById('proceed-btn').addEventListener('click', () => {
+  const params = new URLSearchParams(window.location.search);
+
+  // Build the same URL with all booking details
+  const query = new URLSearchParams({
+    service: 'meet-greet',
+    flight: params.get('flight'),
+    date: params.get('date'),
+    airport: params.get('airport'),
+    adults: params.get('adults'),
+    children: params.get('children'),
+    infants: params.get('infants')
+  }).toString();
+
+  // Redirect to cart.html with details
+  window.location.href = `cart.html?${query}`;
+});
+</script>
+
+
+        
+</body>
+</html>
