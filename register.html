@@ -5,33 +5,69 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Register - Primum Services</title>
-   <link rel="stylesheet" href="footer.css">
+  <link rel="stylesheet" href="footer.css">
+  <link rel="stylesheet" href="header.css">
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
+  <style>
+    body::before {
+      content: "";
+      background-image: url('01.jpg');
+      background-size: cover;
+      background-position: center;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: -1;
+      filter: blur(8px) brightness(0.7);
+    }
+  </style>
 </head>
-<body class="bg-gray-100 flex items-center justify-center min-h-screen">
-  <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
-    <h2 class="text-2xl font-bold mb-6 text-center">Register</h2>
-    <form class="space-y-4">
-      <input type="text" placeholder="Full Name" class="w-full border border-gray-300 p-3 rounded">
-      <input type="email" placeholder="Email" class="w-full border border-gray-300 p-3 rounded">
-      <input type="phone" placeholder="phone" class="w-full border border-gray-300 p-3 rounded">
-      <input type="password" placeholder="Password" class="w-full border border-gray-300 p-3 rounded">
-      <input type="password" placeholder="Confirm Password" class="w-full border border-gray-300 p-3 rounded">
-      <button type="submit" class="w-full bg-blue-700 text-white px-6 py-3 rounded hover:bg-blue-800">Register</button>
-    </form>
-    <p class="mt-4 text-center text-sm text-gray-600">
-      Already have an account? <a href="login.html" class="text-blue-600 hover:underline">Login</a>
-    </p>
-  </div>
-    <!-- Footer -->
-     <div id="footer-placeholder"></div>
+
+<body class="bg-gray-100 flex flex-col min-h-screen">
+
+  <!--  Header inside body and aligned left -->
+  <header class="bg-white shadow">
+    <nav class="main-nav">
+      <div class="container">
+        <div class="nav-container py-4 px-6 flex items-center justify-start">
+          <a href="index.html" class="logo text-2xl font-bold text-gray-800">Premium</a>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <!--  Register Card -->
+  <main class="flex-grow flex items-center justify-center">
+    <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
+      <h2 class="text-2xl font-bold mb-6 text-center">Register</h2>
+      <form class="space-y-4">
+        <input type="text" placeholder="Full Name" class="w-full border border-gray-300 p-3 rounded">
+        <input type="email" placeholder="Email" class="w-full border border-gray-300 p-3 rounded">
+        <input type="tel" placeholder="Phone" class="w-full border border-gray-300 p-3 rounded">
+        <input type="password" placeholder="Password" class="w-full border border-gray-300 p-3 rounded">
+        <input type="password" placeholder="Confirm Password" class="w-full border border-gray-300 p-3 rounded">
+        <button type="submit" class="w-full bg-blue-700 text-white px-6 py-3 rounded hover:bg-blue-800">Register</button>
+      </form>
+      <p class="mt-4 text-center text-sm text-gray-600">
+        Already have an account? 
+        <a href="login.html" class="text-blue-600 hover:underline">Login</a>
+      </p>
+    </div>
+  </main>
+
+  <!--  Footer -->
+  <div id="footer-placeholder"></div>
 
   <script>
-        fetch('footer.html')
-            .then(res => res.text())
-            .then(data => {
-            document.getElementById('footer-placeholder').innerHTML = data;
-            });
-</script>
+    fetch('footer.html')
+      .then(res => res.text())
+      .then(data => {
+        document.getElementById('footer-placeholder').innerHTML = data;
+      });
+  </script>
+
 </body>
 </html>
