@@ -28,16 +28,10 @@
 
 <body class="bg-gray-100 flex flex-col min-h-screen">
 
-  <!--  Header inside body and aligned left -->
-  <header class="bg-white shadow">
-    <nav class="main-nav">
-      <div class="container">
-        <div class="nav-container py-4 px-6 flex items-center justify-start">
-          <a href="index.html" class="logo text-2xl font-bold text-gray-800">Premium</a>
-        </div>
-      </div>
-    </nav>
-  </header>
+ <!-- Header -->
+  <div id="header-placeholder"></div>
+  <br/><br/><br/><br/>
+  <br/><br/><br/><br/>
 
   <!--  Register Card -->
   <main class="flex-grow flex items-center justify-center">
@@ -57,6 +51,8 @@
       </p>
     </div>
   </main>
+  <br/><br/><br/><br/>
+
 
   <!--  Footer -->
   <div id="footer-placeholder"></div>
@@ -67,6 +63,17 @@
       .then(data => {
         document.getElementById('footer-placeholder').innerHTML = data;
       });
+  </script>
+
+    <script>
+  fetch('header.html')
+    .then(res => res.text())
+    .then(html => {
+      document.getElementById('header-placeholder').innerHTML = html;
+      const script = document.createElement('script');
+      script.src = 'header.js';
+      document.body.appendChild(script);
+    });
   </script>
 
 </body>
