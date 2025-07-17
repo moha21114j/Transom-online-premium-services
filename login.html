@@ -4,8 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Login - Primum Services</title>
-  <link rel="stylesheet" href="header.css">
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="header.css">
+  <link rel="stylesheet" href="footer.css">
+
   <style>
     body::before {
       content: "";
@@ -39,15 +41,7 @@
 <body class="bg-gray-100 min-h-screen">
 
   <!-- Header -->
-    <header class="bg-white shadow">
-    <nav class="main-nav">
-      <div class="container">
-        <div class="nav-container py-4 px-6 flex items-center justify-start">
-          <a href="index.html" class="logo text-2xl font-bold text-gray-800">Premium</a>
-        </div>
-      </div>
-    </nav>
-  </header>
+    <div id="header-placeholder"></div>
   <br/><br/><br/><br/>
   <br/><br/><br/><br/>
 
@@ -122,6 +116,18 @@
     </div>
   </div>
 
+  <br/><br/><br/><br/>
+    <!--  Footer -->
+  <div id="footer-placeholder"></div>
+
+  <script>
+    fetch('footer.html')
+      .then(res => res.text())
+      .then(data => {
+        document.getElementById('footer-placeholder').innerHTML = data;
+      });
+  </script>
+
   <!-- Tab Toggle Script -->
   <script>
     function showTab(tab) {
@@ -146,6 +152,16 @@
         emailTab.classList.add('tab-inactive');
       }
     }
+  </script>
+  <script>
+  fetch('header.html')
+    .then(res => res.text())
+    .then(html => {
+      document.getElementById('header-placeholder').innerHTML = html;
+      const script = document.createElement('script');
+      script.src = 'header.js';
+      document.body.appendChild(script);
+    });
   </script>
 
 </body>
