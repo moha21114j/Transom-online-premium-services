@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Elite Airport Services - Muscat | Premium Travel Experience</title>
+    <link rel="stylesheet" href="header.css">
+     <link rel="stylesheet" href="footer.css">
+     <link rel="stylesheet" href="index.css">
+     
+
+   
+</head>
+<body>
+    <!-- Header -->
+    <div id="header-placeholder"></div>
+
+
+    <!-- Hero Section -->
+    <section class="hero-slider">
+        <div class="slide active" style="background-image: url('01.jpg');">
+          <div class="slide-content">
+            <h1>WELCOME TO Transom Handling</h1>
+            <p>With operations spanning throughout Oman, TRANSON Handling is the leading ground handler in all airports.</p>
+          </div>
+        </div>
+        <div class="slide" style="background-image: url('02.jpeg');">
+          <div class="slide-content">
+            <h1>OUR SERVICES</h1>
+            <p>Experience premium ground handling with professionalism and care.</p>
+          </div>
+        </div>
+        <div class="slide" style="background-image: url('03.jpeg');">
+          <div class="slide-content">
+            <h1>EXCELLENCE IN SERVICE</h1>
+            <p>We make travel smoother for you and your customers.</p>
+          </div>
+        </div>
+        <button class="slider-arrow prev" onclick="prevSlide()">&#10094;</button>
+        <button class="slider-arrow next" onclick="nextSlide()">&#10095;</button>
+      </section>
+      
+
+    <!-- Booking Section -->
+    <section id ="booking"class="booking-section">
+        <div class="booking-container">
+            <h2 class="search-title">Search services</h2>
+            
+           <div class="service-tabs">
+            <div class="service-tab active" onclick="selectService('meet-greet')">Meet & Greet (Arrival Only)</div>
+            <div class="service-tab" onclick="selectService('lounges')">Lounges</div>
+            <div class="service-tab" onclick="selectService('limo')">Limo Service</div>
+        </div>
+
+
+            <div class="service-info">
+                <p id="service-description">Meet & Greet (Arrival Only): Personal assistance on arrival at Oman airports.</p>
+            </div>
+
+            <div class="booking-form">
+                <div class="form-section">
+                    <h3>Service required for:</h3>
+                  <div class="service-type">
+                    <div class="radio-group">
+                        <input type="radio" id="arrival" name="service-type" value="arrival" checked onchange="updateFormFields()">
+                        <label for="arrival">Arrival</label>
+                    </div>
+                    <div class="radio-group" id="departure-option">
+                        <input type="radio" id="departure" name="service-type" value="departure" onchange="updateFormFields()">
+                        <label for="departure">Departure</label>
+                    </div>
+                </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group" id="departure-airport-group">
+                    <label for="departure-airport" id="departure-airport-label">Departure Airport</label>
+                    <select id="departure-airport">
+                        <option value="">Muscat International Airport (MCT), Muscat</option>
+                        <option value="salalah">Salalah Airport (SLL), Salalah</option>
+                        <option value="sohar">Sohar Airport (OHS), Sohar</option>
+                        <option value="duqm">Duqm Airport (DQM), Duqm</option>
+                    </select>
+                    </div>
+                    <div class="form-group" id="arrival-airport-group">
+                    <label for="arrival-airport" id="arrival-airport-label">Arrival Airport</label>
+                    <select id="arrival-airport">
+                        <option value="">Select arrival airport</option>
+                        <option value="muscat">Muscat International Airport (MCT), Muscat</option>
+                        <option value="salalah">Salalah Airport (SLL), Salalah</option>
+                        <option value="sohar">Sohar Airport (OHS), Sohar</option>
+                        <option value="duqm">Duqm Airport (DQM), Duqm</option>
+                    </select>
+                </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                    <label for="arrival-date" id="date-label">Arrival Date</label>
+                    <input type="date" id="arrival-date">
+                    </div>
+                    <div class="form-group">
+                    <label for="flight-number" id="flight-number-label">Arrival Flight Number</label>
+                    <input type="text" id="flight-number" id="flight-number-input" placeholder="Enter flight number (e.g., WY101)">
+                    </div>
+                </div>
+
+                <div class="passenger-section">
+                    <div class="passenger-counter">
+                        <h4>Adults</h4>
+                        <p>(from 21 to 99 yr.)</p>
+                        <div class="counter-controls">
+                            <button class="counter-btn" onclick="changeCount('adults', -1)">-</button>
+                            <span class="counter-value" id="adults-count">1</span>
+                            <button class="counter-btn" onclick="changeCount('adults', 1)">+</button>
+                        </div>
+                    </div>
+                    <div class="passenger-counter">
+                        <h4>Children</h4>
+                        <p>(from 2 to 20 yr.)</p>
+                        <div class="counter-controls">
+                            <button class="counter-btn" onclick="changeCount('children', -1)">-</button>
+                            <span class="counter-value" id="children-count">0</span>
+                            <button class="counter-btn" onclick="changeCount('children', 1)">+</button>
+                        </div>
+                    </div>
+                    <div class="passenger-counter">
+                        <h4>Infants</h4>
+                        <p>(below 2 yr.)</p>
+                        <div class="counter-controls">
+                            <button class="counter-btn" onclick="changeCount('infants', -1)">-</button>
+                            <span class="counter-value" id="infants-count">0</span>
+                            <button class="counter-btn" onclick="changeCount('infants', 1)">+</button>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="search-btn" onclick="searchServices()">Search</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Overview -->
+    <section class="why-choose">
+        <div class="container">
+          <h2 class="why-title">Why Choose Premium Services?</h2>
+          <p class="why-subtitle">Experience unparalleled luxury and convenience with our premium airport services in Oman International Airport </p>
+          <div class="why-grid">
+            <div class="why-card">
+              <div class="why-icon">
+                <span>🛡️</span>
+              </div>
+              <h3>Dedicated Support</h3>
+              <p>24/7 personalized assistance from our experienced team of airport service professionals.</p>
+            </div>
+            <div class="why-card">
+              <div class="why-icon">
+                <span>⚡</span>
+              </div>
+              <h3>Fast & Efficient</h3>
+              <p>Skip the queues and enjoy expedited check-in, security, and immigration processes.</p>
+            </div>
+            <div class="why-card">
+              <div class="why-icon">
+                <span>✨</span>
+              </div>
+              <h3>Luxury Experience</h3>
+              <p>Enjoy premium lounges, comfortable seating, and complimentary refreshments.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+          <!-- WHY HEREEEEEEEE --> 
+      
+      
+          <!-- Ser HEREEEEEEEE -->
+          <section class="premium-services">
+              <div class="container">
+                <h2 class="premium-title">Our Premium Services</h2>
+                <p class="premium-subtitle">Comprehensive airport services designed to make your journey seamless and comfortable</p>
+                <div class="premium-grid">
+                  <div class="premium-card">
+                    <img src="1212.jpg" alt="Meet & Greet" loading="lazy">
+                    <h3>Meet & Greet Services</h3>
+                    <p>Personal assistance from arrival to departure with dedicated staff to guide you through all airport procedures.</p>
+                    <a href="#">Learn More →</a>
+                  </div>
+                  <div class="premium-card">
+                    <img src="0B1A2315.JPG" alt="VIP Lounges" loading="lazy">
+                    <h3>VIP Airport Lounges</h3>
+                    <p>Relax in our exclusive lounges with premium amenities, complimentary dining, and business facilities.</p>
+                    <a href="#">Learn More →</a>
+                  </div>
+                  <div class="premium-card">
+                    <img src="03.jpeg" alt="Transfers" loading="lazy">
+                    <h3>Premium Transfer Services</h3>
+                    <p>Luxury vehicle transfers with professional chauffeurs for a comfortable journey to your destination.</p>
+                    <a href="#">Learn More →</a>
+                  </div>
+                  <div class="premium-card">
+                    <img src="04.jpg" alt="Concierge" loading="lazy">
+                    <h3>Maraheb </h3>
+                    <p>Helps you check in and drop your bags before you go to the airport.
+                      You can do this at a MARAHEB office in the city..</p>
+                    <a href="#">Learn More →</a>
+                  </div>
+                  <div class="premium-card">
+                    <img src="11.JPG" alt="Baggage Services" loading="lazy">
+                    <h3>Land and Leave</h3>
+                    <p>Quick exit with fast-track arrival service. Get through immigration and customs in record time..</p>
+                    <a href="#">Learn More →</a>
+                  </div>
+                  <div class="premium-card">
+                    <img src="0B1A5212.jpg" alt="Fast Track" loading="lazy">
+                    <h3>Check in Anywhere</h3>
+                    <p>Check in from home or hotel for a seamless start to your journey. Skip the queues and head straight to security..</p>
+                    <a href="#">Learn More →</a>
+                  </div>
+                </div>
+      
+              </div>
+            </section>
+          
+          <!-- ser HEREEEEEEEE -->
+      
+      <!-- Newsletter Section -->
+      <section class="newsletter">
+          <div class="container">
+            <h2>Stay Updated with Premium Services</h2>
+            <p>Subscribe to receive exclusive offers and updates about our airport services</p>
+            <form class="newsletter-form" onsubmit="subscribeNewsletter(event)">
+              <input type="email" placeholder="Enter your email" required>
+              <button type="submit">Subscribe</button>
+            </form>
+          </div>
+        </section>
+
+    <!-- Footer -->
+     <div id="footer-placeholder"></div>
+
+    
+    
+    <script>
+        function subscribeNewsletter(event) {
+        event.preventDefault();
+        alert('Thank you for subscribing!');
+        }
+    // Service selection
+    let currentService = 'meet-greet';
+
+    function selectService(service) {
+        currentService = service;
+        document.querySelectorAll('.service-tab').forEach(tab => tab.classList.remove('active'));
+        event.target.classList.add('active');
+
+        const descriptions = {
+            'meet-greet': 'Meet & Greet (Arrival Only): Personal assistance on arrival at Oman airports.',
+            'lounges': 'Lounges: Relax in premium lounges for both arrival and departure at Oman airports.',
+            'limo': 'Limo Service: Chauffeur-driven luxury car service for both arrival and departure at Oman airports.'
+        };
+        document.getElementById('service-description').textContent = descriptions[service];
+        updateServiceOptions();
+        updateFormFields();
+    }
+
+    function updateServiceOptions() {
+        const departureOption = document.getElementById('departure-option');
+        const arrivalRadio = document.getElementById('arrival');
+        if (currentService === 'meet-greet') {
+            departureOption.style.display = 'none';
+            arrivalRadio.checked = true;
+        } else {
+            departureOption.style.display = 'block';
+        }
+    }
+
+    function updateFormFields() {
+        const serviceType = document.querySelector('input[name="service-type"]:checked').value;
+        const dateLabel = document.getElementById('date-label');
+        const flightLabel = document.getElementById('flight-number-label');
+        const flightInput = document.getElementById('flight-number-input');
+        if (serviceType === 'departure') {
+            dateLabel.textContent = 'Departure Date';
+            flightLabel.textContent = 'Departure Flight Number';
+            flightInput.placeholder = 'Enter departure flight number (e.g., WY101)';
+        } else {
+            dateLabel.textContent = 'Arrival Date';
+            flightLabel.textContent = 'Arrival Flight Number';
+            flightInput.placeholder = 'Enter arrival flight number (e.g., WY101)';
+        }
+    }
+
+    // Passenger counter
+    let counts = { adults: 1, children: 0, infants: 0 };
+
+    function changeCount(type, change) {
+        counts[type] += change;
+        if (counts[type] < 0) counts[type] = 0;
+        if (type === 'adults' && counts[type] < 1) counts[type] = 1;
+        document.getElementById(type + '-count').textContent = counts[type];
+        const minusBtn = event.target.parentElement.querySelector('.counter-btn:first-child');
+        minusBtn.disabled = (counts[type] === 0) || (type === 'adults' && counts[type] === 1);
+    }
+
+    function searchServices() {
+    const serviceType = document.querySelector('input[name="service-type"]:checked').value;
+    const departureAirport = document.getElementById('departure-airport').value;
+    const arrivalDate = document.getElementById('arrival-date').value;
+    const flightNumber = document.getElementById('flight-number').value;
+    
+    if (!arrivalDate) {
+        alert('Please select an arrival date');
+        return;
+    }
+    if (!flightNumber) {
+        alert('Please enter a flight number');
+        return;
+    }
+
+    // Get airport text for all services
+    const airportSelect = document.getElementById('departure-airport');
+    const airportText = airportSelect.options[airportSelect.selectedIndex].text;
+
+    // if Meet & Greet is selected, go to Meet&Greet.html
+    if (currentService === 'meet-greet') {
+        const params = new URLSearchParams({
+          flight:   document.getElementById('flight-number').value,
+          date:     document.getElementById('arrival-date').value,
+          airport:  airportText,
+          adults:   counts.adults,
+          children: counts.children,
+          infants:  counts.infants
+        });
+
+        window.location.href = `Meet&Greet.html?${params.toString()}`;
+        return;
+    }
+
+    // if Lounges is selected, go to lounges.html
+    if (currentService === 'lounges') {
+        const params = new URLSearchParams({
+          flight:   document.getElementById('flight-number').value,
+          date:     document.getElementById('arrival-date').value,
+          airport:  airportText,
+          adults:   counts.adults,
+          children: counts.children,
+          infants:  counts.infants,
+          serviceType: document.querySelector('input[name="service-type"]:checked').value
+        });
+
+        window.location.href = `lounges.html?${params.toString()}`;
+        return;
+    }
+
+    // if Limo Service is selected, go to limo.html
+    if (currentService === 'limo') {
+        const params = new URLSearchParams({
+          flight:   document.getElementById('flight-number').value,
+          date:     document.getElementById('arrival-date').value,
+          airport:  airportText,
+          adults:   counts.adults,
+          children: counts.children,
+          infants:  counts.infants,
+          service:  document.querySelector('input[name="service-type"]:checked').value
+        });
+
+        window.location.href = `limo.html?${params.toString()}`;
+        return;
+    }
+
+    // For other services, keep existing behavior
+    alert(`Searching for ${serviceType} services for ${counts.adults} adults, ${counts.children} children, and ${counts.infants} infants on ${arrivalDate} - Flight: ${flightNumber}`);
+}
+
+
+    // Hero slider
+    const slides = document.querySelectorAll('.hero-slider .slide');
+    let currentIndex = 0;
+
+    function showSlide(index) {
+        slides.forEach((slide, i) => slide.classList.toggle('active', i === index));
+    }
+
+    function nextSlide() {
+        currentIndex = (currentIndex + 1) % slides.length;
+        showSlide(currentIndex);
+    }
+
+    function prevSlide() {
+        currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+        showSlide(currentIndex);
+    }
+
+    setInterval(() => {
+        slides[currentIndex].classList.remove('active');
+        currentIndex = (currentIndex + 1) % slides.length;
+        slides[currentIndex].classList.add('active');
+    }, 5000);
+
+    // Hero nav dots
+    document.querySelectorAll('.hero-nav span').forEach((dot) => {
+        dot.addEventListener('click', () => {
+            document.querySelectorAll('.hero-nav span').forEach(d => d.classList.remove('active'));
+            dot.classList.add('active');
+        });
+    });
+
+    // Set default date to today
+    document.addEventListener('DOMContentLoaded', () => {
+        document.getElementById('arrival-date').valueAsDate = new Date();
+
+        updateServiceOptions();
+
+
+    });
+</script>
+
+
+        
+        
+
+
+ <script>
+fetch('header.html')
+  .then(res => res.text())
+  .then(html => {
+    document.getElementById('header-placeholder').innerHTML = html;
+    const script = document.createElement('script');
+    script.src = 'header.js';
+    document.body.appendChild(script);
+  });
+</script>
+
+
+    <script>
+    window.addEventListener('scroll', () => {
+        const topBar = document.querySelector('.top-bar');
+        const mainNav = document.querySelector('.main-nav');
+        const scrollY = window.scrollY;
+
+        if (!topBar || !mainNav) return;
+
+        const fadeStart = 0;
+        const fadeEnd = 200;
+
+        let opacity = 1;
+        if (scrollY > fadeStart) {
+            opacity = 1 - (scrollY - fadeStart) / (fadeEnd - fadeStart);
+            if (opacity < 0) opacity = 0;
+        }
+
+        topBar.style.opacity = opacity;
+
+        if (opacity === 0) {
+            mainNav.style.marginTop = '-40px';
+        } else {
+            mainNav.style.marginTop = '0';
+        }
+    });
+    </script>
+
+    
+      
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const params = new URLSearchParams(window.location.search);
+  const service = params.get('service');
+
+  if (service) {
+    // Scroll to booking section smoothly
+    const bookingSection = document.getElementById('booking');
+    if (bookingSection) {
+      bookingSection.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // Simulate clicking the right tab
+    const matchingTab = document.querySelector(`.service-tab[onclick*="${service}"]`);
+    if (matchingTab) {
+      matchingTab.click();
+    }
+  }
+});
+</script>
+
+
+
+<script>
+  fetch('footer.html')
+    .then(res => res.text())
+    .then(data => {
+      document.getElementById('footer-placeholder').innerHTML = data;
+    });
+</script>
+
+
+
+
+
+
+</body>
+
+</html>

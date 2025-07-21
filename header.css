@@ -1,0 +1,420 @@
+header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+  background: white;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+
+header.scrolled {
+    box-shadow: 0 2px 20px rgba(0,0,0,0.15);
+}
+
+header.scrolled .top-bar {
+    padding: 4px 0;
+    font-size: 0.8rem;
+}
+
+header.scrolled .main-nav {
+    padding: 18px 0; /* Increased padding for better height when scrolled */
+}
+
+header.scrolled .nav-container {
+    justify-content: center; /* Center the content when scrolled */
+    gap: 60px; /* Add gap between logo+nav and user actions */
+}
+
+header.scrolled .logo {
+    font-size: 2.0rem; /* Increased from 1.8rem for better presence */
+    margin-right: 30px; /* More space after logo when scrolled */
+}
+
+header.scrolled .nav-menu {
+    margin-left: 0; /* Remove left margin when centered */
+}
+
+header.scrolled .nav-item > a {
+    padding: 12px 16px; /* Increased padding for better height */
+    font-size: 0.92rem; /* Slightly larger font */
+}
+
+header.scrolled .user-actions {
+    min-width: auto; /* Remove fixed width when scrolled */
+    gap: 16px; /* Slightly tighter gap when scrolled */
+}
+
+header.scrolled .currency-btn {
+    padding: 10px 14px; /* Better padding for currency button when scrolled */
+    font-size: 0.9rem;
+}
+
+header.scrolled .search-btn {
+    padding: 12px 14px; /* Better padding for search button when scrolled */
+}
+
+header.scrolled .cart-btn {
+    padding: 10px; /* Better padding for cart button when scrolled */
+}
+
+.top-bar {
+    background: #f8f9fa;
+    padding: 8px 0;
+    font-size: 0.9rem;
+    border-bottom: 1px solid #e9ecef;
+    transition: opacity 0.3s ease;
+
+}
+
+.top-bar .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.top-bar-left {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.top-bar-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.top-bar a {
+    color: #666;
+    text-decoration: none;
+    font-size: 0.85rem;
+    transition: color 0.3s;
+}
+
+.top-bar a:hover {
+    color: #005BAC;
+}
+
+.contact-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    font-size: 0.85rem;
+    color: #666;
+}
+
+.contact-info span {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+/* Main Navigation */
+.main-nav {
+    padding: 15px 0;
+    background: white;
+    transition: margin-top 0.3s ease;
+}
+
+.main-nav .container {
+    max-width: 1400px; /* Increased container width */
+    margin: 0 auto;
+    padding: 0 30px; /* Increased side padding */
+}
+
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1400px; /* Increased max width */
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.logo {
+    font-size: 2.2rem;
+    font-weight: bold;
+    color: #005BAC;
+    text-transform: lowercase;
+    text-decoration: none;
+    transition: transform 0.3s;
+    flex-shrink: 0; /* Prevent logo from shrinking */
+    margin-right: 20px; /* Add space after logo */
+}
+
+.logo:hover {
+    transform: scale(1.05);
+}
+
+.nav-menu {
+    display: flex;
+    list-style: none;
+    align-items: center;
+    gap: 8px; /* Increased gap between nav items */
+    white-space: nowrap;
+    margin-left: 40px; /* Add space between logo and nav items */
+}
+
+.nav-item {
+    position: relative;
+}
+
+.nav-item > a {
+    color: #333;
+    text-decoration: none;
+    padding: 15px 16px; /* Increased horizontal padding */
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    transition: all 0.3s;
+    border-radius: 5px;
+    position: relative;
+    letter-spacing: 0.3px;
+    white-space: nowrap;
+}
+
+.nav-item > a:hover {
+    color: #005BAC;
+    background: rgba(233, 30, 99, 0.05);
+}
+
+
+
+/* User Actions */
+.user-actions {
+    display: flex;
+    align-items: center;
+    gap: 18px; /* Increased gap between user action items */
+    margin-left: auto; /* Push to the right */
+    min-width: 320px; /* Ensure enough space for all items */
+}
+
+.currency-selector {
+    position: relative;
+}
+
+/* Currency selector in navigation bar - with smooth transition */
+.currency-selector-nav {
+    opacity: 0;
+    transform: translateX(20px);
+    transition: all 0.3s ease;
+}
+
+.currency-selector-nav.show {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.currency-btn {
+    background: none;
+    border: 1px solid #ddd;
+    color: #666;
+    padding: 8px 12px;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.currency-btn:hover {
+    border-color: #005BAC;
+    color: #005BAC;
+}
+
+.currency-dropdown {
+    position: absolute;
+    top: 110%;
+    right: 0;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+    display: none;
+    z-index: 1000;
+    min-width: 80px;
+}
+
+.currency-dropdown button {
+    background: none;
+    border: none;
+    padding: 10px 20px;
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
+    font-size: 0.9rem;
+    color: #333;
+    transition: background 0.3s;
+}
+
+.currency-dropdown button:hover {
+    background: #f0f0f0;
+}
+
+
+.search-btn {
+    background: none;
+    border: 1px solid #ddd;
+    color: #666;
+    font-size: 1rem;
+    cursor: pointer;
+    padding: 10px 12px;
+    border-radius: 6px;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.search-btn:hover {
+    border-color: #005BAC;
+    color: #005BAC;
+}
+
+.cart-btn {
+    background: none;
+    border: none;
+    color: #666;
+    position: relative;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 50%;
+    transition: all 0.3s;
+}
+
+.cart-btn:hover {
+    background: rgba(233, 30, 99, 0.1);
+    color: #005BAC;
+}
+
+.cart-badge {
+    position: absolute;
+    top: -2px;
+    right: -2px;
+    background: #ff4444;
+    color: white;
+    border-radius: 50%;
+    width: 18px;
+    height: 18px;
+    font-size: 0.7rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+
+.user-btn {
+    min-width: 80px;              /* NEW: prevents it from getting too small */
+    height: auto;
+    border-radius: 6px;
+    background: none;
+    border: 1px solid #ddd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #666;
+    text-decoration: none;
+    font-size: 0.9rem;
+    padding: 8px 16px;            /* adjust padding for text space */
+    transition: all 0.3s;
+    gap: 8px;
+    white-space: nowrap;          /* NEW: keep text in one line */
+    overflow: hidden;             /* hide anything that spills */
+    text-overflow: ellipsis;      /* add ... if needed */
+}
+
+
+.user-btn:hover {
+    border-color: #005BAC;
+    color: #005BAC;
+}
+
+/* Fix Premium Car Services Dropdown overflow */
+
+
+
+
+/* Mobile Menu */
+.mobile-menu-btn {
+    display: none;
+    background: none;
+    border: none;
+    color: #333;
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 5px;
+}
+
+.mobile-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: white;
+    border-top: 1px solid #e9ecef;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.mobile-menu.active {
+    display: block;
+}
+
+.mobile-menu-item {
+    border-bottom: 1px solid #f8f9fa;
+}
+
+.mobile-menu-item a {
+    display: block;
+    padding: 15px 20px;
+    color: #333;
+    text-decoration: none;
+    transition: background 0.3s;
+}
+
+.mobile-menu-item a:hover {
+    background: rgba(233, 30, 99, 0.05);
+    color: #005BAC;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1200px) {
+    .nav-menu {
+        margin-left: 20px; /* Reduce space on smaller screens */
+    }
+    
+    .nav-item > a {
+        padding: 15px 12px; /* Reduce padding on smaller screens */
+        font-size: 0.9rem;
+    }
+    
+    .user-actions {
+        gap: 15px;
+        min-width: 280px;
+    }
+}
+
+@media (max-width: 768px) {
+    .currency-selector-nav {
+        order: -1; /* Move currency to the beginning on mobile */
+    }
+    
+    .user-actions {
+        flex-wrap: wrap;
+        gap: 10px;
+        min-width: auto;
+    }
+    
+    .nav-menu {
+        margin-left: 10px;
+    }
+    
+    .main-nav .container {
+        padding: 0 15px;
+    }
+}

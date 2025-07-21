@@ -1,0 +1,119 @@
+<meta charset="UTF-8">
+<head>
+    
+    <link rel="stylesheet" href="header.css">
+
+    
+</head>
+
+    <header>
+        <!-- Top Bar -->
+        <div class="top-bar">
+            <div class="container">
+                <div class="top-bar-left">
+                    <div class="contact-info">
+                        <span>📞 +968 2456 7890</span>
+                        <span>✉️ info@eliteairport.om</span>
+                    </div>
+                </div>
+                <div class="top-bar-right">
+                    <a href="#booking">Find My Booking</a>
+                    
+                    <!-- Currency selector in top bar -->
+                    <div class="currency-selector" id="currency-selector-top">
+                        <button class="currency-btn" onclick="toggleCurrencyDropdown()">
+                            <span id="selected-currency">OMR</span> ▾
+                        </button>
+                        <div class="currency-dropdown" id="currency-dropdown">
+                            <button onclick="setCurrency('OMR')">OMR</button>
+                            <button onclick="setCurrency('USD')">USD</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Navigation -->
+        <nav class="main-nav">
+            <div class="container">
+                <div class="nav-container">
+                    <a href="index.html" class="logo">Premium</a>
+                    
+                    <ul class="nav-menu">
+                        <li class="nav-item">
+                            <a href="HomeCheckIn.html">Home check-in</a>
+                        </li>
+
+                        
+                         <li class="nav-item">
+                            <a href="cityCheckIn.html">City Check-in</a>
+                          
+                        </li>
+
+
+                         <li class="nav-item">
+                            <a href="LandAndLeave.html">Land and Leave</a>
+                        </li>
+                       
+                        <li class="nav-item">
+                            <a href="index.html?service=meet-greet#booking">Meet & Greet</a>
+
+                        </li>
+
+
+                        <li class="nav-item">
+                            <a href="index.html?service=lounges#booking">Majan Lounges</a>
+
+                        </li>
+
+                        <li class="nav-item">
+                            <a href="index.html?service=limo#booking">Limo Service</a>
+
+                        </li>
+
+                        <li class="nav-item">
+                            <a href="valet.html">Valet Service</a>
+                        </li>
+
+                       
+                    </ul>
+
+                      <div class="user-actions">
+                        
+                        <!-- Currency selector will be moved here dynamically when scrolling -->
+                        <div class="currency-selector currency-selector-nav" id="currency-selector-nav" style="display: none;">
+                            <button class="currency-btn" onclick="toggleCurrencyDropdown()">
+                                <span id="selected-currency-nav">OMR</span> ▾
+                            </button>
+                            <div class="currency-dropdown" id="currency-dropdown-nav">
+                                <button onclick="setCurrency('OMR')">OMR</button>
+                                <button onclick="setCurrency('USD')">USD</button>
+                            </div>
+                        </div>
+                        
+                        <button class="search-btn" onclick="toggleSearch()">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="11" cy="11" r="8"></circle>
+                                <path d="m21 21-4.35-4.35"></path>
+                            </svg>
+                            Search
+                        </button>
+                        <button class="cart-btn" onclick="window.location.href='Cart.html'">
+                            🛒
+                            <span class="cart-badge">0</span>
+                        </button>
+                        
+                        <a href="login.html" class="user-btn">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="12" cy="7" r="4"></circle>
+                            </svg>
+                            Login
+                        </a>
+                        <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
+                    </div>
+                </div>
+            </div>
+            
+        </nav>
+    </header>

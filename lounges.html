@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Majan Lounge - Premium Airport Experience</title>
+    <link rel="stylesheet" href="footer.css">
+    <link rel="stylesheet" href="header.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            
+        }
+        
+        /* Main Content */
+        .main-content {
+    padding: 150px 20px 2rem 20px;
+}
+        /* Header */
+        header {
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+    background: white;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+       
+
+        /* Booking Summary */
+        .booking-header {
+    background: white;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    margin-bottom: 2rem;
+        }
+
+        .booking-title {
+            font-size: 2rem;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .booking-subtitle {
+            color: #666;
+            margin-bottom: 1.5rem;
+        }
+
+        .flight-summary {
+            background: #fff5f8;
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-left: 4px solid #005BAC;
+            margin-bottom: 2rem;
+        }
+
+        .flight-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .flight-detail {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .flight-detail label {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 0.25rem;
+        }
+
+        .flight-detail span {
+            color: #666;
+        }
+
+
+        /* Lounge Hero Section */
+        .lounge-hero {
+            background: white;
+            padding: 3rem 2rem;
+            margin: 2rem 0;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .lounge-icon {
+            font-size: 6rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .lounge-title {
+            font-size: 2.5rem;
+            color: #2a5298;
+            margin-bottom: 1rem;
+            font-weight: 300;
+        }
+
+        .lounge-description {
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Features Section */
+        .features-section {
+            background: white;
+            padding: 2rem;
+            margin: 2rem 0;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+
+        .features-section h2 {
+            color: #2a5298;
+            margin-bottom: 2rem;
+            text-align: center;
+            font-size: 1.8rem;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .feature-card {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+            border: 1px solid #dee2e6;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .feature-title {
+            font-size: 1.2rem;
+            color: #2a5298;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .feature-description {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        /* Duration Selection */
+        .duration-section {
+            background: white;
+            padding: 2rem;
+            margin: 2rem 0;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+
+        .duration-section h2 {
+            color: #2a5298;
+            margin-bottom: 2rem;
+            text-align: center;
+            font-size: 1.8rem;
+        }
+
+        .duration-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .duration-option {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border: 2px solid #dee2e6;
+            border-radius: 10px;
+            padding: 1.5rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .duration-option:hover {
+            border-color: #2a5298;
+            background: linear-gradient(135deg, #e8f0fe 0%, #d1e3ff 100%);
+            transform: translateY(-2px);
+        }
+
+        .duration-option.active {
+            border-color: #2a5298;
+            background: linear-gradient(135deg, #2a5298 0%, #1e3c72 100%);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(42, 82, 152, 0.3);
+        }
+
+        .duration-option h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .duration-option .price {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .duration-option p {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        /* Booking Section */
+        .booking-section {
+            background: white;
+            padding: 2rem;
+            margin: 2rem 0;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+
+        .booking-section h2 {
+            color: #2a5298;
+            margin-bottom: 2rem;
+            text-align: center;
+            font-size: 1.8rem;
+        }
+
+        .booking-form {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .quantity-btn {
+            width: 40px;
+            height: 40px;
+            border: 2px solid #2a5298;
+            background: white;
+            color: #2a5298;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.2rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .quantity-btn:hover {
+            background: #2a5298;
+            color: white;
+            transform: scale(1.1);
+        }
+
+        .quantity-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .quantity-display {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #2a5298;
+            min-width: 60px;
+            text-align: center;
+            background: #f8f9fa;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            border: 2px solid #dee2e6;
+        }
+
+        .pricing-summary {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+            border: 1px solid #dee2e6;
+        }
+
+        .pricing-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+
+        .pricing-row.total {
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: #2a5298;
+            border-top: 2px solid #dee2e6;
+            padding-top: 1rem;
+            margin-top: 1rem;
+        }
+
+        .add-to-cart-btn {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1.1rem;
+            width: 100%;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
+        }
+
+        .add-to-cart-btn:hover {
+            background: linear-gradient(135deg, #218838 0%, #1e7e34 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(40, 167, 69, 0.4);
+        }
+
+        .add-to-cart-btn:disabled {
+            background: #6c757d;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        /* Success Message */
+        .success-message {
+            background: #d4edda;
+            color: #155724;
+            padding: 1rem;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+            border: 1px solid #c3e6cb;
+            display: none;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.2rem;
+            }
+            
+            .lounge-title {
+                font-size: 2rem;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .duration-options {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .quantity-controls {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+   
+    <div id="header-placeholder"></div>
+ <main class="main-content">
+    <div class="container">
+        <!-- Booking Summary -->
+        <div class="booking-header">
+    <h1 class="booking-title">Book Lounge Access</h1>
+    <p class="booking-subtitle">Complete your booking for a premium lounge experience</p>
+
+    <div class="flight-summary">
+        <div class="flight-details">
+            <div class="flight-detail">
+                <label>Flight Number:</label>
+                <span id="js-flight-number"></span>
+            </div>
+            <div class="flight-detail">
+                <label>Date:</label>
+                <span id="js-arrival-date"></span>
+            </div>
+            <div class="flight-detail">
+                <label>Airport:</label>
+                <span id="js-airport"></span>
+            </div>
+            <div class="flight-detail">
+                <label>Passengers:</label>
+                <span id="js-passengers"></span>
+            </div>
+        </div>
+    </div>
+</div>
+
+        <!-- Lounge Hero Section -->
+        <div class="lounge-hero">
+            <div class="lounge-icon">🏛️</div>
+            <h1 class="lounge-title">Majan Lounge</h1>
+            <p class="lounge-description">
+                Majan Lounge is your escape in the heart of Muscat International Airport, where you can relax and treat your senses to an ethereal Lounge Experience. 
+                The lounge offers a visual allure as rich as Oman's signature landscapes and is the inspiration behind its namesake – Majan – which is loosely translated to "Copper Land".
+            </p>
+        </div>
+
+        <!-- Features Section -->
+        <div class="features-section">
+            <h2>Lounge Features & Amenities</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">📶</div>
+                    <div class="feature-title">Complimentary Wi-Fi</div>
+                    <div class="feature-description">Complimentary access to high-speed Wi-Fi throughout the lounge</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🤫</div>
+                    <div class="feature-title">Relaxing Quiet Area</div>
+                    <div class="feature-description">Peaceful zones designed for rest and relaxation</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💻</div>
+                    <div class="feature-title">Workstations</div>
+                    <div class="feature-description">Dedicated work areas for business travelers</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🖥️</div>
+                    <div class="feature-title">Laptops</div>
+                    <div class="feature-description">Complimentary laptop access for your convenience</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🏢</div>
+                    <div class="feature-title">Conference Rooms</div>
+                    <div class="feature-description">Private meeting spaces for business discussions</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🌅</div>
+                    <div class="feature-title">Copper Land Ambiance</div>
+                    <div class="feature-description">Visual allure inspired by Oman's signature landscapes</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Duration Selection -->
+        <div class="duration-section">
+            <h2>Select Your Duration</h2>
+            <div class="duration-options">
+                <div class="duration-option active" data-duration="2" data-price="55">
+                    <h3>2 Hours</h3>
+                    <div class="price">$55</div>
+                    <p>Perfect for short layovers</p>
+                </div>
+                <div class="duration-option" data-duration="4" data-price="85">
+                    <h3>4 Hours</h3>
+                    <div class="price">$85</div>
+                    <p>Ideal for medium stays</p>
+                </div>
+                <div class="duration-option" data-duration="6" data-price="110">
+                    <h3>6 Hours</h3>
+                    <div class="price">$110</div>
+                    <p>Extended comfort</p>
+                </div>
+                <div class="duration-option" data-duration="8" data-price="140">
+                    <h3>8 Hours</h3>
+                    <div class="price">$140</div>
+                    <p>Full day access</p>
+                </div>
+                <div class="duration-option" data-duration="12" data-price="165">
+                    <h3>12 Hours</h3>
+                    <div class="price">$165</div>
+                    <p>Extended stay</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Booking Section -->
+        <div class="booking-section">
+            <h2>Book Your Majan Lounge Experience</h2>
+            <div class="booking-form">
+                <div class="success-message" id="success-message">
+                    Lounge access successfully added to your cart!
+                </div>
+
+                <div class="form-group">
+                    <label>Number of Guests</label>
+                    <div class="quantity-controls">
+                        <button class="quantity-btn" onclick="changeQuantity(-1)" id="decrease-btn">-</button>
+                        <div class="quantity-display" id="quantity-display">1</div>
+                        <button class="quantity-btn" onclick="changeQuantity(1)" id="increase-btn">+</button>
+                    </div>
+                </div>
+
+                <div class="pricing-summary">
+                    <div class="pricing-row">
+                        <span>Duration:</span>
+                        <span id="selected-duration">2 Hours</span>
+                    </div>
+                    <div class="pricing-row">
+                        <span>Price per person:</span>
+                        <span id="price-per-person">$55</span>
+                    </div>
+                    <div class="pricing-row">
+                        <span>Number of guests:</span>
+                        <span id="guest-count">1</span>
+                    </div>
+                    <div class="pricing-row total">
+                        <span>Total:</span>
+                        <span id="total-price">$55</span>
+                    </div>
+                </div>
+
+                <button class="add-to-cart-btn" onclick="addToCart()" id="add-to-cart-btn">
+                    Add to Cart
+                </button>
+
+                <div style="text-align: center; margin-top: 1rem;">
+                    <a href="Cart.html" style="color: #2a5298; text-decoration: none; font-weight: 500;">
+                        View Cart →
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+    <!-- Footer -->
+    <div id="footer-placeholder"></div>
+
+
+    <script>
+        fetch('header.html')
+          .then(res => res.text())
+          .then(html => {
+            document.getElementById('header-placeholder').innerHTML = html;
+            const script = document.createElement('script');
+            script.src = 'header.js';
+            document.body.appendChild(script);
+          });
+        </script>
+
+        <script>
+        fetch('footer.html')
+            .then(res => res.text())
+            .then(data => {
+            document.getElementById('footer-placeholder').innerHTML = data;
+            });
+</script>
+      
+
+    
+
+    <script>
+        // Global variables
+        let selectedDuration = 2;
+        let selectedPrice = 55;
+        let quantity = 1;
+        let bookingData = {};
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            loadBookingInfo();
+            setupDurationSelection();
+            updatePricingDisplay();
+        });
+
+        // Load booking information from URL parameters
+        function loadBookingInfo() {
+            const p = new URLSearchParams(window.location.search);
+
+            bookingData = {
+                flight: p.get('flight') || '',
+                date: p.get('date') || '',
+                airport: p.get('airport') || '',
+                adults: parseInt(p.get('adults')) || 0,
+                children: parseInt(p.get('children')) || 0,
+                infants: parseInt(p.get('infants')) || 0,
+                serviceType: p.get('serviceType') || 'arrival'
+            };
+
+            let dateText = bookingData.date;
+            if (bookingData.date) {
+                const d = new Date(bookingData.date);
+                dateText = d.toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                });
+            }
+
+            const parts = [];
+            if (bookingData.adults) parts.push(`${bookingData.adults} Adult${bookingData.adults>1 ? 's' : ''}`);
+            if (bookingData.children) parts.push(`${bookingData.children} Child${bookingData.children>1 ? 'ren' : ''}`);
+            if (bookingData.infants) parts.push(`${bookingData.infants} Infant${bookingData.infants>1 ? 's' : ''}`);
+            const passengerText = parts.join(', ') || '—';
+
+            document.getElementById('js-flight-number').textContent = bookingData.flight;
+            document.getElementById('js-arrival-date').textContent = dateText;
+            document.getElementById('js-airport').textContent = bookingData.airport;
+            document.getElementById('js-passengers').textContent = passengerText;
+        }
+
+        // Setup duration selection
+        function setupDurationSelection() {
+            const durationOptions = document.querySelectorAll('.duration-option');
+            
+            durationOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    // Remove active class from all options
+                    durationOptions.forEach(opt => opt.classList.remove('active'));
+                    
+                    // Add active class to clicked option
+                    this.classList.add('active');
+                    
+                    // Update selected duration and price
+                    selectedDuration = parseInt(this.dataset.duration);
+                    selectedPrice = parseInt(this.dataset.price);
+                    
+                    // Update pricing display
+                    updatePricingDisplay();
+                });
+            });
+        }
+
+        // Change quantity
+        function changeQuantity(change) {
+            quantity += change;
+            
+            if (quantity < 1) {
+                quantity = 1;
+            }
+            
+            document.getElementById('quantity-display').textContent = quantity;
+            document.getElementById('decrease-btn').disabled = quantity <= 1;
+            
+            updatePricingDisplay();
+        }
+
+        // Update pricing display
+        function updatePricingDisplay() {
+            const total = selectedPrice * quantity;
+            
+            document.getElementById('selected-duration').textContent = `${selectedDuration} Hours`;
+            document.getElementById('price-per-person').textContent = `$${selectedPrice}`;
+            document.getElementById('guest-count').textContent = quantity;
+            document.getElementById('total-price').textContent = `$${total}`;
+        }
+
+        // Add to cart - Fixed to properly integrate with main cart system
+        function addToCart() {
+            const params = new URLSearchParams({
+                service: 'lounge',
+                flight: bookingData.flight,
+                date: bookingData.date,
+                airport: bookingData.airport,
+                adults: bookingData.adults,
+                children: bookingData.children,
+                infants: bookingData.infants,
+                serviceType: bookingData.serviceType,
+                duration: selectedDuration,
+                guests: quantity
+            });
+
+            // Show success message
+            const successMessage = document.getElementById('success-message');
+            successMessage.style.display = 'block';
+            
+            // Update button temporarily
+            const addButton = document.getElementById('add-to-cart-btn');
+            const originalText = addButton.textContent;
+            addButton.textContent = 'Added to Cart!';
+            addButton.style.background = '#28a745';
+            
+            setTimeout(() => {
+                successMessage.style.display = 'none';
+                addButton.textContent = originalText;
+                addButton.style.background = '';
+            }, 3000);
+
+            // Redirect to cart with the lounge service data
+            setTimeout(() => {
+                window.location.href = `Cart.html?${params.toString()}`;
+            }, 1500);
+        }
+    </script>
+</body>
+</html>

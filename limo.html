@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Limo Service - Oman Airport Services</title>
+    <link rel="stylesheet" href="footer.css">
+    <link rel="stylesheet" href="header.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        header {
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f8f9fa;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .main-content {
+            padding: 150px 20px 2rem 20px;
+        }
+
+        .booking-header {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        .booking-title {
+            font-size: 2rem;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .booking-subtitle {
+            color: #666;
+            margin-bottom: 1.5rem;
+        }
+
+        .trip-summary {
+            background: #fff5f8;
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-left: 4px solid #005BAC;
+            margin-bottom: 2rem;
+        }
+
+        .trip-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .trip-detail {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .trip-detail label {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 0.25rem;
+        }
+
+        .trip-detail span {
+            color: #666;
+        }
+
+        .service-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            color: #333;
+            margin-bottom: 1rem;
+        }
+
+        .service-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .service-option {
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .service-option:hover {
+            border-color: #005BAC;
+            transform: translateY(-2px);
+        }
+
+        .service-option.selected {
+            border-color: #e91e63;
+            background: #fff5f8;
+        }
+
+        .service-option input[type="radio"] {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            width: 20px;
+            height: 20px;
+            accent-color: #e91e63;
+        }
+
+        .service-option h3 {
+            color: #005BAC;
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        .service-option p {
+            color: #666;
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+
+        .service-price {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #6A1B9A;
+            margin-bottom: 1rem;
+        }
+
+        .service-features {
+            list-style: none;
+            margin-top: 1rem;
+        }
+
+        .service-features li {
+            color: #666;
+            margin-bottom: 0.5rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .service-features li:before {
+            content: "✓";
+            color: #005BAC;
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+
+        .pickup-details {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        .location-type {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .location-option {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .location-option input[type="radio"] {
+            width: 20px;
+            height: 20px;
+            accent-color: #e91e63;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            background: white;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #e91e63;
+        }
+
+        .phone-input {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .phone-input select {
+            width: 100px;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            accent-color: #e91e63;
+        }
+
+        .booking-summary {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .summary-item:last-child {
+            border-bottom: none;
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: #6A1B9A;
+            padding-top: 1rem;
+        }
+
+        .summary-total {
+            border-top: 2px solid #005BAC;
+            margin-top: 1rem;
+            padding-top: 1rem;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: #e91e63;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #c2185b;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: #6A1B9A;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #005BAC;
+            transform: translateY(-2px);
+        }
+
+        .alert {
+            background: #e3f2fd;
+            border: 1px solid #2196f3;
+            color: #1976d2;
+            padding: 1rem;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .trip-details {
+                grid-template-columns: 1fr;
+            }
+
+            .service-options {
+                grid-template-columns: 1fr;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .location-type {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="header-placeholder"></div>
+    <main class="main-content">
+        <div class="container">
+            <div class="booking-header">
+                <h1 class="booking-title">Book Limo Service</h1>
+                <p class="booking-subtitle">Premium chauffeur-driven transportation service in Oman</p>
+                
+                <div class="trip-summary">
+                    <div class="trip-details">
+                        <div class="trip-detail">
+                            <label>Service Type:</label>
+                            <span id="js-service-type">Airport Transfer</span>
+                        </div>
+                        <div class="trip-detail">
+                            <label>Date:</label>
+                            <span id="js-travel-date">—</span>
+                        </div>
+                        <div class="trip-detail">
+                            <label>Airport:</label>
+                            <span id="js-airport">—</span>
+                        </div>
+                        <div class="trip-detail">
+                            <label>Passengers:</label>
+                            <span id="js-passengers">—</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="service-section">
+                <h2 class="section-title">Choose Your Service Package</h2>
+                <div class="service-options">
+                    <div class="service-option selected">
+                        <input type="radio" name="service" value="standard" checked>
+                        <h3>Standard Limo</h3>
+                        <p>Comfortable sedan with professional chauffeur</p>
+                        <div class="service-price">From USD 38.58</div>
+                        <ul class="service-features">
+                            <li>Professional chauffeur</li>
+                            <li>Standard sedan (4 passengers)</li>
+                            <li>Complimentary water</li>
+                            <li>Flight monitoring</li>
+                            <li>30 minutes free waiting</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="service-option">
+                        <input type="radio" name="service" value="premium">
+                        <h3>Premium Limo</h3>
+                        <p>Luxury vehicle with enhanced amenities</p>
+                        <div class="service-price">From USD 56.07</div>
+                        <ul class="service-features">
+                            <li>Luxury sedan/SUV</li>
+                            <li>Premium chauffeur service</li>
+                            <li>Refreshments included</li>
+                            <li>Wi-Fi available</li>
+                            <li>60 minutes free waiting</li>
+                            <li>Meet & greet service</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="service-option">
+                        <input type="radio" name="service" value="luxury">
+                        <h3>Luxury Limo</h3>
+                        <p>Ultimate VIP experience with premium vehicles</p>
+                        <div class="service-price">From USD 89.50</div>
+                        <ul class="service-features">
+                            <li>Luxury limousine or high-end SUV</li>
+                            <li>VIP chauffeur service</li>
+                            <li>Premium refreshments</li>
+                            <li>Entertainment system</li>
+                            <li>90 minutes free waiting</li>
+                            <li>Red carpet service</li>
+                            <li>Personal assistant</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pickup-details">
+                <h2 class="section-title">Pickup & Drop-off Details</h2>
+                
+                <div class="alert" id="service-info">
+                    <strong>Note:</strong> Our limo service operates exclusively within Oman.
+                </div>
+
+                <div class="location-type">
+                    <div class="location-option">
+                        <input type="radio" name="dropoff-type" value="landmark" id="landmark" checked>
+                        <label for="landmark">Landmark</label>
+                    </div>
+                    <div class="location-option">
+                        <input type="radio" name="dropoff-type" value="building" id="building">
+                        <label for="building">Building/Villa</label>
+                    </div>
+                    <div class="location-option">
+                        <input type="radio" name="dropoff-type" value="hotel" id="hotel">
+                        <label for="hotel">Hotel</label>
+                    </div>
+                </div>
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="pickup-location">Pickup Location*</label>
+                        <input type="text" id="pickup-location" name="pickup-location" readonly>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="dropoff-location">Drop-off Location*</label>
+                        <input type="text" id="dropoff-location" name="dropoff-location" placeholder="Enter location name">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="address-line1">Address Line 1*</label>
+                        <input type="text" id="address-line1" name="address-line1" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="address-line2">Address Line 2 (optional)</label>
+                        <input type="text" id="address-line2" name="address-line2">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="telephone">Telephone*</label>
+                        <div class="phone-input">
+                            <select id="country-code" name="country-code">
+                                <option value="+968">🇴🇲 +968</option>
+                                <option value="+971">🇦🇪 +971</option>
+                                <option value="+973">🇧🇭 +973</option>
+                                <option value="+974">🇶🇦 +974</option>
+                                <option value="+965">🇰🇼 +965</option>
+                                <option value="+966">🇸🇦 +966</option>
+                            </select>
+                            <input type="tel" id="telephone" name="telephone" placeholder="XXXX XXXX" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="pickup-time">Pickup Time*</label>
+                        <input type="time" id="pickup-time" name="pickup-time" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="comments">Comments (optional)</label>
+                    <textarea id="comments" name="comments" rows="3" placeholder="Any special requirements or additional information..."></textarea>
+                </div>
+
+                <div class="checkbox-group">
+                    <input type="checkbox" id="car-seat" name="car-seat">
+                    <label for="car-seat">Car seat required</label>
+                </div>
+            </div>
+
+            <div class="booking-summary">
+                <h2 class="section-title">Booking Summary</h2>
+                <div class="summary-item">
+                    <span>Standard Limo Service</span>
+                    <span id="service-cost">USD 38.58</span>
+                </div>
+                <div class="summary-item">
+                    <span>VAT (5%)</span>
+                    <span id="vat-cost">USD 1.93</span>
+                </div>
+                <div class="summary-item summary-total">
+                    <span>Total Amount</span>
+                    <span id="total-cost">USD 40.51</span>
+                </div>
+            </div>
+
+            <div class="action-buttons">
+                <button type="button" class="btn btn-primary" onclick="proceedToPayment()">ADD TO CART</button>
+            </div>
+        </div>
+    </main>
+
+    <div id="footer-placeholder"></div>
+
+    <script>
+        // Load header and footer
+        fetch('header.html')
+            .then(res => res.text())
+            .then(html => {
+                document.getElementById('header-placeholder').innerHTML = html;
+                const script = document.createElement('script');
+                script.src = 'header.js';
+                document.body.appendChild(script);
+            });
+
+        fetch('footer.html')
+            .then(res => res.text())
+            .then(data => {
+                document.getElementById('footer-placeholder').innerHTML = data;
+            });
+
+        // Initialize page on load
+        document.addEventListener('DOMContentLoaded', () => {
+            const params = new URLSearchParams(window.location.search);
+            
+            // Get parameters
+            const serviceType = params.get('service') || 'arrival';
+            const date = params.get('date') || '';
+            const airport = params.get('airport') || '';
+            const adults = parseInt(params.get('adults')) || 0;
+            const children = parseInt(params.get('children')) || 0;
+            const infants = parseInt(params.get('infants')) || 0;
+
+            // Update service type display
+            const serviceTypeText = serviceType === 'arrival' ? 'Airport to Hotel/Home' : 'Hotel/Home to Airport';
+            document.getElementById('js-service-type').textContent = serviceTypeText;
+
+            // Format date
+            if (date) {
+                const d = new Date(date);
+                document.getElementById('js-travel-date').textContent = d.toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                });
+            }
+
+            // Set airport
+            document.getElementById('js-airport').textContent = airport;
+
+            // Build passenger text
+            const parts = [];
+            if (adults) parts.push(`${adults} Adult${adults > 1 ? 's' : ''}`);
+            if (children) parts.push(`${children} Child${children > 1 ? 'ren' : ''}`);
+            if (infants) parts.push(`${infants} Infant${infants > 1 ? 's' : ''}`);
+            document.getElementById('js-passengers').textContent = parts.join(', ') || '—';
+
+            // Set pickup/dropoff based on service type
+            const pickupField = document.getElementById('pickup-location');
+            const dropoffField = document.getElementById('dropoff-location');
+            
+            if (serviceType === 'arrival') {
+                pickupField.value = airport;
+                dropoffField.placeholder = 'Enter your destination (Hotel/Home)';
+            } else {
+                pickupField.placeholder = 'Enter pickup location (Hotel/Home)';
+                pickupField.removeAttribute('readonly');
+                dropoffField.value = airport;
+                dropoffField.setAttribute('readonly', true);
+            }
+        });
+
+        // Service option selection
+        document.querySelectorAll('.service-option').forEach(option => {
+            option.addEventListener('click', function() {
+                document.querySelectorAll('.service-option').forEach(opt => opt.classList.remove('selected'));
+                this.classList.add('selected');
+                
+                const radio = this.querySelector('input[type="radio"]');
+                radio.checked = true;
+                
+                updateSummary();
+            });
+        });
+
+        // Update summary based on selected service
+        function updateSummary() {
+            const selectedService = document.querySelector('input[name="service"]:checked');
+            let basePrice = 38.58;
+            let serviceName = 'Standard Limo Service';
+            
+            if (selectedService) {
+                switch(selectedService.value) {
+                    case 'standard':
+                        basePrice = 38.58;
+                        serviceName = 'Standard Limo Service';
+                        break;
+                    case 'premium':
+                        basePrice = 56.07;
+                        serviceName = 'Premium Limo Service';
+                        break;
+                    case 'luxury':
+                        basePrice = 89.50;
+                        serviceName = 'Luxury Limo Service';
+                        break;
+                }
+            }
+            
+            const vat = basePrice * 0.05;
+            const total = basePrice + vat;
+            
+            document.querySelector('.summary-item span').textContent = serviceName;
+            document.getElementById('service-cost').textContent = `USD ${basePrice.toFixed(2)}`;
+            document.getElementById('vat-cost').textContent = `USD ${vat.toFixed(2)}`;
+            document.getElementById('total-cost').textContent = `USD ${total.toFixed(2)}`;
+        }
+
+        // Form validation and submission
+        function proceedToPayment() {
+            const required = ['dropoff-location', 'address-line1', 'telephone', 'pickup-time'];
+            let isValid = true;
+            
+            required.forEach(field => {
+                const input = document.getElementById(field);
+                if (!input.value.trim()) {
+                    input.style.borderColor = '#e91e63';
+                    isValid = false;
+                } else {
+                    input.style.borderColor = '#ddd';
+                }
+            });
+            
+            if (!isValid) {
+                alert('Please fill in all required fields.');
+                return;
+            }
+            
+            // Build URL with booking data
+            const params = new URLSearchParams(window.location.search);
+            const selectedService = document.querySelector('input[name="service"]:checked').value;
+
+            const query = new URLSearchParams({
+                service: selectedService,                // <-- now it's "standard", "premium", or "luxury"
+                serviceType: 'limo',                     // <-- help the cart recognize this as a limo booking
+                flight: params.get('flight') || '',
+                date: params.get('date') || '',
+                airport: params.get('airport') || '',
+                adults: params.get('adults') || '0',
+                children: params.get('children') || '0',
+                infants: params.get('infants') || '0',
+                pickup: document.getElementById('pickup-location').value,
+                dropoff: document.getElementById('dropoff-location').value,
+                address1: document.getElementById('address-line1').value,
+                address2: document.getElementById('address-line2').value,
+                phone: document.getElementById('country-code').value + document.getElementById('telephone').value,
+                time: document.getElementById('pickup-time').value,
+                comments: document.getElementById('comments').value
+            }).toString();
+
+            
+            // Redirect to cart
+            window.location.href = `Cart.html?${query}`;
+        }
+
+        function saveLater() {
+            alert('Your booking details have been saved for later.');
+        }
+    </script>
+</body>
+</html>

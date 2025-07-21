@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>City Check-in - Transom Handling | Maraheb Services</title>
+    <link rel="stylesheet" href="header.css">
+    <link rel="stylesheet" href="cityCheckIn.css">
+    <link rel="stylesheet" href="footer.css">
+  
+</head>
+<body>
+      <!-- Header -->
+      <div id="header-placeholder"></div><!-- for Header movment -->
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <!-- Page Header -->
+            <div class="page-header">
+                <h1>City Check-in Service</h1>
+                <p>Visit our convenient city locations for hassle-free check-in before heading to the airport</p>
+            </div>
+
+            <!-- Service Content -->
+            <div class="service-content">
+                <div class="service-info">
+                    <h2>Check-in at City Locations</h2>
+                    <p>Maraheb's City Check-in service offers convenient locations throughout Muscat where you can complete your check-in process before traveling to the airport. Our fixed offices are strategically located in key areas to serve you better.</p>
+                    
+                    <p>Simply visit any of our city locations with your travel documents, and our experienced staff will handle your check-in, seat selection, and baggage processing. This service helps you avoid airport crowds and ensures a smoother travel experience.</p>
+
+                    <ul class="service-features">
+                        <li>Multiple convenient city locations</li>
+                        <li>Professional check-in assistance</li>
+                        <li>Baggage handling and processing</li>
+                        <li>Seat selection and boarding pass printing</li>
+                        <li>Travel document verification</li>
+                        <li>Flight status updates</li>
+                        <li>Reduced airport waiting time</li>
+                    </ul>
+                </div>
+
+                <div class="service-visual">
+                    <div class="service-icon">🏢</div>
+                    <h3>City Convenience</h3>
+                    <p>Multiple locations across Muscat for easy access to check-in services.</p>
+                </div>
+            </div>
+
+            <!-- Office Locations -->
+            <div class="process-steps">
+                <h2>Our City Check-in Locations</h2>
+                <div class="steps-grid">
+                    <div class="step">
+                        <div class="step-number">📍</div>
+                        <h3>City Centre Muscat</h3>
+                        <p><strong>Address:</strong> Ground Floor, City Centre Muscat<br>
+                        <strong>Hours:</strong> 8:00 AM - 10:00 PM<br>
+                        <strong>Contact:</strong> +968 2456 7891</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">📍</div>
+                        <h3>Muscat Grand Mall</h3>
+                        <p><strong>Address:</strong> Level 1, Muscat Grand Mall<br>
+                        <strong>Hours:</strong> 9:00 AM - 11:00 PM<br>
+                        <strong>Contact:</strong> +968 2456 7892</p>
+                    </div>
+                   
+                </div>
+            </div>
+
+            <!-- Service Process -->
+            <div class="process-steps">
+                <h2>How City Check-in Works</h2>
+                <div class="steps-grid">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <h3>Choose Location</h3>
+                        <p>Select the most convenient city check-in location for you</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <h3>Visit Office</h3>
+                        <p>Bring your travel documents and visit during operating hours</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <h3>Complete Check-in</h3>
+                        <p>Our staff processes your check-in and handles baggage</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">4</div>
+                        <h3>Go to Airport</h3>
+                        <p>Head to the airport and proceed directly to security</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Additional Info -->
+            <div class="service-content">
+                <div class="service-info">
+                    <h2>What to Bring</h2>
+                    <ul class="service-features">
+                        <li>Valid passport or ID</li>
+                        <li>Flight booking confirmation</li>
+                        <li>Visa documents (if required)</li>
+                        <li>Travel insurance (if applicable)</li>
+                        <li>Special assistance requests</li>
+                    </ul>
+                </div>
+
+                <div class="service-info">
+                    <h2>Important Notes</h2>
+                    <ul class="service-features">
+                        <li>Service available for most airlines</li>
+                        <li>Check-in closes 2 hours before departure</li>
+                        <li>Some restrictions may apply for certain destinations</li>
+                        <li>Special baggage requires advance notice</li>
+                        <li>No additional fees for standard service</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </main>
+    <!-- Footer -->
+     <div id="footer-placeholder"></div>
+     <script>
+        fetch('header.html')
+          .then(res => res.text())
+          .then(html => {
+            document.getElementById('header-placeholder').innerHTML = html;
+            const script = document.createElement('script');
+            script.src = 'header.js';
+            document.body.appendChild(script);
+          });
+        </script>
+
+        <script>
+        fetch('footer.html')
+            .then(res => res.text())
+            .then(data => {
+            document.getElementById('footer-placeholder').innerHTML = data;
+            });
+</script>
+
+</body>
+</html>

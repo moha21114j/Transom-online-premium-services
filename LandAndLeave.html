@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Land and Leave - Transom Handling | Maraheb Services</title>
+    <link rel="stylesheet" href="header.css">
+    <link rel="stylesheet" href="LsndAndLeave.css">
+    <link rel="stylesheet" href="footer.css">
+
+</head>
+<body>
+    <!-- Header -->
+      <div id="header-placeholder"></div><!-- for Header movment -->
+  
+    <!-- Main Content -->header
+    <main class="main-content">
+        <div class="container">
+            <!-- Page Header -->
+            <div class="page-header">
+                <h1>Land and Leave Service</h1>
+                <p>Fast-track your arrival with our premium exit service - get through immigration and customs in record time</p>
+            </div>
+
+            <!-- Service Content -->
+            <div class="service-content">
+                <div class="service-info">
+                    <h2>Land and Leave by Maraheb</h2>
+                    <p>Make your arrival as smooth as your departure with Maraheb's Land and Leave service. Our professional team will meet you at the aircraft and guide you through all arrival procedures, including immigration and customs, ensuring a quick and hassle-free exit from the airport.</p>
+                    
+                    <p>This premium service is ideal for business travelers, VIPs, or anyone who values their time. Skip the long queues and enjoy a seamless arrival experience that gets you to your destination faster.</p>
+
+                    <ul class="service-features">
+                        <li>Meet and greet at aircraft door</li>
+                        <li>Fast-track immigration clearance</li>
+                        <li>Priority baggage collection</li>
+                        <li>Customs assistance</li>
+                        <li>Escort to arrival hall</li>
+                        <li>Transportation coordination</li>
+                        <li>Dedicated arrival lounge access</li>
+                    </ul>
+
+                    <a href="https://maraheb.om/" class="maraheb-link" target="_blank">Book with Maraheb →</a>
+                </div>
+
+                <div class="service-visual">
+                    <div class="service-icon">🛬</div>
+                    <h3>Fast-Track Arrival</h3>
+                    <p>Experience the quickest way to exit the airport with our dedicated arrival service.</p>
+                </div>
+            </div>
+
+            <!-- Benefits Section -->
+            <div class="benefits-section">
+                <h2>Why Choose Land and Leave?</h2>
+                <div class="benefits-grid">
+                    <div class="benefit-card">
+                        <div class="benefit-icon">⚡</div>
+                        <h3>Time Saving</h3>
+                        <p>Reduce your arrival time by up to 60% with our fast-track service</p>
+                    </div>
+                    <div class="benefit-card">
+                        <div class="benefit-icon">🎯</div>
+                        <h3>Personalized Service</h3>
+                        <p>Dedicated staff member assigned to handle all your arrival needs</p>
+                    </div>
+                    <div class="benefit-card">
+                        <div class="benefit-icon">🛡️</div>
+                        <h3>Stress-Free</h3>
+                        <p>No waiting in lines, no confusion - just smooth, efficient service</p>
+                    </div>
+                    <div class="benefit-card">
+                        <div class="benefit-icon">🌟</div>
+                        <h3>VIP Treatment</h3>
+                        <p>Enjoy premium treatment from the moment you land</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+      <!-- Footer -->
+     <div id="footer-placeholder"></div>
+     <script>
+        fetch('header.html')
+          .then(res => res.text())
+          .then(html => {
+            document.getElementById('header-placeholder').innerHTML = html;
+            const script = document.createElement('script');
+            script.src = 'header.js';
+            document.body.appendChild(script);
+          });
+        </script>
+
+        <script>
+        fetch('footer.html')
+            .then(res => res.text())
+            .then(data => {
+            document.getElementById('footer-placeholder').innerHTML = data;
+            });
+</script>
+
+</body>
+</html>

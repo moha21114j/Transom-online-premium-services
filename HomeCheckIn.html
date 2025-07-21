@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Home Check-in</title>
+    <link rel="stylesheet" href="header.css">
+    <link rel="stylesheet" href="HomeCheckIn.css">
+    <link rel="stylesheet" href="footer.css">
+    
+
+
+
+    
+</head>
+<body>
+
+    
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div id="header-placeholder"></div>
+        <div class="container">
+            <!-- Page Header -->
+            <div class="page-header">
+                <h1>Home Check-in Service</h1>
+                <p>Check in from the comfort of your home or hotel and skip the queues at the airport</p>
+            </div>
+
+            <!-- Service Content -->
+            <div class="service-content">
+                <div class="service-info">
+                    <h2>Check-in Anywhere by Maraheb</h2>
+                    <p>Experience the convenience of checking in from anywhere with Maraheb's Home Check-in service. Our professional team comes to your location to handle all check-in formalities, allowing you to skip the airport queues and head straight to security.</p>
+                    
+                    <p>This premium service is perfect for business travelers, families, or anyone who values time and convenience. Our trained staff will collect your documents, process your check-in, and ensure everything is ready for your departure.</p>
+
+                    <ul class="service-features">
+                        <li>Check-in from your home, hotel, or office</li>
+                        <li>Professional staff handles all formalities</li>
+                        <li>Skip airport check-in queues</li>
+                        <li>Go directly to security at the airport</li>
+                        <li>Available for most airlines</li>
+                        <li>Secure document handling</li>
+                        <li>Real-time flight updates</li>
+                    </ul>
+
+                    <a href="https://maraheb.om/home-check-in/" class="maraheb-link" target="_blank">Book with Maraheb →</a>
+                </div>
+
+                <div class="service-visual">
+                    <div class="service-icon">🏠</div>
+                    <h3>Convenient Home Service</h3>
+                    <p>Our team comes to you, making travel preparation effortless and stress-free.</p>
+                </div>
+            </div>
+
+            <!-- Process Steps -->
+            <div class="process-steps">
+                <h2>How It Works</h2>
+                <div class="steps-grid">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <h3>Book Online</h3>
+                        <p>Schedule your home check-in service through the Maraheb platform</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <h3>Staff Arrives</h3>
+                        <p>Our professional team comes to your specified location</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <h3>Check-in Process</h3>
+                        <p>We handle all check-in formalities and documentation</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">4</div>
+                        <h3>Ready to Fly</h3>
+                        <p>Arrive at the airport and go straight to security</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+     <div id="footer-placeholder"></div>
+
+
+    <script>
+        fetch('header.html')
+          .then(res => res.text())
+          .then(html => {
+            document.getElementById('header-placeholder').innerHTML = html;
+            const script = document.createElement('script');
+            script.src = 'header.js';
+            document.body.appendChild(script);
+          });
+        </script>
+
+          <script>
+        fetch('footer.html')
+            .then(res => res.text())
+            .then(data => {
+            document.getElementById('footer-placeholder').innerHTML = data;
+            });
+</script>
+        
+</body>
+</html>
