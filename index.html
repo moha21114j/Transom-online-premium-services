@@ -48,7 +48,7 @@
             
            <div class="service-tabs">
             <div class="service-tab active" onclick="selectService('meet-greet')">Meet & Greet</div>
-            <div class="service-tab" onclick="selectService('lounges')">Lounges(Departure )</div>
+            <div class="service-tab" onclick="selectService('lounges')">Lounges(Departure Only)</div>
             <div class="service-tab" onclick="selectService('limo')">Limo Service</div>
         </div>
 
@@ -443,6 +443,29 @@ fetch('header.html')
     const script = document.createElement('script');
     script.src = 'header.js';
     document.body.appendChild(script);
+
+    //  Ensure currency is loaded after header is ready
+     setTimeout(() => {
+        const savedCurrency = localStorage.getItem('selectedCurrency');
+        if (savedCurrency && window.setCurrency) {
+            const selectedCurrencyTop = document.getElementById('selected-currency');
+            const selectedCurrencyNav = document.getElementById('selected-currency-nav');
+            
+            if (selectedCurrencyTop) {
+                selectedCurrencyTop.textContent = savedCurrency;
+            }
+            if (selectedCurrencyNav) {
+                selectedCurrencyNav.textContent = savedCurrency;
+            }
+        }
+           const cartCount = localStorage.getItem('cartItemCount') || '0';
+            const cartBadge = document.querySelector('.cart-badge');
+            if (cartBadge) {
+                cartBadge.textContent = cartCount;
+                cartBadge.style.display = parseInt(cartCount) > 0 ? 'flex' : 'none';
+            }
+
+    }, 200);
   });
 </script>
 

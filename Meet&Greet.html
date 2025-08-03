@@ -386,18 +386,91 @@
     <!-- Footer -->
      <div id="footer-placeholder"></div>
      <script>
-        fetch('header.html')
-          .then(res => res.text())
-          .then(html => {
+       fetch('header.html')
+        .then(res => res.text())
+        .then(html => {
             document.getElementById('header-placeholder').innerHTML = html;
             const script = document.createElement('script');
             script.src = 'header.js';
             document.body.appendChild(script);
-          });
+
+            //  Ensure currency is loaded after header is ready
+            setTimeout(() => {
+                const savedCurrency = localStorage.getItem('selectedCurrency');
+                if (savedCurrency && window.setCurrency) {
+                    const selectedCurrencyTop = document.getElementById('selected-currency');
+                    const selectedCurrencyNav = document.getElementById('selected-currency-nav');
+                    
+                    if (selectedCurrencyTop) {
+                        selectedCurrencyTop.textContent = savedCurrency;
+                    }
+                    if (selectedCurrencyNav) {
+                        selectedCurrencyNav.textContent = savedCurrency;
+                    }
+                }
+                   const cartCount = localStorage.getItem('cartItemCount') || '0';
+                    const cartBadge = document.querySelector('.cart-badge');
+                    if (cartBadge) {
+                        cartBadge.textContent = cartCount;
+                        cartBadge.style.display = parseInt(cartCount) > 0 ? 'flex' : 'none';
+                    }
+            }, 200);
+        });
         </script>
 
 
     <script>
+
+        // Currency configuration
+        const currencyConfig = {
+            'USD': { symbol: '$', rate: 1, position: 'before' },
+            'OMR': { symbol: 'OMR', rate: 0.385, position: 'after' }
+        };
+
+        // Get selected currency
+        function getSelectedCurrency() {
+            return localStorage.getItem('selectedCurrency') || 'USD';
+        }
+
+        // Format price with currency
+        function formatPrice(amount, currency = null) {
+            if (!currency) currency = getSelectedCurrency();
+            const config = currencyConfig[currency];
+            const convertedAmount = amount * config.rate;
+            const formattedAmount = convertedAmount.toFixed(2);
+            
+            if (config.position === 'before') {
+                return `${config.symbol}${formattedAmount}`;
+            } else {
+                return `${formattedAmount} ${config.symbol}`;
+            }
+        }
+
+        // Update all prices on the page
+        function updateAllPrices() {
+            const priceElements = document.querySelectorAll('.service-price');
+            const prices = [45, 85, 150]; // standard, premium, luxury
+            priceElements.forEach((element, index) => {
+                if (prices[index]) {
+                    element.textContent = `${formatPrice(prices[index])} per person`;
+                }
+            });
+            if (window.updateSummary) updateSummary();
+        }
+
+        // Listen for currency changes
+        document.addEventListener('currencyChanged', function(e) {
+            updateAllPrices();
+        });
+
+        window.addEventListener('storage', function(e) {
+            if (e.key === 'selectedCurrency') {
+                updateAllPrices();
+            }
+        });
+
+
+
         // Service option selection
         document.querySelectorAll('.service-option').forEach(option => {
             option.addEventListener('click', function() {
@@ -423,8 +496,6 @@
 
         function updateSummary() {
             const selectedService = document.querySelector('input[name="service"]:checked');
-            const additionalServices = document.querySelectorAll('.additional-option input[type="checkbox"]:checked');
-            
             let basePrice = 0;
             let serviceName = '';
             
@@ -445,59 +516,25 @@
                 }
             }
             
-            let additionalTotal = 0;
-            additionalServices.forEach(service => {
-                additionalTotal += parseFloat(service.value);
-            });
+            const vat = basePrice * 0.05;
+            const total = basePrice + vat;
             
-            const subtotal = basePrice + additionalTotal;
-            const serviceFee = 5;
-            const vat = (subtotal + serviceFee) * 0.05;
-            const total = subtotal + serviceFee + vat;
-            
-            // Update summary display
+            // Update with currency formatting
             const summaryItems = document.querySelectorAll('.summary-item');
-            summaryItems[0].innerHTML = `<span>${serviceName} (1 person)</span><span>$${basePrice.toFixed(2)}</span>`;
-            
-            if (additionalTotal > 0) {
-                if (summaryItems.length === 4) {
-                    // Insert additional services line
-                    const additionalLine = document.createElement('div');
-                    additionalLine.className = 'summary-item';
-                    additionalLine.innerHTML = `<span>Additional Services</span><span>$${additionalTotal.toFixed(2)}</span>`;
-                    summaryItems[0].parentNode.insertBefore(additionalLine, summaryItems[1]);
-                } else {
-                    summaryItems[1].innerHTML = `<span>Additional Services</span><span>$${additionalTotal.toFixed(2)}</span>`;
-                }
+            if (summaryItems[0]) {
+                summaryItems[0].innerHTML = `<span>${serviceName} (1 person)</span><span>${formatPrice(basePrice)}</span>`;
             }
             
             const vatLine = document.querySelector('.summary-item:nth-last-child(2)');
-            vatLine.innerHTML = `<span>VAT (5%)</span><span>$${vat.toFixed(2)}</span>`;
+            if (vatLine) {
+                vatLine.innerHTML = `<span>VAT (5%)</span><span>${formatPrice(vat)}</span>`;
+            }
             
             const totalLine = document.querySelector('.summary-total');
-            totalLine.innerHTML = `<span>Total Amount</span><span>$${total.toFixed(2)}</span>`;
+            if (totalLine) {
+                totalLine.innerHTML = `<span>Total Amount</span><span>${formatPrice(total)}</span>`;
+            }
         }
-
-        // Form validation
-        document.querySelector('.btn-primary').addEventListener('click', function(e) {
-    e.preventDefault();
-
-    // Build URL with all booking data
-    const params = new URLSearchParams(window.location.search);
-
-    const query = new URLSearchParams({
-      service: 'meet-greet',
-      flight: params.get('flight'),
-      date: params.get('date'),
-      airport: params.get('airport'),
-      adults: params.get('adults'),
-      children: params.get('children'),
-      infants: params.get('infants')
-    }).toString();
-
-    // Go to cart.html with params
-    window.location.href = `Cart.html?${query}`;
-});
 
     </script>
           <script>
@@ -564,6 +601,9 @@ document.getElementById('proceed-btn').addEventListener('click', () => {
   // Redirect to cart.html with details
   window.location.href = `Cart.html?${query}`;
 });
+// Initialize currency display
+        setTimeout(() => { updateAllPrices(); }, 300);
+    </script>
 </script>
 
 

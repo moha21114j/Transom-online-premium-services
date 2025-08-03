@@ -576,6 +576,32 @@
             vatRate: 0.05,
             appliedPromo: null
         };
+        // Currency configuration
+        const currencyConfig = {
+            'USD': { symbol: '$', rate: 1, position: 'before' },
+            'OMR': { symbol: 'OMR', rate: 0.385, position: 'after' } // 1 USD = 0.385 OMR approximately
+        };
+
+
+        // Get selected currency from localStorage or default to USD
+        function getSelectedCurrency() {
+            return localStorage.getItem('selectedCurrency') || 'USD';
+        }
+
+        // Format price with currency
+        function formatPrice(amount, currency = null) {
+            if (!currency) currency = getSelectedCurrency();
+            const config = currencyConfig[currency];
+            const convertedAmount = amount * config.rate;
+            const formattedAmount = convertedAmount.toFixed(2);
+            
+            if (config.position === 'before') {
+                return `${config.symbol}${formattedAmount}`;
+            } else {
+                return `${formattedAmount} ${config.symbol}`;
+            }
+        }
+
 
         // Service configurations with proper pricing
         const serviceConfigs = {
@@ -827,12 +853,38 @@
             }
 
             saveCart();
+            setTimeout(() => {
+            updateCartBadge();
+        }, 100);
+
+        }
+
+
+        // Function to update cart badge count
+        function updateCartBadge() {
+            const totalItems = cart.items.reduce((total, item) => total + item.quantity, 0);
+            
+            // Update the badge in the current page
+            const cartBadge = document.querySelector('.cart-badge');
+            if (cartBadge) {
+                cartBadge.textContent = totalItems;
+                cartBadge.style.display = totalItems > 0 ? 'flex' : 'none';
+            }
+            
+            // Also save to localStorage so other pages can read it
+            localStorage.setItem('cartItemCount', totalItems.toString());
+            
+            // Dispatch event to notify other pages
+            window.dispatchEvent(new CustomEvent('cartUpdated', { 
+                detail: { itemCount: totalItems } 
+            }));
         }
 
         // Save cart to localStorage
         function saveCart() {
-            localStorage.setItem('airportServiceCart', JSON.stringify(cart));
-        }
+        localStorage.setItem('airportServiceCart', JSON.stringify(cart));
+        updateCartBadge(); // ADD THIS LINE
+    }
 
         // Render cart items
         function renderCart() {
@@ -847,6 +899,7 @@
                     </div>
                 `;
                 updateSummary();
+                updateCartBadge();
                 return;
             }
 
@@ -982,13 +1035,24 @@
                             <span style="margin-left: 1rem; color: #666;">${getQuantityLabel(item.service)}</span>
                         </div>
                         ` : '<div></div>'}
-                        <div class="item-price">${(item.basePrice * item.quantity).toFixed(2)}</div>
+                        <div class="item-price">${formatPrice(item.basePrice * item.quantity)}</div>
                         <button class="remove-btn" onclick="removeItem('${item.id}')">Remove</button>
                     </div>
                 </div>
             `).join('');
 
             updateSummary();
+        }
+
+        function updateItemPrices() {
+            const currency = getSelectedCurrency();
+            cart.items.forEach(item => {
+                const itemElement = document.querySelector(`#cart-item-${item.id} .item-price`);
+                if (itemElement) {
+                    const itemTotal = item.basePrice * item.quantity;
+                    itemElement.textContent = formatPrice(itemTotal, currency);
+                }
+            });
         }
 
         // Get quantity label based on service type
@@ -1005,25 +1069,33 @@
 
         // Update quantity
         function updateQuantity(itemId, change) {
-            const item = cart.items.find(i => i.id === itemId);
-            if (item) {
-                const newQuantity = item.quantity + change;
-                if (newQuantity >= 1 && newQuantity <= 10) {
-                    item.quantity = newQuantity;
-                    saveCart();
-                    renderCart();
-                }
+        const item = cart.items.find(i => i.id === itemId);
+        if (item) {
+            const newQuantity = item.quantity + change;
+            if (newQuantity >= 1 && newQuantity <= 10) {
+                item.quantity = newQuantity;
+                saveCart();
+                renderCart();
+                // Force update cart badge immediately
+                setTimeout(() => {
+                    updateCartBadge();
+                }, 100);
             }
         }
+    }
 
         // Remove item
         function removeItem(itemId) {
-            if (confirm('Are you sure you want to remove this item from your cart?')) {
-                cart.items = cart.items.filter(item => item.id !== itemId);
-                saveCart();
-                renderCart();
-            }
+        if (confirm('Are you sure you want to remove this item from your cart?')) {
+            cart.items = cart.items.filter(item => item.id !== itemId);
+            saveCart();
+            renderCart();
+            // Force update cart badge immediately
+            setTimeout(() => {
+                updateCartBadge();
+            }, 100);
         }
+    }
 
         // Update summary with correct calculations
         function updateSummary() {
@@ -1040,10 +1112,10 @@
                 }
             }
 
-            document.getElementById('subtotal').textContent = `${subtotal.toFixed(2)}`;
-            document.getElementById('service-fee').textContent = `${cart.serviceFee.toFixed(2)}`;
-            document.getElementById('vat').textContent = `${vatAmount.toFixed(2)}`;
-            document.getElementById('total').textContent = `${total.toFixed(2)}`;
+            document.getElementById('subtotal').textContent = formatPrice(subtotal);
+            document.getElementById('service-fee').textContent = formatPrice(cart.serviceFee);
+            document.getElementById('vat').textContent = formatPrice(vatAmount);
+            document.getElementById('total').textContent = formatPrice(total);
         }
 
         // Apply promo code
@@ -1095,6 +1167,7 @@
             }
 
             // Get current cart summary
+            const currency = getSelectedCurrency();
             const subtotal = cart.items.reduce((sum, item) => sum + (item.basePrice * item.quantity), 0);
             const total = document.getElementById('total').textContent;
             
@@ -1121,17 +1194,47 @@
                 day: 'numeric'
             });
         }
+        // Listen for currency changes
+        window.addEventListener('storage', function(e) {
+            if (e.key === 'selectedCurrency') {
+                updateSummary();
+                updateItemPrices();
+            }
+        });
+
+        // Also listen for currency changes within the same page
+        document.addEventListener('currencyChanged', function() {
+            updateSummary();
+            updateItemPrices();
+        });
+
 
         // Load header and footer
         document.addEventListener('DOMContentLoaded', () => {
-            fetch('header.html')
-                .then(res => res.text())
-                .then(html => {
-                    document.getElementById('header-placeholder').innerHTML = html;
-                    const script = document.createElement('script');
-                    script.src = 'header.js';
-                    document.body.appendChild(script);
-                });
+           fetch('header.html')
+            .then(res => res.text())
+            .then(html => {
+                document.getElementById('header-placeholder').innerHTML = html;
+                const script = document.createElement('script');
+                script.src = 'header.js';
+                document.body.appendChild(script);
+
+                //  Ensure currency is loaded after header is ready
+                setTimeout(() => {
+                    const savedCurrency = localStorage.getItem('selectedCurrency');
+                    if (savedCurrency && window.setCurrency) {
+                        const selectedCurrencyTop = document.getElementById('selected-currency');
+                        const selectedCurrencyNav = document.getElementById('selected-currency-nav');
+                        
+                        if (selectedCurrencyTop) {
+                            selectedCurrencyTop.textContent = savedCurrency;
+                        }
+                        if (selectedCurrencyNav) {
+                            selectedCurrencyNav.textContent = savedCurrency;
+                        }
+                    }
+                }, 200);
+            });
 
             fetch('footer.html')
                 .then(res => res.text())
@@ -1141,6 +1244,8 @@
 
             initializeCart();
         });
+
+        
     </script>
 </body>
 </html>

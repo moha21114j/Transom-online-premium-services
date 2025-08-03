@@ -92,6 +92,11 @@ window.setCurrency = function(currency) {
     }
 
     localStorage.setItem('selectedCurrency', currency);
+    
+    // Dispatch custom event to notify other parts of the page
+    document.dispatchEvent(new CustomEvent('currencyChanged', { 
+        detail: { currency: currency } 
+    }));
 };
 
 window.toggleMobileMenu = function() {
@@ -120,10 +125,55 @@ document.addEventListener('click', function(event) {
     }
 });
 
-// Load saved currency on page load
+// Load saved currency on page load - UPDATED VERSION
 document.addEventListener('DOMContentLoaded', function() {
-    const savedCurrency = localStorage.getItem('selectedCurrency');
-    if (savedCurrency) {
-        setCurrency(savedCurrency);
+    // Add a small delay to ensure header elements are ready
+    setTimeout(() => {
+        const savedCurrency = localStorage.getItem('selectedCurrency');
+        if (savedCurrency) {
+            const selectedCurrencyTop = document.getElementById('selected-currency');
+            const selectedCurrencyNav = document.getElementById('selected-currency-nav');
+            
+            if (selectedCurrencyTop) {
+                selectedCurrencyTop.textContent = savedCurrency;
+            }
+            if (selectedCurrencyNav) {
+                selectedCurrencyNav.textContent = savedCurrency;
+            }
+            
+            console.log('Loaded saved currency:', savedCurrency);
+        } else {
+            // Set default currency if none is saved
+            setCurrency('USD');
+        }
+        
+        // LOAD CART COUNT HERE TOO:
+        loadCartCount();
+    }, 100);
+});
+
+// Function to load and display cart count
+function loadCartCount() {
+    const cartCount = localStorage.getItem('cartItemCount') || '0';
+    const cartBadge = document.querySelector('.cart-badge');
+    if (cartBadge) {
+        cartBadge.textContent = cartCount;
+        cartBadge.style.display = parseInt(cartCount) > 0 ? 'flex' : 'none';
+    }
+}
+
+// Listen for cart updates
+window.addEventListener('cartUpdated', function(e) {
+    const cartBadge = document.querySelector('.cart-badge');
+    if (cartBadge) {
+        cartBadge.textContent = e.detail.itemCount;
+        cartBadge.style.display = e.detail.itemCount > 0 ? 'flex' : 'none';
+    }
+});
+
+// Listen for storage changes
+window.addEventListener('storage', function(e) {
+    if (e.key === 'cartItemCount') {
+        loadCartCount();
     }
 });

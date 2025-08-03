@@ -1,152 +1,606 @@
-<!DOCTYPE html>
+// Social login handler
+        function socialLogin(provider) {
+            showError(`${provider} login is not yet implemented`);
+        }<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Login - Primum Services</title>
-  <link rel="stylesheet" href="header.css">
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-  <style>
-    body::before {
-      content: "";
-      background-image: url('01.jpg');
-      background-size: cover;
-      background-position: center;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      z-index: -1;
-      filter: blur(8px) brightness(0.7);
-    }
-    .tab-active {
-      color: #1D4ED8;
-      border-bottom: 2px solid #1D4ED8;
-    }
-    .tab-inactive {
-      color: #888;
-      border-bottom: 2px solid #eee;
-    }
-    .custom-btn {
-      background-color: #1D4ED8;
-    }
-    .custom-btn:hover {
-      background-color: #1E40AF;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Transom Handling Services</title>
+    <link rel="stylesheet" href="header.css">
+    <link rel="stylesheet" href="footer.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+
+        .main-content {
+            padding: 150px 20px 2rem 20px;
+            min-height: calc(100vh - 200px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .login-container {
+            background: white;
+            padding: 3rem;
+            border-radius: 15px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 450px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .login-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #005BAC, #6A1B9A);
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .login-header h1 {
+            color: #005BAC;
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            font-weight: 300;
+        }
+
+        .login-header p {
+            color: #666;
+            font-size: 1rem;
+        }
+
+        .login-tabs {
+            display: flex;
+            margin-bottom: 2rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 4px;
+        }
+
+        .tab-button {
+            flex: 1;
+            background: none;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            color: #666;
+        }
+
+        .tab-button.active {
+            background: white;
+            color: #005BAC;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #005BAC;
+            box-shadow: 0 0 0 3px rgba(0, 91, 172, 0.1);
+        }
+
+        .phone-input {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .phone-input select {
+            width: 120px;
+            flex-shrink: 0;
+        }
+
+        .phone-input input {
+            flex: 1;
+        }
+
+        .form-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            font-size: 0.9rem;
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .remember-me input[type="checkbox"] {
+            width: auto;
+            margin: 0;
+        }
+
+        .forgot-password {
+            color: #005BAC;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .forgot-password:hover {
+            color: #6A1B9A;
+            text-decoration: underline;
+        }
+
+        .login-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #005BAC 0%, #6A1B9A 100%);
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 91, 172, 0.3);
+        }
+
+        .login-btn:active {
+            transform: translateY(0);
+        }
+
+        .register-link {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid #e9ecef;
+        }
+
+        .register-link p {
+            color: #666;
+            margin-bottom: 1rem;
+        }
+
+        .register-link a {
+            color: #005BAC;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+
+        .register-link a:hover {
+            color: #6A1B9A;
+            text-decoration: underline;
+        }
+
+        .social-login {
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid #e9ecef;
+        }
+
+        .social-login p {
+            text-align: center;
+            color: #666;
+            margin-bottom: 1rem;
+        }
+
+        .social-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-btn {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            font-weight: 600;
+        }
+
+        .social-btn:hover {
+            border-color: #005BAC;
+            background: #f8f9fa;
+        }
+
+        .error-message {
+            background: #ffe6e6;
+            color: #d63031;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            border-left: 4px solid #d63031;
+            display: none;
+        }
+
+        .success-message {
+            background: #e6ffe6;
+            color: #00b894;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            border-left: 4px solid #00b894;
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                padding: 120px 15px 2rem 15px;
+            }
+
+            .login-container {
+                padding: 2rem;
+                margin: 1rem;
+            }
+
+            .login-header h1 {
+                font-size: 1.8rem;
+            }
+
+            .social-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
 </head>
-<body class="bg-gray-100 min-h-screen">
+<body>
+    <!-- Header -->
+    <div id="header-placeholder"></div>
 
-  <!-- Header -->
-    <header class="bg-white shadow">
-    <nav class="main-nav">
-      <div class="container">
-        <div class="nav-container py-4 px-6 flex items-center justify-start">
-          <a href="index.html" class="logo text-2xl font-bold text-gray-800">Premium</a>
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="login-container">
+            <div class="login-header">
+                <h1>Welcome Back</h1>
+                <p>Sign in to access your airport services</p>
+            </div>
+
+            <!-- Error/Success Messages -->
+            <div class="error-message" id="error-message"></div>
+            <div class="success-message" id="success-message"></div>
+
+            <!-- Login Tabs -->
+            <div class="login-tabs">
+                <button class="tab-button active" onclick="switchTab('email')">Email Login</button>
+                <button class="tab-button" onclick="switchTab('phone')">Phone Login</button>
+            </div>
+
+            <!-- Email Login Form -->
+            <div class="tab-content active" id="email-tab">
+                <form id="email-form" onsubmit="handleEmailLogin(event)">
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" name="email" required placeholder="Enter your email">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" name="password" required placeholder="Enter your password">
+                    </div>
+
+                    <div class="form-options">
+                        <div class="remember-me">
+                            <input type="checkbox" id="remember-email" name="remember">
+                            <label for="remember-email">Remember me</label>
+                        </div>
+                        <a href="#" class="forgot-password" onclick="showForgotPassword()">Forgot Password?</a>
+                    </div>
+
+                    <button type="submit" class="login-btn">Sign In</button>
+                </form>
+            </div>
+
+            <!-- Phone Login Form -->
+            <div class="tab-content" id="phone-tab">
+                <form id="phone-form" onsubmit="handlePhoneLogin(event)">
+                    <div class="form-group">
+                        <label for="phone-number">Phone Number</label>
+                        <div class="phone-input">
+                            <select id="country-code" name="country-code">
+                                <option value="+968">🇴🇲 +968</option>
+                                <option value="+971">🇦🇪 +971</option>
+                                <option value="+973">🇧🇭 +973</option>
+                                <option value="+974">🇶🇦 +974</option>
+                                <option value="+965">🇰🇼 +965</option>
+                                <option value="+966">🇸🇦 +966</option>
+                            </select>
+                            <input type="tel" id="phone-number" name="phone" required placeholder="Phone number">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phone-password">Password</label>
+                        <input type="password" id="phone-password" name="password" required placeholder="Enter your password">
+                    </div>
+
+                    <div class="form-options">
+                        <div class="remember-me">
+                            <input type="checkbox" id="remember-phone" name="remember">
+                            <label for="remember-phone">Remember me</label>
+                        </div>
+                        <a href="#" class="forgot-password" onclick="showForgotPassword()">Forgot Password?</a>
+                    </div>
+
+                    <button type="submit" class="login-btn">Sign In</button>
+                </form>
+            </div>
+
+
+
+            <!-- Register Link -->
+            <div class="register-link">
+                <p>Don't have an account?</p>
+                <a href="register.html">Create Account</a>
+            </div>
         </div>
-      </div>
-    </nav>
-  </header>
-  <br/><br/><br/><br/>
-  <br/><br/><br/><br/>
+    </main>
 
-  <!-- Login Card -->
-  <div class="flex items-center justify-center min-h-[calc(100vh-80px)] px-4">
-    <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
-      
-      <!-- Card Title -->
-      <h2 class="text-2xl font-bold text-center text-gray-800 mb-6">Login</h2>
+    <!-- Footer -->
+    <div id="footer-placeholder"></div>
 
-      <!-- Tabs -->
-      <div class="flex justify-between mb-6 border-b-2">
-        <button id="emailTab" class="w-1/2 pb-2 text-center font-medium tab-active" onclick="showTab('email')">Email</button>
-        <button id="phoneTab" class="w-1/2 pb-2 text-center font-medium tab-inactive" onclick="showTab('phone')">Phone</button>
-      </div>
+    <script>
+        // Tab switching functionality
+        function switchTab(tabType) {
+            // Update tab buttons
+            document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
 
-      <!-- Email Login Form -->
-      <form id="emailForm" class="space-y-4">
-        <div>
-          <label class="block text-sm font-medium mb-1">Email :</label>
-          <input type="email" placeholder="Email" class="w-full border border-gray-300 p-3 rounded" required>
-        </div>
-        <div>
-          <label class="block text-sm font-medium mb-1">Password : </label>
-          <input type="password" placeholder="Password" class="w-full border border-gray-300 p-3 rounded" required>
-        </div>
-        <div class="flex justify-between items-center text-sm">
-          <label class="inline-flex items-center">
-            <input type="checkbox" class="mr-2">
-            Remember Me
-          </label>
-          <a href="#" class="text-blue-700 hover:underline">Forgot Password?</a>
-        </div>
-        <button type="submit" class="w-full text-white px-6 py-3 rounded custom-btn">Login</button>
-      </form>
+            // Update tab content
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            document.getElementById(tabType + '-tab').classList.add('active');
+        }
 
-      <!-- Phone Login Form -->
-      <form id="phoneForm" class="space-y-4 hidden">
-        <div>
-          <label class="block text-sm font-medium mb-1">Phone Number :</label>
-          <div class="flex gap-2">
-            <select class="border border-gray-300 p-3 rounded w-1/3">
-              <option value="+968">+968</option>
-              <option value="+971">+971</option>
-              <option value="+966">+966</option>
-              <option value="+973">+973</option>
-              <option value="+974">+974</option>
-              <option value="+965">+965</option>
-            </select>
-            <input type="tel" placeholder="Phone number" class="w-2/3 border border-gray-300 p-3 rounded" required />
-          </div>
-        </div>
-        <div>
-          <label class="block text-sm font-medium mb-1">Password : </label>
-          <input type="password" placeholder="Password" class="w-full border border-gray-300 p-3 rounded" required>
-        </div>
-         <div class="flex justify-between items-center text-sm">
-          <label class="inline-flex items-center">
-            <input type="checkbox" class="mr-2">
-            Remember Me
-          </label>
-          <a href="#" class="text-blue-700 hover:underline">Forgot Password?</a>
-        </div>
-        <button type="submit" class="w-full text-white px-6 py-3 rounded custom-btn">Login</button>
-      </form>
+        // Email login handler
+        function handleEmailLogin(event) {
+            event.preventDefault();
+            
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const remember = document.getElementById('remember-email').checked;
 
-      <!-- Register Link -->
-      <p class="mt-6 text-center text-sm text-gray-600">
-        Don't have an account?
-        <a href="register.html" class="text-blue-700 hover:underline font-medium">Register now</a>
-      </p>
-    </div>
-  </div>
+            // Basic validation
+            if (!email || !password) {
+                showError('Please fill in all fields');
+                return;
+            }
 
-  <!-- Tab Toggle Script -->
-  <script>
-    function showTab(tab) {
-      const emailForm = document.getElementById('emailForm');
-      const phoneForm = document.getElementById('phoneForm');
-      const emailTab = document.getElementById('emailTab');
-      const phoneTab = document.getElementById('phoneTab');
+            // Show loading state
+            const submitBtn = event.target.querySelector('.login-btn');
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = 'Signing In...';
+            submitBtn.disabled = true;
 
-      if (tab === 'email') {
-        emailForm.classList.remove('hidden');
-        phoneForm.classList.add('hidden');
-        emailTab.classList.add('tab-active');
-        emailTab.classList.remove('tab-inactive');
-        phoneTab.classList.remove('tab-active');
-        phoneTab.classList.add('tab-inactive');
-      } else {
-        phoneForm.classList.remove('hidden');
-        emailForm.classList.add('hidden');
-        phoneTab.classList.add('tab-active');
-        phoneTab.classList.remove('tab-inactive');
-        emailTab.classList.remove('tab-active');
-        emailTab.classList.add('tab-inactive');
-      }
-    }
-  </script>
+            // Simulate login process (replace with actual authentication)
+            setTimeout(() => {
+                // Demo credentials
+                if (email === 'admin@transom.om' && password === 'admin123') {
+                    showSuccess('Login successful! Redirecting...');
+                    
+                    // Save login state
+                    if (remember) {
+                        localStorage.setItem('rememberedEmail', email);
+                    }
+                    localStorage.setItem('isLoggedIn', 'true');
+                    localStorage.setItem('userEmail', email);
+                    
+                    // Redirect after success
+                    setTimeout(() => {
+                        window.location.href = 'index.html';
+                    }, 1500);
+                } else {
+                    showError('Invalid email or password');
+                    submitBtn.textContent = originalText;
+                    submitBtn.disabled = false;
+                }
+            }, 1500);
+        }
 
+        // Phone login handler
+        function handlePhoneLogin(event) {
+            event.preventDefault();
+            
+            const countryCode = document.getElementById('country-code').value;
+            const phone = document.getElementById('phone-number').value;
+            const password = document.getElementById('phone-password').value;
+            const remember = document.getElementById('remember-phone').checked;
+
+            // Basic validation
+            if (!phone || !password) {
+                showError('Please fill in all fields');
+                return;
+            }
+
+            // Show loading state
+            const submitBtn = event.target.querySelector('.login-btn');
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = 'Signing In...';
+            submitBtn.disabled = true;
+
+            // Simulate login process
+            setTimeout(() => {
+                // Demo credentials
+                if (phone === '99887766' && password === 'admin123') {
+                    showSuccess('Login successful! Redirecting...');
+                    
+                    // Save login state
+                    if (remember) {
+                        localStorage.setItem('rememberedPhone', countryCode + phone);
+                    }
+                    localStorage.setItem('isLoggedIn', 'true');
+                    localStorage.setItem('userPhone', countryCode + phone);
+                    
+                    // Redirect after success
+                    setTimeout(() => {
+                        window.location.href = 'index.html';
+                    }, 1500);
+                } else {
+                    showError('Invalid phone number or password');
+                    submitBtn.textContent = originalText;
+                    submitBtn.disabled = false;
+                }
+            }, 1500);
+        }
+
+        // Social login handler
+        function socialLogin(provider) {
+            showError(`${provider} login is not yet implemented`);
+        }
+
+        // Forgot password handler
+        function showForgotPassword() {
+            alert('Forgot password functionality would be implemented here.\n\nFor demo purposes:\nEmail: admin@transom.om\nPhone: 99887766\nPassword: admin123');
+        }
+
+        // Message display functions
+        function showError(message) {
+            const errorDiv = document.getElementById('error-message');
+            const successDiv = document.getElementById('success-message');
+            
+            successDiv.style.display = 'none';
+            errorDiv.textContent = message;
+            errorDiv.style.display = 'block';
+            
+            // Auto-hide after 5 seconds
+            setTimeout(() => {
+                errorDiv.style.display = 'none';
+            }, 5000);
+        }
+
+        function showSuccess(message) {
+            const errorDiv = document.getElementById('error-message');
+            const successDiv = document.getElementById('success-message');
+            
+            errorDiv.style.display = 'none';
+            successDiv.textContent = message;
+            successDiv.style.display = 'block';
+        }
+
+        // Load header and footer
+        document.addEventListener('DOMContentLoaded', () => {
+            fetch('header.html')
+                .then(res => res.text())
+                .then(html => {
+                    document.getElementById('header-placeholder').innerHTML = html;
+                    const script = document.createElement('script');
+                    script.src = 'header.js';
+                    document.body.appendChild(script);
+                    
+                    setTimeout(() => {
+                        const savedCurrency = localStorage.getItem('selectedCurrency');
+                        if (savedCurrency && window.setCurrency) {
+                            const selectedCurrencyTop = document.getElementById('selected-currency');
+                            const selectedCurrencyNav = document.getElementById('selected-currency-nav');
+                            
+                            if (selectedCurrencyTop) {
+                                selectedCurrencyTop.textContent = savedCurrency;
+                            }
+                            if (selectedCurrencyNav) {
+                                selectedCurrencyNav.textContent = savedCurrency;
+                            }
+                        }
+                        
+                        // Load cart count
+                        const cartCount = localStorage.getItem('cartItemCount') || '0';
+                        const cartBadge = document.querySelector('.cart-badge');
+                        if (cartBadge) {
+                            cartBadge.textContent = cartCount;
+                            cartBadge.style.display = parseInt(cartCount) > 0 ? 'flex' : 'none';
+                        }
+                    }, 200);
+                });
+
+            fetch('footer.html')
+                .then(res => res.text())
+                .then(data => {
+                    document.getElementById('footer-placeholder').innerHTML = data;
+                });
+
+            // Load remembered credentials
+            const rememberedEmail = localStorage.getItem('rememberedEmail');
+            const rememberedPhone = localStorage.getItem('rememberedPhone');
+            
+            if (rememberedEmail) {
+                document.getElementById('email').value = rememberedEmail;
+                document.getElementById('remember-email').checked = true;
+            }
+            
+            if (rememberedPhone) {
+                // Extract country code and phone number
+                const phoneMatch = rememberedPhone.match(/^(\+\d+)(.+)$/);
+                if (phoneMatch) {
+                    document.getElementById('country-code').value = phoneMatch[1];
+                    document.getElementById('phone-number').value = phoneMatch[2];
+                    document.getElementById('remember-phone').checked = true;
+                }
+            }
+
+            // Check if already logged in
+            if (localStorage.getItem('isLoggedIn') === 'true') {
+                showSuccess('You are already logged in. Redirecting...');
+                setTimeout(() => {
+                    window.location.href = 'index.html';
+                }, 1500);
+            }
+        });
+    </script>
 </body>
 </html>

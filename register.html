@@ -1,73 +1,599 @@
-<!-- register.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Register - Primum Services</title>
-  <link rel="stylesheet" href="footer.css">
-  <link rel="stylesheet" href="header.css">
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Transom Handling Services</title>
+    <link rel="stylesheet" href="header.css">
+    <link rel="stylesheet" href="footer.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-  <style>
-    body::before {
-      content: "";
-      background-image: url('01.jpg');
-      background-size: cover;
-      background-position: center;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      z-index: -1;
-      filter: blur(8px) brightness(0.7);
-    }
-  </style>
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+
+        .main-content {
+            padding: 150px 20px 2rem 20px;
+            min-height: calc(100vh - 200px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .register-container {
+            background: white;
+            padding: 3rem;
+            border-radius: 15px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 500px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .register-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #005BAC, #6A1B9A);
+        }
+
+        .register-header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .register-header h1 {
+            color: #005BAC;
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            font-weight: 300;
+        }
+
+        .register-header p {
+            color: #666;
+            font-size: 1rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #005BAC;
+            box-shadow: 0 0 0 3px rgba(0, 91, 172, 0.1);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .phone-input {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .phone-input select {
+            width: 120px;
+            flex-shrink: 0;
+        }
+
+        .phone-input input {
+            flex: 1;
+        }
+
+        .password-requirements {
+            font-size: 0.8rem;
+            color: #666;
+            margin-top: 0.5rem;
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .password-requirements li {
+            margin-bottom: 0.25rem;
+            position: relative;
+            padding-left: 20px;
+        }
+
+        .password-requirements li:before {
+            content: '✗';
+            position: absolute;
+            left: 0;
+            color: #e74c3c;
+        }
+
+        .password-requirements li.valid:before {
+            content: '✓';
+            color: #27ae60;
+        }
+
+        .terms-checkbox {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            margin-bottom: 2rem;
+            font-size: 0.9rem;
+        }
+
+        .terms-checkbox input[type="checkbox"] {
+            width: auto;
+            margin: 0;
+            margin-top: 0.25rem;
+        }
+
+        .terms-checkbox label {
+            margin: 0;
+            font-weight: normal;
+            line-height: 1.5;
+        }
+
+        .terms-checkbox a {
+            color: #005BAC;
+            text-decoration: none;
+        }
+
+        .terms-checkbox a:hover {
+            text-decoration: underline;
+        }
+
+        .register-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #005BAC 0%, #6A1B9A 100%);
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .register-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 91, 172, 0.3);
+        }
+
+        .register-btn:active {
+            transform: translateY(0);
+        }
+
+        .register-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .login-link {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid #e9ecef;
+        }
+
+        .login-link p {
+            color: #666;
+            margin-bottom: 1rem;
+        }
+
+        .login-link a {
+            color: #005BAC;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+
+        .login-link a:hover {
+            color: #6A1B9A;
+            text-decoration: underline;
+        }
+
+        .error-message {
+            background: #ffe6e6;
+            color: #d63031;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            border-left: 4px solid #d63031;
+            display: none;
+        }
+
+        .success-message {
+            background: #e6ffe6;
+            color: #00b894;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            border-left: 4px solid #00b894;
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                padding: 120px 15px 2rem 15px;
+            }
+
+            .register-container {
+                padding: 2rem;
+                margin: 1rem;
+            }
+
+            .register-header h1 {
+                font-size: 1.8rem;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
+<body>
+    <!-- Header -->
+    <div id="header-placeholder"></div>
 
-<body class="bg-gray-100 flex flex-col min-h-screen">
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="register-container">
+            <div class="register-header">
+                <h1>Create Account</h1>
+                <p>Access our world-class airport services</p>
+            </div>
 
-  <!--  Header inside body and aligned left -->
-  <header class="bg-white shadow">
-    <nav class="main-nav">
-      <div class="container">
-        <div class="nav-container py-4 px-6 flex items-center justify-start">
-          <a href="index.html" class="logo text-2xl font-bold text-gray-800">Premium</a>
+            <!-- Error/Success Messages -->
+            <div class="error-message" id="error-message"></div>
+            <div class="success-message" id="success-message"></div>
+
+            <!-- Registration Form -->
+            <form id="register-form" onsubmit="handleRegistration(event)">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="first-name">First Name *</label>
+                        <input type="text" id="first-name" name="firstName" required placeholder="First name">
+                    </div>
+                    <div class="form-group">
+                        <label for="last-name">Last Name *</label>
+                        <input type="text" id="last-name" name="lastName" required placeholder="Last name">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="reg-email">Email Address *</label>
+                    <input type="email" id="reg-email" name="email" required placeholder="Enter your email">
+                </div>
+
+                <div class="form-group">
+                    <label for="reg-phone">Phone Number *</label>
+                    <div class="phone-input">
+                        <select id="reg-country-code" name="countryCode">
+                            <option value="+968">🇴🇲 +968</option>
+                            <option value="+971">🇦🇪 +971</option>
+                            <option value="+973">🇧🇭 +973</option>
+                            <option value="+974">🇶🇦 +974</option>
+                            <option value="+965">🇰🇼 +965</option>
+                            <option value="+966">🇸🇦 +966</option>
+                        </select>
+                        <input type="tel" id="reg-phone" name="phone" required placeholder="Phone number">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="date-of-birth">Date of Birth</label>
+                        <input type="date" id="date-of-birth" name="dateOfBirth">
+                    </div>
+                    <div class="form-group">
+                        <label for="nationality">Nationality</label>
+                        <select id="nationality" name="nationality">
+                            <option value="">Select nationality</option>
+                            <option value="OM">Omani</option>
+                            <option value="AE">UAE</option>
+                            <option value="SA">Saudi Arabia</option>
+                            <option value="QA">Qatar</option>
+                            <option value="KW">Kuwait</option>
+                            <option value="BH">Bahrain</option>
+                            <option value="US">United States</option>
+                            <option value="UK">United Kingdom</option>
+                            <option value="IN">India</option>
+                            <option value="PK">Pakistan</option>
+                            <option value="BD">Bangladesh</option>
+                            <option value="LK">Sri Lanka</option>
+                            <option value="PH">Philippines</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="reg-password">Password *</label>
+                    <input type="password" id="reg-password" name="password" required placeholder="Create a password" oninput="checkPassword()">
+                    <ul class="password-requirements" id="password-requirements">
+                        <li id="length-req">At least 8 characters</li>
+                        <li id="uppercase-req">One uppercase letter</li>
+                        <li id="lowercase-req">One lowercase letter</li>
+                        <li id="number-req">One number</li>
+                    </ul>
+                </div>
+
+                <div class="form-group">
+                    <label for="confirm-password">Confirm Password *</label>
+                    <input type="password" id="confirm-password" name="confirmPassword" required placeholder="Confirm your password" oninput="checkPasswordMatch()">
+                    <div id="password-match" style="font-size: 0.8rem; margin-top: 0.5rem;"></div>
+                </div>
+
+                <div class="terms-checkbox">
+                    <input type="checkbox" id="terms" name="terms" required>
+                    <label for="terms">
+                        I agree to the <a href="#" onclick="showTerms()">Terms of Service</a> and 
+                        <a href="#" onclick="showPrivacy()">Privacy Policy</a>
+                    </label>
+                </div>
+
+                <div class="terms-checkbox">
+                    <input type="checkbox" id="newsletter" name="newsletter">
+                    <label for="newsletter">
+                        Send me updates about services and special offers
+                    </label>
+                </div>
+
+                <button type="submit" class="register-btn" id="register-btn">Create Account</button>
+            </form>
+
+            <!-- Login Link -->
+            <div class="login-link">
+                <p>Already have an account?</p>
+                <a href="login.html">Sign In</a>
+            </div>
         </div>
-      </div>
-    </nav>
-  </header>
+    </main>
 
-  <!--  Register Card -->
-  <main class="flex-grow flex items-center justify-center">
-    <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
-      <h2 class="text-2xl font-bold mb-6 text-center">Register</h2>
-      <form class="space-y-4">
-        <input type="text" placeholder="Full Name" class="w-full border border-gray-300 p-3 rounded">
-        <input type="email" placeholder="Email" class="w-full border border-gray-300 p-3 rounded">
-        <input type="tel" placeholder="Phone" class="w-full border border-gray-300 p-3 rounded">
-        <input type="password" placeholder="Password" class="w-full border border-gray-300 p-3 rounded">
-        <input type="password" placeholder="Confirm Password" class="w-full border border-gray-300 p-3 rounded">
-        <button type="submit" class="w-full bg-blue-700 text-white px-6 py-3 rounded hover:bg-blue-800">Register</button>
-      </form>
-      <p class="mt-4 text-center text-sm text-gray-600">
-        Already have an account? 
-        <a href="login.html" class="text-blue-600 hover:underline">Login</a>
-      </p>
-    </div>
-  </main>
+    <!-- Footer -->
+    <div id="footer-placeholder"></div>
 
-  <!--  Footer -->
-  <div id="footer-placeholder"></div>
+    <script>
+        // Password validation
+        function checkPassword() {
+            const password = document.getElementById('reg-password').value;
+            const requirements = {
+                'length-req': password.length >= 8,
+                'uppercase-req': /[A-Z]/.test(password),
+                'lowercase-req': /[a-z]/.test(password),
+                'number-req': /\d/.test(password)
+            };
 
-  <script>
-    fetch('footer.html')
-      .then(res => res.text())
-      .then(data => {
-        document.getElementById('footer-placeholder').innerHTML = data;
-      });
-  </script>
+            Object.keys(requirements).forEach(req => {
+                const element = document.getElementById(req);
+                if (requirements[req]) {
+                    element.classList.add('valid');
+                } else {
+                    element.classList.remove('valid');
+                }
+            });
 
+            // Check if confirm password matches
+            checkPasswordMatch();
+            
+            // Enable/disable submit button
+            updateSubmitButton();
+        }
+
+        // Password match validation
+        function checkPasswordMatch() {
+            const password = document.getElementById('reg-password').value;
+            const confirmPassword = document.getElementById('confirm-password').value;
+            const matchDiv = document.getElementById('password-match');
+
+            if (confirmPassword.length === 0) {
+                matchDiv.textContent = '';
+                return;
+            }
+
+            if (password === confirmPassword) {
+                matchDiv.textContent = '✓ Passwords match';
+                matchDiv.style.color = '#27ae60';
+            } else {
+                matchDiv.textContent = '✗ Passwords do not match';
+                matchDiv.style.color = '#e74c3c';
+            }
+
+            updateSubmitButton();
+        }
+
+        // Update submit button state
+        function updateSubmitButton() {
+            const password = document.getElementById('reg-password').value;
+            const confirmPassword = document.getElementById('confirm-password').value;
+            const terms = document.getElementById('terms').checked;
+            const submitBtn = document.getElementById('register-btn');
+
+            const passwordValid = password.length >= 8 && 
+                                /[A-Z]/.test(password) && 
+                                /[a-z]/.test(password) && 
+                                /\d/.test(password);
+            
+            const passwordsMatch = password === confirmPassword && confirmPassword.length > 0;
+
+            if (passwordValid && passwordsMatch && terms) {
+                submitBtn.disabled = false;
+            } else {
+                submitBtn.disabled = true;
+            }
+        }
+
+        // Registration handler
+        function handleRegistration(event) {
+            event.preventDefault();
+            
+            const formData = new FormData(event.target);
+            const data = Object.fromEntries(formData);
+
+            // Validation
+            if (!data.firstName || !data.lastName || !data.email || !data.phone || !data.password) {
+                showError('Please fill in all required fields');
+                return;
+            }
+
+            if (!data.terms) {
+                showError('You must agree to the Terms of Service');
+                return;
+            }
+
+            // Show loading state
+            const submitBtn = document.getElementById('register-btn');
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = 'Creating Account...';
+            submitBtn.disabled = true;
+
+            // Simulate registration process
+            setTimeout(() => {
+                // Check if email already exists (demo)
+                if (data.email === 'admin@transom.om') {
+                    showError('This email is already registered');
+                    submitBtn.textContent = originalText;
+                    submitBtn.disabled = false;
+                    return;
+                }
+
+                // Success simulation
+                showSuccess('Account created successfully! Redirecting to login...');
+                
+                // Save user data (in real app, this would go to server)
+                const userData = {
+                    firstName: data.firstName,
+                    lastName: data.lastName,
+                    email: data.email,
+                    phone: data.countryCode + data.phone,
+                    dateOfBirth: data.dateOfBirth,
+                    nationality: data.nationality,
+                    newsletter: data.newsletter || false,
+                    registrationDate: new Date().toISOString()
+                };
+                
+                localStorage.setItem('pendingUser', JSON.stringify(userData));
+                
+                // Redirect to login
+                setTimeout(() => {
+                    window.location.href = 'login.html';
+                }, 2000);
+            }, 2000);
+        }
+
+        // Terms and privacy handlers
+        function showTerms() {
+            alert('Terms of Service\n\nThis would display the full terms of service in a real application.\n\nFor demo purposes, these are placeholder terms.');
+        }
+
+        function showPrivacy() {
+            alert('Privacy Policy\n\nThis would display the full privacy policy in a real application.\n\nFor demo purposes, this is a placeholder privacy policy.');
+        }
+
+        // Message display functions
+        function showError(message) {
+            const errorDiv = document.getElementById('error-message');
+            const successDiv = document.getElementById('success-message');
+            
+            successDiv.style.display = 'none';
+            errorDiv.textContent = message;
+            errorDiv.style.display = 'block';
+            
+            // Auto-hide after 5 seconds
+            setTimeout(() => {
+                errorDiv.style.display = 'none';
+            }, 5000);
+        }
+
+        function showSuccess(message) {
+            const errorDiv = document.getElementById('error-message');
+            const successDiv = document.getElementById('success-message');
+            
+            errorDiv.style.display = 'none';
+            successDiv.textContent = message;
+            successDiv.style.display = 'block';
+        }
+
+        // Load header and footer
+        document.addEventListener('DOMContentLoaded', () => {
+            fetch('header.html')
+                .then(res => res.text())
+                .then(html => {
+                    document.getElementById('header-placeholder').innerHTML = html;
+                    const script = document.createElement('script');
+                    script.src = 'header.js';
+                    document.body.appendChild(script);
+                    
+                    setTimeout(() => {
+                        const savedCurrency = localStorage.getItem('selectedCurrency');
+                        if (savedCurrency && window.setCurrency) {
+                            const selectedCurrencyTop = document.getElementById('selected-currency');
+                            const selectedCurrencyNav = document.getElementById('selected-currency-nav');
+                            
+                            if (selectedCurrencyTop) {
+                                selectedCurrencyTop.textContent = savedCurrency;
+                            }
+                            if (selectedCurrencyNav) {
+                                selectedCurrencyNav.textContent = savedCurrency;
+                            }
+                        }
+                        
+                        // Load cart count
+                        const cartCount = localStorage.getItem('cartItemCount') || '0';
+                        const cartBadge = document.querySelector('.cart-badge');
+                        if (cartBadge) {
+                            cartBadge.textContent = cartCount;
+                            cartBadge.style.display = parseInt(cartCount) > 0 ? 'flex' : 'none';
+                        }
+                    }, 200);
+                });
+
+            fetch('footer.html')
+                .then(res => res.text())
+                .then(data => {
+                    document.getElementById('footer-placeholder').innerHTML = data;
+                });
+
+            // Add event listeners for real-time validation
+            document.getElementById('terms').addEventListener('change', updateSubmitButton);
+            
+            // Set initial button state
+            updateSubmitButton();
+        });
+    </script>
 </body>
 </html>

@@ -543,15 +543,90 @@
     <div id="footer-placeholder"></div>
 
     <script>
-        // Load header and footer
-        fetch('header.html')
-            .then(res => res.text())
-            .then(html => {
-                document.getElementById('header-placeholder').innerHTML = html;
-                const script = document.createElement('script');
-                script.src = 'header.js';
-                document.body.appendChild(script);
+
+            // Currency configuration
+        const currencyConfig = {
+            'USD': { symbol: '$', rate: 1, position: 'before' },
+            'OMR': { symbol: 'OMR', rate: 0.385, position: 'after' }
+        };
+
+        // Get selected currency
+        function getSelectedCurrency() {
+            return localStorage.getItem('selectedCurrency') || 'USD';
+        }
+
+        // Format price with currency
+        function formatPrice(amount, currency = null) {
+            if (!currency) currency = getSelectedCurrency();
+            const config = currencyConfig[currency];
+            const convertedAmount = amount * config.rate;
+            const formattedAmount = convertedAmount.toFixed(2);
+            
+            if (config.position === 'before') {
+                return `${config.symbol}${formattedAmount}`;
+            } else {
+                return `${formattedAmount} ${config.symbol}`;
+            }
+        }
+
+        // Update all prices on the page
+        function updateAllPrices() {
+            const currency = getSelectedCurrency();
+            
+            // Update service option prices
+            document.querySelectorAll('.service-price').forEach((element, index) => {
+                const prices = [38.58, 56.07, 89.50]; // standard, premium, luxury
+                if (prices[index]) {
+                    element.textContent = `From ${formatPrice(prices[index], currency)}`;
+                }
             });
+            updateSummary(); // Update the booking summary
+        }
+
+        // Listen for currency changes
+        document.addEventListener('currencyChanged', function(e) {
+            console.log('Currency changed to:', e.detail.currency);
+            updateAllPrices();
+        });
+
+        window.addEventListener('storage', function(e) {
+            if (e.key === 'selectedCurrency') {
+                updateAllPrices();
+            }
+        });
+
+        // Load header and footer
+       fetch('header.html')
+        .then(res => res.text())
+        .then(html => {
+            document.getElementById('header-placeholder').innerHTML = html;
+            const script = document.createElement('script');
+            script.src = 'header.js';
+            document.body.appendChild(script);
+
+            //  Ensure currency is loaded after header is ready
+            setTimeout(() => {
+                const savedCurrency = localStorage.getItem('selectedCurrency');
+                if (savedCurrency && window.setCurrency) {
+                    const selectedCurrencyTop = document.getElementById('selected-currency');
+                    const selectedCurrencyNav = document.getElementById('selected-currency-nav');
+                    
+                    if (selectedCurrencyTop) {
+                        selectedCurrencyTop.textContent = savedCurrency;
+                    }
+                    if (selectedCurrencyNav) {
+                        selectedCurrencyNav.textContent = savedCurrency;
+                    }
+                }
+
+                   const cartCount = localStorage.getItem('cartItemCount') || '0';
+                    const cartBadge = document.querySelector('.cart-badge');
+                    if (cartBadge) {
+                        cartBadge.textContent = cartCount;
+                        cartBadge.style.display = parseInt(cartCount) > 0 ? 'flex' : 'none';
+                    }
+            }, 200);
+        });
 
         fetch('footer.html')
             .then(res => res.text())
@@ -559,6 +634,7 @@
                 document.getElementById('footer-placeholder').innerHTML = data;
             });
 
+        // Initialize page on load
         // Initialize page on load
         document.addEventListener('DOMContentLoaded', () => {
             const params = new URLSearchParams(window.location.search);
@@ -608,6 +684,9 @@
                 dropoffField.value = airport;
                 dropoffField.setAttribute('readonly', true);
             }
+            
+            // ADD THIS LINE HERE ↓
+            setTimeout(() => { updateAllPrices(); }, 300);
         });
 
         // Service option selection
@@ -650,9 +729,9 @@
             const total = basePrice + vat;
             
             document.querySelector('.summary-item span').textContent = serviceName;
-            document.getElementById('service-cost').textContent = `USD ${basePrice.toFixed(2)}`;
-            document.getElementById('vat-cost').textContent = `USD ${vat.toFixed(2)}`;
-            document.getElementById('total-cost').textContent = `USD ${total.toFixed(2)}`;
+            document.getElementById('service-cost').textContent = formatPrice(basePrice);
+            document.getElementById('vat-cost').textContent = formatPrice(vat);
+            document.getElementById('total-cost').textContent = formatPrice(total);
         }
 
         // Form validation and submission
@@ -680,8 +759,8 @@
             const selectedService = document.querySelector('input[name="service"]:checked').value;
 
             const query = new URLSearchParams({
-                service: selectedService,                // <-- now it's "standard", "premium", or "luxury"
-                serviceType: 'limo',                     // <-- help the cart recognize this as a limo booking
+                service: 'limo',                           // ← CHANGED: Always use 'limo' as main service
+                package: selectedService,                  // ← CHANGED: Pass the actual selection as 'package'
                 flight: params.get('flight') || '',
                 date: params.get('date') || '',
                 airport: params.get('airport') || '',
@@ -697,7 +776,6 @@
                 comments: document.getElementById('comments').value
             }).toString();
 
-            
             // Redirect to cart
             window.location.href = `Cart.html?${query}`;
         }

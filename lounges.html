@@ -572,14 +572,36 @@
 
 
     <script>
-        fetch('header.html')
-          .then(res => res.text())
-          .then(html => {
+      fetch('header.html')
+        .then(res => res.text())
+        .then(html => {
             document.getElementById('header-placeholder').innerHTML = html;
             const script = document.createElement('script');
             script.src = 'header.js';
             document.body.appendChild(script);
-          });
+
+            //  Ensure currency is loaded after header is ready
+            setTimeout(() => {
+                const savedCurrency = localStorage.getItem('selectedCurrency');
+                if (savedCurrency && window.setCurrency) {
+                    const selectedCurrencyTop = document.getElementById('selected-currency');
+                    const selectedCurrencyNav = document.getElementById('selected-currency-nav');
+                    
+                    if (selectedCurrencyTop) {
+                        selectedCurrencyTop.textContent = savedCurrency;
+                    }
+                    if (selectedCurrencyNav) {
+                        selectedCurrencyNav.textContent = savedCurrency;
+                    }
+                }
+                   const cartCount = localStorage.getItem('cartItemCount') || '0';
+                    const cartBadge = document.querySelector('.cart-badge');
+                    if (cartBadge) {
+                        cartBadge.textContent = cartCount;
+                        cartBadge.style.display = parseInt(cartCount) > 0 ? 'flex' : 'none';
+                    }
+            }, 200);
+        });
         </script>
 
         <script>
@@ -594,6 +616,56 @@
     
 
     <script>
+
+
+    // Currency configuration
+        const currencyConfig = {
+            'USD': { symbol: '$', rate: 1, position: 'before' },
+            'OMR': { symbol: 'OMR', rate: 0.385, position: 'after' }
+        };
+
+        // Get selected currency
+        function getSelectedCurrency() {
+            return localStorage.getItem('selectedCurrency') || 'USD';
+        }
+
+        // Format price with currency
+        function formatPrice(amount, currency = null) {
+            if (!currency) currency = getSelectedCurrency();
+            const config = currencyConfig[currency];
+            const convertedAmount = amount * config.rate;
+            const formattedAmount = convertedAmount.toFixed(2);
+            
+            if (config.position === 'before') {
+                return `${config.symbol}${formattedAmount}`;
+            } else {
+                return `${formattedAmount} ${config.symbol}`;
+            }
+        }
+
+        // Update all prices on the page
+        function updateAllPrices() {
+            const priceElements = document.querySelectorAll('.duration-option .price');
+            const prices = [55, 85, 110, 140, 165]; // 2h, 4h, 6h, 8h, 12h
+            priceElements.forEach((element, index) => {
+                if (prices[index]) {
+                    element.textContent = formatPrice(prices[index]);
+                }
+            });
+            if (window.updatePricingDisplay) updatePricingDisplay();
+        }
+
+        // Listen for currency changes
+        document.addEventListener('currencyChanged', function(e) {
+            updateAllPrices();
+        });
+
+        window.addEventListener('storage', function(e) {
+            if (e.key === 'selectedCurrency') {
+                updateAllPrices();
+            }
+        });
+
         // Global variables
         let selectedDuration = 2;
         let selectedPrice = 55;
@@ -601,10 +673,13 @@
         let bookingData = {};
 
         // Initialize page
-        document.addEventListener('DOMContentLoaded', function() {
+       document.addEventListener('DOMContentLoaded', function() {
             loadBookingInfo();
             setupDurationSelection();
             updatePricingDisplay();
+            
+            // Initialize currency display
+            setTimeout(() => { updateAllPrices(); }, 300);
         });
 
         // Load booking information from URL parameters
@@ -680,13 +755,13 @@
         }
 
         // Update pricing display
-        function updatePricingDisplay() {
+       function updatePricingDisplay() {
             const total = selectedPrice * quantity;
             
             document.getElementById('selected-duration').textContent = `${selectedDuration} Hours`;
-            document.getElementById('price-per-person').textContent = `$${selectedPrice}`;
+            document.getElementById('price-per-person').textContent = formatPrice(selectedPrice);
             document.getElementById('guest-count').textContent = quantity;
-            document.getElementById('total-price').textContent = `$${total}`;
+            document.getElementById('total-price').textContent = formatPrice(total);
         }
 
         // Add to cart - Fixed to properly integrate with main cart system
