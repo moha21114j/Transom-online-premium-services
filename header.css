@@ -26,9 +26,9 @@ header.scrolled .nav-container {
     gap: 60px; /* Add gap between logo+nav and user actions */
 }
 
-header.scrolled .logo {
-    font-size: 2.0rem; /* Increased from 1.8rem for better presence */
-    margin-right: 30px; /* More space after logo when scrolled */
+header.scrolled .logo-image {
+  height: 40px;  
+  margin-right: 30px; 
 }
 
 header.scrolled .nav-menu {
@@ -133,14 +133,18 @@ header.scrolled .cart-btn {
 }
 
 .logo {
-    font-size: 2.2rem;
-    font-weight: bold;
-    color: #005BAC;
-    text-transform: lowercase;
+    display: flex;
+    align-items: center;
     text-decoration: none;
     transition: transform 0.3s;
-    flex-shrink: 0; /* Prevent logo from shrinking */
-    margin-right: 20px; /* Add space after logo */
+}
+
+.logo-image {
+    height: 35px;
+    width: auto;
+    object-fit: contain;
+    transition: height 0.3s ease;
+    filter: brightness(0) saturate(100%) invert(25%) sepia(65%) saturate(3449%) hue-rotate(252deg) brightness(82%) contrast(93%);
 }
 
 .logo:hover {
