@@ -47,8 +47,8 @@
             <h2 class="search-title">Search services</h2>
             
            <div class="service-tabs">
-            <div class="service-tab active" onclick="selectService('meet-greet')">Meet & Greet (Arrival Only)</div>
-            <div class="service-tab" onclick="selectService('lounges')">Lounges</div>
+            <div class="service-tab active" onclick="selectService('meet-greet')">Meet & Greet</div>
+            <div class="service-tab" onclick="selectService('lounges')">Lounges(Departure )</div>
             <div class="service-tab" onclick="selectService('limo')">Limo Service</div>
         </div>
 
@@ -254,25 +254,40 @@
         event.target.classList.add('active');
 
         const descriptions = {
-            'meet-greet': 'Meet & Greet (Arrival Only): Personal assistance on arrival at Oman airports.',
-            'lounges': 'Lounges: Relax in premium lounges for both arrival and departure at Oman airports.',
-            'limo': 'Limo Service: Chauffeur-driven luxury car service for both arrival and departure at Oman airports.'
-        };
+        'meet-greet': 'Meet & Greet: Personal assistance for both arrival and departure at Oman airports.',
+        'lounges': 'Lounges: Relax in premium lounges for departure at Oman airports.',
+        'limo': 'Limo Service: Chauffeur-driven luxury car service for both arrival and departure at Oman airports.'
+    };
         document.getElementById('service-description').textContent = descriptions[service];
         updateServiceOptions();
         updateFormFields();
     }
 
     function updateServiceOptions() {
-        const departureOption = document.getElementById('departure-option');
-        const arrivalRadio = document.getElementById('arrival');
+    const departureOption = document.getElementById('departure-option');
+    const arrivalRadio = document.getElementById('arrival');
+    const departureRadio = document.getElementById('departure');
+    
+    if (currentService === 'lounges') {
+        // For lounges, show only departure option
+        departureOption.style.display = 'block';
+        departureRadio.checked = true;
+        
+        // Hide the arrival radio button and label
+        arrivalRadio.style.display = 'none';
+        document.querySelector('label[for="arrival"]').style.display = 'none';
+    } else {
+        // For meet-greet and limo, show both options
+        departureOption.style.display = 'block';
+        arrivalRadio.style.display = 'inline';
+        document.querySelector('label[for="arrival"]').style.display = 'inline';
+        
+        // Reset to arrival as default for meet-greet
         if (currentService === 'meet-greet') {
-            departureOption.style.display = 'none';
             arrivalRadio.checked = true;
-        } else {
-            departureOption.style.display = 'block';
         }
     }
+}
 
     function updateFormFields() {
         const serviceType = document.querySelector('input[name="service-type"]:checked').value;
