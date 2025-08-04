@@ -43,12 +43,21 @@
                     <a href="https://maraheb.om/" class="maraheb-link" target="_blank">Book with Maraheb →</a>
                 </div>
 
-                <div class="service-visual">
-                    <div class="service-icon">🛬</div>
-                    <h3>Fast-Track Arrival</h3>
-                    <p>Experience the quickest way to exit the airport with our dedicated arrival service.</p>
-                </div>
-            </div>
+                           <div class="service-visual">
+  <div class="hero-slider">
+    <div class="slide active">
+      <img src="0B1A.jpg" alt="VIP Lounges" loading="lazy">
+    </div>
+    <div class="slide">
+      <img src="00B11.JPG" alt="Luxury Transport" loading="lazy">
+    </div>
+    
+
+    <!-- Navigation buttons -->
+    <button class="prev">❮</button>
+    <button class="next">❯</button>
+  </div>
+</div>
 
             <!-- Benefits Section -->
             <div class="benefits-section">
@@ -123,5 +132,23 @@
             });
 </script>
 
+    <script>
+const slides = document.querySelectorAll('.hero-slider .slide');
+let currentIndex = 0;
+
+document.querySelector('.next').addEventListener('click', () => changeSlide(1));
+document.querySelector('.prev').addEventListener('click', () => changeSlide(-1));
+
+function changeSlide(direction) {
+  slides[currentIndex].classList.remove('active');
+  currentIndex = (currentIndex + direction + slides.length) % slides.length;
+  slides[currentIndex].classList.add('active');
+}
+
+// Auto-slide every 3.5 seconds
+setInterval(() => changeSlide(1), 3500);
+</script>
+
 </body>
+
 </html>
