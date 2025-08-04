@@ -48,12 +48,17 @@
                     <a href="https://maraheb.om/home-check-in/" class="maraheb-link" target="_blank">Book with Maraheb →</a>
                 </div>
 
-                <div class="service-visual">
-                    <div class="service-icon">🏠</div>
-                    <h3>Convenient Home Service</h3>
-                    <p>Our team comes to you, making travel preparation effortless and stress-free.</p>
-                </div>
-            </div>
+               <div class="service-visual">
+  <div class="hero-slider">
+    <div class="slide active">
+      <img src="0B1A5094.JPG" alt="VIP Lounges" loading="lazy">
+    </div>
+    <div class="slide">
+      <img src="0B1A49123.JPG" alt="Luxury Transport" loading="lazy">
+    </div>
+    <div class="slide">
+      <img src="0B1A49696.JPG" alt="Exclusive Dining" loading="lazy">
+    </div>
 
             <!-- Process Steps -->
             <div class="process-steps">
@@ -127,6 +132,23 @@
             .then(data => {
             document.getElementById('footer-placeholder').innerHTML = data;
             });
+</script>
+
+                   <script>
+const slides = document.querySelectorAll('.hero-slider .slide');
+let currentIndex = 0;
+
+document.querySelector('.next').addEventListener('click', () => changeSlide(1));
+document.querySelector('.prev').addEventListener('click', () => changeSlide(-1));
+
+function changeSlide(direction) {
+  slides[currentIndex].classList.remove('active');
+  currentIndex = (currentIndex + direction + slides.length) % slides.length;
+  slides[currentIndex].classList.add('active');
+}
+
+// Auto-slide every 3.5 seconds
+setInterval(() => changeSlide(1), 3500);
 </script>
         
 </body>
